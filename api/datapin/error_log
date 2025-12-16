@@ -1,0 +1,201 @@
+[24-Jul-2023 00:54:14 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$phone in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 49
+[24-Jul-2023 00:54:14 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 75
+[24-Jul-2023 00:54:14 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 75
+[24-Jul-2023 00:54:14 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 78
+[24-Jul-2023 00:54:14 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$error in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 84
+[24-Jul-2023 00:54:14 Africa/Lagos] PHP Notice:  Trying to access array offset on value of type null in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 84
+[28-Jul-2023 12:21:14 UTC] PHP Fatal error:  Cannot redeclare ApiModel::saveDataPin() in /home/dannvtuc/public_html/core/Models/ApiModel.php on line 253
+[28-Jul-2023 15:54:45 UTC] PHP Fatal error:  Cannot redeclare ApiModel::saveDataPin() in /home/dannvtuc/public_html/core/Models/ApiModel.php on line 253
+[28-Jul-2023 17:00:29 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$phone in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 49
+[28-Jul-2023 17:00:30 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 75
+[28-Jul-2023 17:00:30 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 75
+[28-Jul-2023 17:00:30 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 78
+[28-Jul-2023 17:00:30 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$error in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 84
+[28-Jul-2023 17:00:30 Africa/Lagos] PHP Notice:  Trying to access array offset on value of type null in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 84
+[28-Jul-2023 17:07:52 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$phone in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 49
+[28-Jul-2023 17:07:52 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 75
+[28-Jul-2023 17:07:52 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 75
+[28-Jul-2023 17:07:52 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 78
+[28-Jul-2023 17:07:52 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$error in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 84
+[28-Jul-2023 17:07:52 Africa/Lagos] PHP Notice:  Trying to access array offset on value of type null in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 84
+[28-Jul-2023 20:26:10 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$phone in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 49
+[28-Jul-2023 20:26:10 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 75
+[28-Jul-2023 20:26:10 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 75
+[28-Jul-2023 20:26:10 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 78
+[28-Jul-2023 20:26:10 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$error in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 84
+[28-Jul-2023 20:26:10 Africa/Lagos] PHP Notice:  Trying to access array offset on value of type null in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 84
+[28-Jul-2023 20:36:16 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$phone in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 49
+[28-Jul-2023 20:36:16 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 75
+[28-Jul-2023 20:36:16 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 75
+[28-Jul-2023 20:36:16 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 78
+[28-Jul-2023 20:36:16 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$error in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 84
+[28-Jul-2023 20:36:16 Africa/Lagos] PHP Notice:  Trying to access array offset on value of type null in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 84
+[28-Jul-2023 20:37:47 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$phone in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 49
+[28-Jul-2023 20:37:47 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 75
+[28-Jul-2023 20:37:47 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 75
+[28-Jul-2023 20:37:47 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 78
+[28-Jul-2023 20:37:47 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$error in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 84
+[28-Jul-2023 20:37:47 Africa/Lagos] PHP Notice:  Trying to access array offset on value of type null in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 84
+[28-Jul-2023 20:39:31 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$phone in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 49
+[28-Jul-2023 20:39:32 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 75
+[28-Jul-2023 20:39:32 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 75
+[28-Jul-2023 20:39:32 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 78
+[28-Jul-2023 20:39:32 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$error in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 84
+[28-Jul-2023 20:39:32 Africa/Lagos] PHP Notice:  Trying to access array offset on value of type null in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 84
+[28-Jul-2023 20:41:46 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$phone in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 49
+[28-Jul-2023 20:41:47 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 75
+[28-Jul-2023 20:41:47 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 75
+[28-Jul-2023 20:41:47 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 78
+[28-Jul-2023 20:41:47 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$error in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 84
+[28-Jul-2023 20:41:47 Africa/Lagos] PHP Notice:  Trying to access array offset on value of type null in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 84
+[28-Jul-2023 20:43:14 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$phone in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 49
+[28-Jul-2023 20:43:14 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 75
+[28-Jul-2023 20:43:14 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 75
+[28-Jul-2023 20:43:14 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 78
+[28-Jul-2023 20:43:14 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$error in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 84
+[28-Jul-2023 20:43:14 Africa/Lagos] PHP Notice:  Trying to access array offset on value of type null in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 84
+[28-Jul-2023 20:43:41 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$phone in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 49
+[28-Jul-2023 20:43:41 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 75
+[28-Jul-2023 20:43:41 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 75
+[28-Jul-2023 20:43:41 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 78
+[28-Jul-2023 20:43:41 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$error in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 84
+[28-Jul-2023 20:43:41 Africa/Lagos] PHP Notice:  Trying to access array offset on value of type null in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 84
+[28-Jul-2023 20:46:32 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$phone in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 49
+[28-Jul-2023 20:46:33 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 75
+[28-Jul-2023 20:46:33 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 75
+[28-Jul-2023 20:46:33 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 78
+[28-Jul-2023 20:46:33 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$error in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 84
+[28-Jul-2023 20:46:33 Africa/Lagos] PHP Notice:  Trying to access array offset on value of type null in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 84
+[28-Jul-2023 20:53:10 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$phone in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 49
+[28-Jul-2023 20:53:10 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 75
+[28-Jul-2023 20:53:10 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 75
+[28-Jul-2023 20:53:10 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 78
+[28-Jul-2023 20:53:10 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$error in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 84
+[28-Jul-2023 20:53:10 Africa/Lagos] PHP Notice:  Trying to access array offset on value of type null in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 84
+[28-Jul-2023 20:57:28 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$phone in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 49
+[28-Jul-2023 20:57:29 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 75
+[28-Jul-2023 20:57:29 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 75
+[28-Jul-2023 20:57:29 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 78
+[28-Jul-2023 20:57:29 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$error in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 84
+[28-Jul-2023 20:57:29 Africa/Lagos] PHP Notice:  Trying to access array offset on value of type null in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 84
+[28-Jul-2023 20:58:01 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$phone in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 49
+[28-Jul-2023 20:58:02 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 75
+[28-Jul-2023 20:58:02 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 75
+[28-Jul-2023 20:58:02 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 78
+[28-Jul-2023 20:58:02 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$error in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 84
+[28-Jul-2023 20:58:02 Africa/Lagos] PHP Notice:  Trying to access array offset on value of type null in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 84
+[28-Jul-2023 21:01:04 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$phone in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 49
+[28-Jul-2023 21:01:05 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 75
+[28-Jul-2023 21:01:05 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 75
+[28-Jul-2023 21:01:05 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 78
+[28-Jul-2023 21:01:05 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$error in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 84
+[28-Jul-2023 21:01:05 Africa/Lagos] PHP Notice:  Trying to access array offset on value of type null in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 84
+[28-Jul-2023 21:02:25 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$phone in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 49
+[28-Jul-2023 21:02:26 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 75
+[28-Jul-2023 21:02:26 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 75
+[28-Jul-2023 21:02:26 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 78
+[28-Jul-2023 21:02:26 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$error in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 84
+[28-Jul-2023 21:02:26 Africa/Lagos] PHP Notice:  Trying to access array offset on value of type null in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 84
+[28-Jul-2023 21:07:21 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$phone in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 49
+[28-Jul-2023 21:07:22 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 75
+[28-Jul-2023 21:07:22 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 75
+[28-Jul-2023 21:07:22 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 78
+[28-Jul-2023 21:07:22 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$error in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 84
+[28-Jul-2023 21:07:22 Africa/Lagos] PHP Notice:  Trying to access array offset on value of type null in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 84
+[28-Jul-2023 21:08:53 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$phone in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 49
+[28-Jul-2023 21:08:54 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 75
+[28-Jul-2023 21:08:54 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 75
+[28-Jul-2023 21:08:54 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 78
+[28-Jul-2023 21:08:54 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$error in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 84
+[28-Jul-2023 21:08:54 Africa/Lagos] PHP Notice:  Trying to access array offset on value of type null in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 84
+[28-Jul-2023 21:13:31 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$phone in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 49
+[28-Jul-2023 21:13:32 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 75
+[28-Jul-2023 21:13:32 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 75
+[28-Jul-2023 21:13:32 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 78
+[28-Jul-2023 21:13:32 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$error in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 84
+[28-Jul-2023 21:13:32 Africa/Lagos] PHP Notice:  Trying to access array offset on value of type null in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 84
+[28-Jul-2023 21:14:08 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$phone in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 49
+[28-Jul-2023 21:14:08 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 75
+[28-Jul-2023 21:14:08 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 75
+[28-Jul-2023 21:14:08 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 78
+[28-Jul-2023 21:14:08 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$error in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 84
+[28-Jul-2023 21:14:08 Africa/Lagos] PHP Notice:  Trying to access array offset on value of type null in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 84
+[29-Jul-2023 01:14:41 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$phone in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 49
+[29-Jul-2023 01:14:41 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 75
+[29-Jul-2023 01:14:41 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 75
+[29-Jul-2023 01:14:41 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 78
+[29-Jul-2023 01:14:41 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$error in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 84
+[29-Jul-2023 01:14:41 Africa/Lagos] PHP Notice:  Trying to access array offset on value of type null in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 84
+[29-Jul-2023 04:45:50 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$phone in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 49
+[29-Jul-2023 04:45:51 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 75
+[29-Jul-2023 04:45:51 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 75
+[29-Jul-2023 04:45:51 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 78
+[29-Jul-2023 04:45:51 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$error in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 84
+[29-Jul-2023 04:45:51 Africa/Lagos] PHP Notice:  Trying to access array offset on value of type null in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 84
+[30-Jul-2023 09:00:58 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$phone in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 49
+[30-Jul-2023 09:00:59 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 75
+[30-Jul-2023 09:00:59 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 75
+[30-Jul-2023 09:00:59 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 78
+[30-Jul-2023 09:00:59 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$error in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 84
+[30-Jul-2023 09:00:59 Africa/Lagos] PHP Notice:  Trying to access array offset on value of type null in /home/dannvtuc/public_html/core/Controllers/DataPin.php on line 84
+[11-Aug-2023 16:18:14 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$phone in /home/dharehx/jossyfeydataservice.com.ng/core/Controllers/DataPin.php on line 49
+[11-Aug-2023 16:18:15 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dharehx/jossyfeydataservice.com.ng/core/Controllers/DataPin.php on line 75
+[11-Aug-2023 16:18:15 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dharehx/jossyfeydataservice.com.ng/core/Controllers/DataPin.php on line 75
+[11-Aug-2023 16:18:15 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dharehx/jossyfeydataservice.com.ng/core/Controllers/DataPin.php on line 78
+[11-Aug-2023 16:18:15 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$error in /home/dharehx/jossyfeydataservice.com.ng/core/Controllers/DataPin.php on line 84
+[11-Aug-2023 16:18:15 Africa/Lagos] PHP Notice:  Trying to access array offset on value of type null in /home/dharehx/jossyfeydataservice.com.ng/core/Controllers/DataPin.php on line 84
+[11-Aug-2023 18:33:28 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$phone in /home/dharehx/jossyfeydataservice.com.ng/core/Controllers/DataPin.php on line 49
+[11-Aug-2023 18:33:28 Africa/Lagos] PHP Notice:  Trying to get property 'Status' of non-object in /home/dharehx/jossyfeydataservice.com.ng/core/Controllers/DataPin.php on line 75
+[11-Aug-2023 18:33:28 Africa/Lagos] PHP Notice:  Trying to get property 'Status' of non-object in /home/dharehx/jossyfeydataservice.com.ng/core/Controllers/DataPin.php on line 75
+[11-Aug-2023 18:33:28 Africa/Lagos] PHP Notice:  Trying to get property 'Status' of non-object in /home/dharehx/jossyfeydataservice.com.ng/core/Controllers/DataPin.php on line 78
+[11-Aug-2023 18:33:28 Africa/Lagos] PHP Notice:  Trying to get property 'error' of non-object in /home/dharehx/jossyfeydataservice.com.ng/core/Controllers/DataPin.php on line 84
+[11-Aug-2023 18:33:28 Africa/Lagos] PHP Notice:  Trying to access array offset on value of type null in /home/dharehx/jossyfeydataservice.com.ng/core/Controllers/DataPin.php on line 84
+[11-Aug-2023 18:58:29 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$phone in /home/dharehx/jossyfeydataservice.com.ng/core/Controllers/DataPin.php on line 49
+[11-Aug-2023 18:58:29 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dharehx/jossyfeydataservice.com.ng/core/Controllers/DataPin.php on line 75
+[11-Aug-2023 18:58:29 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dharehx/jossyfeydataservice.com.ng/core/Controllers/DataPin.php on line 75
+[11-Aug-2023 18:58:29 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dharehx/jossyfeydataservice.com.ng/core/Controllers/DataPin.php on line 78
+[11-Aug-2023 18:58:29 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$error in /home/dharehx/jossyfeydataservice.com.ng/core/Controllers/DataPin.php on line 84
+[11-Aug-2023 18:58:29 Africa/Lagos] PHP Notice:  Trying to access array offset on value of type null in /home/dharehx/jossyfeydataservice.com.ng/core/Controllers/DataPin.php on line 84
+[12-Aug-2023 06:25:30 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$phone in /home/dharehx/jossyfeydataservice.com.ng/core/Controllers/DataPin.php on line 49
+[12-Aug-2023 06:25:31 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dharehx/jossyfeydataservice.com.ng/core/Controllers/DataPin.php on line 75
+[12-Aug-2023 06:25:31 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dharehx/jossyfeydataservice.com.ng/core/Controllers/DataPin.php on line 75
+[12-Aug-2023 06:25:31 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dharehx/jossyfeydataservice.com.ng/core/Controllers/DataPin.php on line 78
+[12-Aug-2023 06:25:31 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$error in /home/dharehx/jossyfeydataservice.com.ng/core/Controllers/DataPin.php on line 84
+[12-Aug-2023 06:25:31 Africa/Lagos] PHP Notice:  Trying to access array offset on value of type null in /home/dharehx/jossyfeydataservice.com.ng/core/Controllers/DataPin.php on line 84
+[12-Aug-2023 06:34:37 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$phone in /home/dharehx/jossyfeydataservice.com.ng/core/Controllers/DataPin.php on line 49
+[12-Aug-2023 06:34:38 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dharehx/jossyfeydataservice.com.ng/core/Controllers/DataPin.php on line 75
+[12-Aug-2023 06:34:38 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dharehx/jossyfeydataservice.com.ng/core/Controllers/DataPin.php on line 75
+[12-Aug-2023 06:34:38 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dharehx/jossyfeydataservice.com.ng/core/Controllers/DataPin.php on line 78
+[12-Aug-2023 06:34:38 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$error in /home/dharehx/jossyfeydataservice.com.ng/core/Controllers/DataPin.php on line 84
+[12-Aug-2023 06:34:38 Africa/Lagos] PHP Notice:  Trying to access array offset on value of type null in /home/dharehx/jossyfeydataservice.com.ng/core/Controllers/DataPin.php on line 84
+[12-Aug-2023 06:43:19 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$AccessToken in /home/dharehx/jossyfeydataservice.com.ng/core/Controllers/DataPin.php on line 127
+[12-Aug-2023 05:49:01 UTC] PHP Fatal error:  Uncaught Error: Class 'DataPin' not found in /home/dharehx/jossyfeydataservice.com.ng/api/datapin/index.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/dharehx/jossyfeydataservice.com.ng/api/datapin/index.php on line 15
+[12-Aug-2023 05:54:44 UTC] PHP Fatal error:  Uncaught Error: Class 'DataPin' not found in /home/dharehx/jossyfeydataservice.com.ng/api/datapin/index.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/dharehx/jossyfeydataservice.com.ng/api/datapin/index.php on line 15
+[12-Aug-2023 07:08:19 UTC] PHP Fatal error:  Uncaught Error: Class 'DataPin' not found in /home/dharehx/jossyfeydataservice.com.ng/api/datapin/index.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/dharehx/jossyfeydataservice.com.ng/api/datapin/index.php on line 15
+[12-Aug-2023 07:10:32 UTC] PHP Fatal error:  Uncaught Error: Class 'DataPin' not found in /home/dharehx/jossyfeydataservice.com.ng/api/datapin/index.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/dharehx/jossyfeydataservice.com.ng/api/datapin/index.php on line 15
+[12-Aug-2023 08:30:06 UTC] PHP Fatal error:  Uncaught Error: Class 'DataPin' not found in /home/dharehx/jossyfeydataservice.com.ng/api/datapin/index.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/dharehx/jossyfeydataservice.com.ng/api/datapin/index.php on line 15
+[12-Aug-2023 08:37:19 UTC] PHP Fatal error:  Uncaught Error: Class 'DataPin' not found in /home/dharehx/jossyfeydataservice.com.ng/api/datapin/index.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/dharehx/jossyfeydataservice.com.ng/api/datapin/index.php on line 15
+[13-Aug-2023 12:38:59 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$phone in /home/dharehx/jossyfeydataservice.com.ng/core/Controllers/DataPin.php on line 49
+[13-Aug-2023 12:38:59 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dharehx/jossyfeydataservice.com.ng/core/Controllers/DataPin.php on line 75
+[13-Aug-2023 12:38:59 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dharehx/jossyfeydataservice.com.ng/core/Controllers/DataPin.php on line 75
+[13-Aug-2023 12:38:59 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dharehx/jossyfeydataservice.com.ng/core/Controllers/DataPin.php on line 78
+[13-Aug-2023 12:38:59 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$error in /home/dharehx/jossyfeydataservice.com.ng/core/Controllers/DataPin.php on line 84
+[13-Aug-2023 12:38:59 Africa/Lagos] PHP Notice:  Trying to access array offset on value of type null in /home/dharehx/jossyfeydataservice.com.ng/core/Controllers/DataPin.php on line 84

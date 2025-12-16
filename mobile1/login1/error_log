@@ -1,0 +1,258 @@
+[03-Jan-2023 00:21:31 Africa/Lagos] PHP Fatal error:  Uncaught PDOException: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO) in /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php:29
+Stack trace:
+#0 /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php(29): PDO->__construct()
+#1 /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php(23): Model->connectDb()
+#2 /home/hopejjiu/ameenwebkey.com.ng/core/Controllers/Subscriber.php(53): Model->__construct()
+#3 /home/hopejjiu/ameenwebkey.com.ng/mobile/home/includes/route.php(55): Subscriber->__construct()
+#4 /home/hopejjiu/ameenwebkey.com.ng/mobile/login/index.php(24): require_once('/home/hopejjiu/...')
+#5 {main}
+  thrown in /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php on line 29
+[03-Jan-2023 00:21:34 Africa/Lagos] PHP Fatal error:  Uncaught PDOException: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO) in /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php:29
+Stack trace:
+#0 /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php(29): PDO->__construct()
+#1 /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php(23): Model->connectDb()
+#2 /home/hopejjiu/ameenwebkey.com.ng/core/Controllers/Subscriber.php(53): Model->__construct()
+#3 /home/hopejjiu/ameenwebkey.com.ng/mobile/home/includes/route.php(55): Subscriber->__construct()
+#4 /home/hopejjiu/ameenwebkey.com.ng/mobile/login/index.php(24): require_once('/home/hopejjiu/...')
+#5 {main}
+  thrown in /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php on line 29
+[03-Jan-2023 00:21:36 Africa/Lagos] PHP Fatal error:  Uncaught PDOException: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO) in /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php:29
+Stack trace:
+#0 /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php(29): PDO->__construct()
+#1 /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php(23): Model->connectDb()
+#2 /home/hopejjiu/ameenwebkey.com.ng/core/Controllers/Subscriber.php(53): Model->__construct()
+#3 /home/hopejjiu/ameenwebkey.com.ng/mobile/home/includes/route.php(55): Subscriber->__construct()
+#4 /home/hopejjiu/ameenwebkey.com.ng/mobile/login/index.php(24): require_once('/home/hopejjiu/...')
+#5 {main}
+  thrown in /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php on line 29
+[03-Jan-2023 00:21:37 Africa/Lagos] PHP Fatal error:  Uncaught PDOException: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO) in /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php:29
+Stack trace:
+#0 /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php(29): PDO->__construct()
+#1 /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php(23): Model->connectDb()
+#2 /home/hopejjiu/ameenwebkey.com.ng/core/Controllers/Subscriber.php(53): Model->__construct()
+#3 /home/hopejjiu/ameenwebkey.com.ng/mobile/home/includes/route.php(55): Subscriber->__construct()
+#4 /home/hopejjiu/ameenwebkey.com.ng/mobile/login/index.php(24): require_once('/home/hopejjiu/...')
+#5 {main}
+  thrown in /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php on line 29
+[03-Jan-2023 00:21:39 Africa/Lagos] PHP Fatal error:  Uncaught PDOException: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO) in /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php:29
+Stack trace:
+#0 /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php(29): PDO->__construct()
+#1 /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php(23): Model->connectDb()
+#2 /home/hopejjiu/ameenwebkey.com.ng/core/Controllers/Subscriber.php(53): Model->__construct()
+#3 /home/hopejjiu/ameenwebkey.com.ng/mobile/home/includes/route.php(55): Subscriber->__construct()
+#4 /home/hopejjiu/ameenwebkey.com.ng/mobile/login/index.php(24): require_once('/home/hopejjiu/...')
+#5 {main}
+  thrown in /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php on line 29
+[03-Jan-2023 00:21:41 Africa/Lagos] PHP Fatal error:  Uncaught PDOException: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO) in /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php:29
+Stack trace:
+#0 /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php(29): PDO->__construct()
+#1 /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php(23): Model->connectDb()
+#2 /home/hopejjiu/ameenwebkey.com.ng/core/Controllers/Subscriber.php(53): Model->__construct()
+#3 /home/hopejjiu/ameenwebkey.com.ng/mobile/home/includes/route.php(55): Subscriber->__construct()
+#4 /home/hopejjiu/ameenwebkey.com.ng/mobile/login/index.php(24): require_once('/home/hopejjiu/...')
+#5 {main}
+  thrown in /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php on line 29
+[03-Jan-2023 00:21:50 Africa/Lagos] PHP Fatal error:  Uncaught PDOException: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO) in /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php:29
+Stack trace:
+#0 /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php(29): PDO->__construct()
+#1 /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php(23): Model->connectDb()
+#2 /home/hopejjiu/ameenwebkey.com.ng/core/Controllers/Subscriber.php(53): Model->__construct()
+#3 /home/hopejjiu/ameenwebkey.com.ng/mobile/home/includes/route.php(55): Subscriber->__construct()
+#4 /home/hopejjiu/ameenwebkey.com.ng/mobile/login/index.php(24): require_once('/home/hopejjiu/...')
+#5 {main}
+  thrown in /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php on line 29
+[03-Jan-2023 00:22:41 Africa/Lagos] PHP Fatal error:  Uncaught PDOException: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO) in /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php:29
+Stack trace:
+#0 /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php(29): PDO->__construct()
+#1 /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php(23): Model->connectDb()
+#2 /home/hopejjiu/ameenwebkey.com.ng/core/Controllers/Subscriber.php(53): Model->__construct()
+#3 /home/hopejjiu/ameenwebkey.com.ng/mobile/home/includes/route.php(55): Subscriber->__construct()
+#4 /home/hopejjiu/ameenwebkey.com.ng/mobile/login/index.php(24): require_once('/home/hopejjiu/...')
+#5 {main}
+  thrown in /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php on line 29
+[03-Jan-2023 00:22:47 Africa/Lagos] PHP Fatal error:  Uncaught PDOException: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO) in /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php:29
+Stack trace:
+#0 /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php(29): PDO->__construct()
+#1 /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php(23): Model->connectDb()
+#2 /home/hopejjiu/ameenwebkey.com.ng/core/Controllers/Subscriber.php(53): Model->__construct()
+#3 /home/hopejjiu/ameenwebkey.com.ng/mobile/home/includes/route.php(55): Subscriber->__construct()
+#4 /home/hopejjiu/ameenwebkey.com.ng/mobile/login/index.php(24): require_once('/home/hopejjiu/...')
+#5 {main}
+  thrown in /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php on line 29
+[03-Jan-2023 00:22:51 Africa/Lagos] PHP Fatal error:  Uncaught PDOException: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO) in /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php:29
+Stack trace:
+#0 /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php(29): PDO->__construct()
+#1 /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php(23): Model->connectDb()
+#2 /home/hopejjiu/ameenwebkey.com.ng/core/Controllers/Subscriber.php(53): Model->__construct()
+#3 /home/hopejjiu/ameenwebkey.com.ng/mobile/home/includes/route.php(55): Subscriber->__construct()
+#4 /home/hopejjiu/ameenwebkey.com.ng/mobile/login/index.php(24): require_once('/home/hopejjiu/...')
+#5 {main}
+  thrown in /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php on line 29
+[03-Jan-2023 00:22:58 Africa/Lagos] PHP Fatal error:  Uncaught PDOException: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO) in /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php:29
+Stack trace:
+#0 /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php(29): PDO->__construct()
+#1 /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php(23): Model->connectDb()
+#2 /home/hopejjiu/ameenwebkey.com.ng/core/Controllers/Subscriber.php(53): Model->__construct()
+#3 /home/hopejjiu/ameenwebkey.com.ng/mobile/home/includes/route.php(55): Subscriber->__construct()
+#4 /home/hopejjiu/ameenwebkey.com.ng/mobile/login/index.php(24): require_once('/home/hopejjiu/...')
+#5 {main}
+  thrown in /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php on line 29
+[03-Jan-2023 00:23:03 Africa/Lagos] PHP Fatal error:  Uncaught PDOException: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO) in /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php:29
+Stack trace:
+#0 /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php(29): PDO->__construct()
+#1 /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php(23): Model->connectDb()
+#2 /home/hopejjiu/ameenwebkey.com.ng/core/Controllers/Subscriber.php(53): Model->__construct()
+#3 /home/hopejjiu/ameenwebkey.com.ng/mobile/home/includes/route.php(55): Subscriber->__construct()
+#4 /home/hopejjiu/ameenwebkey.com.ng/mobile/login/index.php(24): require_once('/home/hopejjiu/...')
+#5 {main}
+  thrown in /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php on line 29
+[03-Jan-2023 00:23:24 Africa/Lagos] PHP Fatal error:  Uncaught PDOException: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO) in /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php:29
+Stack trace:
+#0 /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php(29): PDO->__construct()
+#1 /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php(23): Model->connectDb()
+#2 /home/hopejjiu/ameenwebkey.com.ng/core/Controllers/Subscriber.php(53): Model->__construct()
+#3 /home/hopejjiu/ameenwebkey.com.ng/mobile/home/includes/route.php(55): Subscriber->__construct()
+#4 /home/hopejjiu/ameenwebkey.com.ng/mobile/login/index.php(24): require_once('/home/hopejjiu/...')
+#5 {main}
+  thrown in /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php on line 29
+[03-Jan-2023 00:23:28 Africa/Lagos] PHP Fatal error:  Uncaught PDOException: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO) in /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php:29
+Stack trace:
+#0 /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php(29): PDO->__construct()
+#1 /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php(23): Model->connectDb()
+#2 /home/hopejjiu/ameenwebkey.com.ng/core/Controllers/Subscriber.php(53): Model->__construct()
+#3 /home/hopejjiu/ameenwebkey.com.ng/mobile/home/includes/route.php(55): Subscriber->__construct()
+#4 /home/hopejjiu/ameenwebkey.com.ng/mobile/login/index.php(24): require_once('/home/hopejjiu/...')
+#5 {main}
+  thrown in /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php on line 29
+[03-Jan-2023 00:23:41 Africa/Lagos] PHP Fatal error:  Uncaught PDOException: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO) in /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php:29
+Stack trace:
+#0 /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php(29): PDO->__construct()
+#1 /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php(23): Model->connectDb()
+#2 /home/hopejjiu/ameenwebkey.com.ng/core/Controllers/Subscriber.php(53): Model->__construct()
+#3 /home/hopejjiu/ameenwebkey.com.ng/mobile/home/includes/route.php(55): Subscriber->__construct()
+#4 /home/hopejjiu/ameenwebkey.com.ng/mobile/login/index.php(24): require_once('/home/hopejjiu/...')
+#5 {main}
+  thrown in /home/hopejjiu/ameenwebkey.com.ng/core/Models/Model.php on line 29
+[01-Jun-2023 00:20:36 Africa/Lagos] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'vtunaija_enimosubtopupmate1.sitesettings' doesn't exist in /home/vtunaija/enimosub.com.ng/core/Models/SubscriberModel.php:571
+Stack trace:
+#0 /home/vtunaija/enimosub.com.ng/core/Models/SubscriberModel.php(571): PDOStatement->execute()
+#1 /home/vtunaija/enimosub.com.ng/core/Controllers/Subscriber.php(495): SubscriberModel->getSiteSettings()
+#2 /home/vtunaija/enimosub.com.ng/mobile/home/includes/route.php(56): Subscriber->getSiteSettings()
+#3 /home/vtunaija/enimosub.com.ng/mobile/login/index.php(24): require_once('/home/vtunaija/...')
+#4 {main}
+  thrown in /home/vtunaija/enimosub.com.ng/core/Models/SubscriberModel.php on line 571
+[01-Jun-2023 00:20:55 Africa/Lagos] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'vtunaija_enimosubtopupmate1.sitesettings' doesn't exist in /home/vtunaija/enimosub.com.ng/core/Models/SubscriberModel.php:571
+Stack trace:
+#0 /home/vtunaija/enimosub.com.ng/core/Models/SubscriberModel.php(571): PDOStatement->execute()
+#1 /home/vtunaija/enimosub.com.ng/core/Controllers/Subscriber.php(495): SubscriberModel->getSiteSettings()
+#2 /home/vtunaija/enimosub.com.ng/mobile/home/includes/route.php(56): Subscriber->getSiteSettings()
+#3 /home/vtunaija/enimosub.com.ng/mobile/login/index.php(24): require_once('/home/vtunaija/...')
+#4 {main}
+  thrown in /home/vtunaija/enimosub.com.ng/core/Models/SubscriberModel.php on line 571
+[17-Jul-2023 21:31:30 Africa/Lagos] PHP Fatal error:  Uncaught PDOException: SQLSTATE[28000] [1045] Access denied for user 'vtunaija_enimosubtopupmate1'@'localhost' (using password: YES) in /home/dannvtuc/public_html/core/Models/Model.php:29
+Stack trace:
+#0 /home/dannvtuc/public_html/core/Models/Model.php(29): PDO->__construct('mysql:host=loca...', 'vtunaija_enimos...', 'vtunaija_enimos...')
+#1 /home/dannvtuc/public_html/core/Models/Model.php(23): Model->connectDb()
+#2 /home/dannvtuc/public_html/core/Controllers/Subscriber.php(53): Model->__construct()
+#3 /home/dannvtuc/public_html/mobile/home/includes/route.php(55): Subscriber->__construct()
+#4 /home/dannvtuc/public_html/mobile/login/index.php(24): require_once('/home/dannvtuc/...')
+#5 {main}
+  thrown in /home/dannvtuc/public_html/core/Models/Model.php on line 29
+[27-Jul-2023 23:42:43 Africa/Lagos] PHP Parse error:  syntax error, unexpected 'public' (T_PUBLIC), expecting end of file in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 282
+[27-Jul-2023 23:42:49 Africa/Lagos] PHP Parse error:  syntax error, unexpected 'public' (T_PUBLIC), expecting end of file in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 282
+[27-Jul-2023 23:43:21 Africa/Lagos] PHP Parse error:  syntax error, unexpected 'public' (T_PUBLIC), expecting end of file in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 282
+[28-Jul-2023 02:49:02 Africa/Lagos] PHP Parse error:  syntax error, unexpected ':', expecting ')' in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 247
+[28-Jul-2023 02:49:04 Africa/Lagos] PHP Parse error:  syntax error, unexpected ':', expecting ')' in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 247
+[28-Jul-2023 02:50:03 Africa/Lagos] PHP Parse error:  syntax error, unexpected ':', expecting ')' in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 247
+[28-Jul-2023 02:50:22 Africa/Lagos] PHP Parse error:  syntax error, unexpected ':', expecting ')' in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 247
+[28-Jul-2023 02:50:26 Africa/Lagos] PHP Parse error:  syntax error, unexpected ':', expecting ')' in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 247
+[28-Jul-2023 02:52:46 Africa/Lagos] PHP Parse error:  syntax error, unexpected ':', expecting ')' in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 246
+[28-Jul-2023 02:52:48 Africa/Lagos] PHP Parse error:  syntax error, unexpected ':', expecting ')' in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 246
+[28-Jul-2023 02:52:49 Africa/Lagos] PHP Parse error:  syntax error, unexpected ':', expecting ')' in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 246
+[28-Jul-2023 02:54:19 Africa/Lagos] PHP Parse error:  syntax error, unexpected ':', expecting ')' in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 246
+[28-Jul-2023 02:54:20 Africa/Lagos] PHP Parse error:  syntax error, unexpected ':', expecting ')' in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 246
+[28-Jul-2023 03:02:21 Africa/Lagos] PHP Fatal error:  Uncaught Error: Class 'Subscriber' not found in /home/dannvtuc/public_html/mobile/home/includes/route.php:55
+Stack trace:
+#0 /home/dannvtuc/public_html/mobile/login/index.php(24): require_once()
+#1 {main}
+  thrown in /home/dannvtuc/public_html/mobile/home/includes/route.php on line 55
+[28-Jul-2023 03:02:31 Africa/Lagos] PHP Parse error:  syntax error, unexpected ';', expecting ')' in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 248
+[28-Jul-2023 03:02:33 Africa/Lagos] PHP Parse error:  syntax error, unexpected ';', expecting ')' in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 248
+[28-Jul-2023 03:02:34 Africa/Lagos] PHP Parse error:  syntax error, unexpected ';', expecting ')' in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 248
+[28-Jul-2023 03:02:35 Africa/Lagos] PHP Parse error:  syntax error, unexpected ';', expecting ')' in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 248
+[28-Jul-2023 03:02:54 Africa/Lagos] PHP Parse error:  syntax error, unexpected ';', expecting ')' in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 248
+[28-Jul-2023 03:08:50 Africa/Lagos] PHP Parse error:  syntax error, unexpected 'Error' (T_STRING), expecting ')' in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 270
+[28-Jul-2023 03:08:53 Africa/Lagos] PHP Parse error:  syntax error, unexpected 'Error' (T_STRING), expecting ')' in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 270
+[28-Jul-2023 03:09:01 Africa/Lagos] PHP Parse error:  syntax error, unexpected 'Error' (T_STRING), expecting ')' in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 270
+[28-Jul-2023 03:14:07 Africa/Lagos] PHP Parse error:  syntax error, unexpected 'Error' (T_STRING), expecting ')' in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 270
+[28-Jul-2023 03:14:27 Africa/Lagos] PHP Parse error:  syntax error, unexpected 'Error' (T_STRING), expecting ')' in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 270
+[28-Jul-2023 03:48:45 Africa/Lagos] PHP Parse error:  syntax error, unexpected '=' in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 221
+[28-Jul-2023 03:48:47 Africa/Lagos] PHP Parse error:  syntax error, unexpected '=' in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 221
+[28-Jul-2023 03:53:07 Africa/Lagos] PHP Parse error:  syntax error, unexpected '=' in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 221
+[28-Jul-2023 03:53:09 Africa/Lagos] PHP Parse error:  syntax error, unexpected '=' in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 221
+[28-Jul-2023 04:01:01 Africa/Lagos] PHP Parse error:  syntax error, unexpected '=' in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 221
+[28-Jul-2023 04:01:03 Africa/Lagos] PHP Parse error:  syntax error, unexpected '=' in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 221
+[28-Jul-2023 04:01:09 Africa/Lagos] PHP Parse error:  syntax error, unexpected '=' in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 221
+[28-Jul-2023 04:01:10 Africa/Lagos] PHP Parse error:  syntax error, unexpected '=' in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 221
+[28-Jul-2023 04:01:10 Africa/Lagos] PHP Parse error:  syntax error, unexpected '=' in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 221
+[28-Jul-2023 04:01:11 Africa/Lagos] PHP Parse error:  syntax error, unexpected '=' in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 221
+[28-Jul-2023 04:01:11 Africa/Lagos] PHP Parse error:  syntax error, unexpected '=' in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 221
+[28-Jul-2023 04:07:29 Africa/Lagos] PHP Parse error:  syntax error, unexpected 'pin' (T_STRING), expecting ')' in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 233
+[28-Jul-2023 04:07:31 Africa/Lagos] PHP Parse error:  syntax error, unexpected 'pin' (T_STRING), expecting ')' in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 233
+[28-Jul-2023 04:17:08 Africa/Lagos] PHP Parse error:  syntax error, unexpected 'false' (T_STRING) in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 219
+[28-Jul-2023 04:17:10 Africa/Lagos] PHP Parse error:  syntax error, unexpected 'false' (T_STRING) in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 219
+[28-Jul-2023 04:20:26 Africa/Lagos] PHP Parse error:  syntax error, unexpected 'false' (T_STRING) in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 219
+[28-Jul-2023 04:20:28 Africa/Lagos] PHP Parse error:  syntax error, unexpected 'false' (T_STRING) in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 219
+[28-Jul-2023 04:23:49 Africa/Lagos] PHP Parse error:  syntax error, unexpected 'Error' (T_STRING), expecting ')' in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 270
+[28-Jul-2023 04:23:50 Africa/Lagos] PHP Parse error:  syntax error, unexpected 'Error' (T_STRING), expecting ')' in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 270
+[28-Jul-2023 04:23:51 Africa/Lagos] PHP Parse error:  syntax error, unexpected 'Error' (T_STRING), expecting ')' in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 270
+[28-Jul-2023 04:23:51 Africa/Lagos] PHP Parse error:  syntax error, unexpected 'Error' (T_STRING), expecting ')' in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 270
+[28-Jul-2023 04:23:52 Africa/Lagos] PHP Parse error:  syntax error, unexpected 'Error' (T_STRING), expecting ')' in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 270
+[28-Jul-2023 04:23:52 Africa/Lagos] PHP Parse error:  syntax error, unexpected 'Error' (T_STRING), expecting ')' in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 270
+[28-Jul-2023 04:51:17 Africa/Lagos] PHP Fatal error:  Uncaught Error: Class 'Subscriber' not found in /home/dannvtuc/public_html/mobile/home/includes/route.php:55
+Stack trace:
+#0 /home/dannvtuc/public_html/mobile/login/index.php(24): require_once()
+#1 {main}
+  thrown in /home/dannvtuc/public_html/mobile/home/includes/route.php on line 55
+[28-Jul-2023 04:51:31 Africa/Lagos] PHP Parse error:  syntax error, unexpected 'Error' (T_STRING), expecting ')' in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 270
+[28-Jul-2023 04:51:32 Africa/Lagos] PHP Parse error:  syntax error, unexpected 'Error' (T_STRING), expecting ')' in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 270
+[28-Jul-2023 04:51:33 Africa/Lagos] PHP Parse error:  syntax error, unexpected 'Error' (T_STRING), expecting ')' in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 270
+[28-Jul-2023 04:51:33 Africa/Lagos] PHP Parse error:  syntax error, unexpected 'Error' (T_STRING), expecting ')' in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 270
+[28-Jul-2023 04:51:34 Africa/Lagos] PHP Parse error:  syntax error, unexpected 'Error' (T_STRING), expecting ')' in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 270
+[28-Jul-2023 04:51:55 Africa/Lagos] PHP Parse error:  syntax error, unexpected 'Error' (T_STRING), expecting ')' in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 270
+[28-Jul-2023 04:53:06 Africa/Lagos] PHP Parse error:  syntax error, unexpected 'Error' (T_STRING), expecting ')' in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 270
+[28-Jul-2023 04:53:07 Africa/Lagos] PHP Parse error:  syntax error, unexpected 'Error' (T_STRING), expecting ')' in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 270
+[28-Jul-2023 04:53:07 Africa/Lagos] PHP Parse error:  syntax error, unexpected 'Error' (T_STRING), expecting ')' in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 270
+[28-Jul-2023 04:53:17 Africa/Lagos] PHP Parse error:  syntax error, unexpected 'Error' (T_STRING), expecting ')' in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 270
+[28-Jul-2023 04:53:24 Africa/Lagos] PHP Parse error:  syntax error, unexpected 'Error' (T_STRING), expecting ')' in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 270
+[28-Jul-2023 04:53:28 Africa/Lagos] PHP Parse error:  syntax error, unexpected 'Error' (T_STRING), expecting ')' in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 270
+[28-Jul-2023 04:54:52 Africa/Lagos] PHP Parse error:  syntax error, unexpected 'Error' (T_STRING), expecting ')' in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 270
+[28-Jul-2023 04:54:53 Africa/Lagos] PHP Parse error:  syntax error, unexpected 'Error' (T_STRING), expecting ')' in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 270
+[28-Jul-2023 04:54:53 Africa/Lagos] PHP Parse error:  syntax error, unexpected 'Error' (T_STRING), expecting ')' in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 270
+[28-Jul-2023 04:54:54 Africa/Lagos] PHP Parse error:  syntax error, unexpected 'Error' (T_STRING), expecting ')' in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 270
+[28-Jul-2023 08:21:23 Africa/Lagos] PHP Parse error:  syntax error, unexpected 'public' (T_PUBLIC) in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 266
+[28-Jul-2023 08:40:00 Africa/Lagos] PHP Parse error:  syntax error, unexpected 'public' (T_PUBLIC) in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 263
+[28-Jul-2023 08:40:07 Africa/Lagos] PHP Parse error:  syntax error, unexpected 'public' (T_PUBLIC) in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 263
+[28-Jul-2023 08:40:07 Africa/Lagos] PHP Parse error:  syntax error, unexpected 'public' (T_PUBLIC) in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 263
+[28-Jul-2023 08:40:14 Africa/Lagos] PHP Parse error:  syntax error, unexpected 'public' (T_PUBLIC) in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 263
+[28-Jul-2023 08:40:16 Africa/Lagos] PHP Parse error:  syntax error, unexpected 'public' (T_PUBLIC) in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 263
+[28-Jul-2023 08:40:17 Africa/Lagos] PHP Parse error:  syntax error, unexpected 'public' (T_PUBLIC) in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 263
+[28-Jul-2023 08:40:56 Africa/Lagos] PHP Parse error:  syntax error, unexpected 'public' (T_PUBLIC) in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 263
+[28-Jul-2023 08:44:14 Africa/Lagos] PHP Parse error:  syntax error, unexpected 'public' (T_PUBLIC) in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 263
+[28-Jul-2023 08:44:15 Africa/Lagos] PHP Parse error:  syntax error, unexpected 'public' (T_PUBLIC) in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 263
+[28-Jul-2023 08:45:32 Africa/Lagos] PHP Parse error:  syntax error, unexpected 'public' (T_PUBLIC) in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 263
+[28-Jul-2023 08:46:07 Africa/Lagos] PHP Parse error:  syntax error, unexpected 'public' (T_PUBLIC) in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 263
+[28-Jul-2023 08:46:10 Africa/Lagos] PHP Parse error:  syntax error, unexpected 'public' (T_PUBLIC) in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 263
+[28-Jul-2023 09:03:38 Africa/Lagos] PHP Parse error:  syntax error, unexpected ':', expecting ')' in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 240
+[28-Jul-2023 09:03:41 Africa/Lagos] PHP Parse error:  syntax error, unexpected ':', expecting ')' in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 240
+[28-Jul-2023 09:05:13 Africa/Lagos] PHP Parse error:  syntax error, unexpected ':', expecting ')' in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 240
+[28-Jul-2023 09:30:35 Africa/Lagos] PHP Fatal error:  Uncaught Error: Class 'Subscriber' not found in /home/dannvtuc/public_html/mobile/home/includes/route.php:55
+Stack trace:
+#0 /home/dannvtuc/public_html/mobile/login/index.php(24): require_once()
+#1 {main}
+  thrown in /home/dannvtuc/public_html/mobile/home/includes/route.php on line 55
+[28-Jul-2023 20:52:28 Africa/Lagos] PHP Fatal error:  Uncaught Error: Class 'Subscriber' not found in /home/dannvtuc/public_html/mobile/home/includes/route.php:55
+Stack trace:
+#0 /home/dannvtuc/public_html/mobile/login/index.php(24): require_once()
+#1 {main}
+  thrown in /home/dannvtuc/public_html/mobile/home/includes/route.php on line 55

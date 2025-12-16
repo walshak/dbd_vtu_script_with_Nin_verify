@@ -1,0 +1,210 @@
+
+
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
+<title>Login</title>
+<link rel="stylesheet" type="text/css" href="../assets/styles/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="../assets/styles/style.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="../assets/fonts/css/fontawesome-all.min.css">    
+<link rel="manifest" href="../assets/scripts/_manifest.json" data-pwa-version="set_in_manifest_and_pwa_js">
+<link rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co/bsChJKX/20230223-234140.png
+">
+<link rel="icon" type="image/png" href="https://i.ibb.co/bsChJKX/20230223-234140.png
+" />
+<style>
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background-image: url("");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-color: #5B2DD9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-container {
+            width: 300px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .form-control {
+            background-color: #ffffff !important;
+            border-radius: 5rem !important;
+            padding: 25px !important;
+            padding-left: 50px !important;
+        }
+
+        .form-control:focus {
+            background-color: #f2f2f2 !important;
+        }
+
+        .input-style i {
+            padding-left: 20px !important;
+        }
+
+        .btn {
+            border-radius: 5rem !important;
+        }
+
+        .color-highlight {
+            color: #5B2DD9 !important;
+        }
+
+        .gradient-highlight {
+            background: linear-gradient(#5B2DD9, #5B2DD9) !important;
+        }
+    </style>
+</head>
+<body class="theme-light">
+    <div id="page">
+        <div class="page-content mt-2">
+            <div class="text-center">
+                <div class="pb-2 pt-4">
+                    <img src="https://i.ibb.co/jT0gG2D/20230731-170856.png" class="img-fluid" width="250" />
+                </div>
+            </div>
+            <div class="login-container">
+                <div class="content ">
+                    <div class="text-center">
+                        <h1 class="font-30 mb-3">LOGIN</h1>
+                        <h2 class="mb-3 color-highlight" id="accountname"> You are Welcome Back</h2>
+                    </div>
+                    <form id="login-form" method="post">
+                        <div class="px-2">
+                            <div class="input-style no-borders has-icon mb-4" id="phonediv">
+                                <i class="fa fa-phone"></i>
+                                <input type="number" class="form-control" id="phone" name="phone" placeholder="Phone Number" required readonly />
+                                <label for="phone" class="color-highlight">Phone</label>
+                                <em>(required)</em>
+                            </div>
+                            <div class="input-style no-borders has-icon mb-4">
+                                <i class="fa fa-lock"></i>
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Password" required readonly />
+                                <label for="password" class="color-highlight">Password</label>
+                                <em>(required)</em>
+                            </div>
+
+                            <button type="submit" id="submit-btn" style="width: 100%;" class="btn btn-full btn-l font-600 font-15 gradient-highlight mt-4">
+                                Login
+                            </button>
+
+                            <div class="row pt-5 mb-3">
+                                <div class="col-12 text-center font-15">
+                                    <a class="text-dark" href="../recovery/">Forget Password? Recover It</a>
+                                </div>
+                                <div class="col-12 text-center font-15 mt-2">
+                                    <a class="text-dark" href="../register/">New User? Create Account</a>
+                                </div>
+                                <div class="col-12 text-center font-15 mt-3">
+                            <a class="text-white"<b>Licensed By Jossyfeydata</b></a>
+                        </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+ 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="../assets/scripts/bootstrap.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script type="text/javascript" src="../assets/scripts/custom.js"></script>
+
+<script type="text/javascript">
+$("document").ready(function(){
+
+    //Save Phone Number
+    checkIfPhoneNumberSaved();
+
+    //Enable Form Input
+    $("#phone").click(function(){$(this).removeAttr("readonly"); });
+    $("#password").click(function(){$(this).removeAttr("readonly"); });
+
+    //Registration Form
+    $('#login-form').submit(function(e){
+            e.preventDefault()
+            $('#submit-btn').removeClass("gradient-highlight");
+            $('#submit-btn').addClass("btn-secondary");
+            $('#submit-btn').html('<i class="fa fa-spinner fa-spin" aria-hidden="true"></i> Processing ...');
+            
+            $.ajax({
+                url:'../home/includes/route.php?login',
+                data: new FormData($(this)[0]),
+                cache: false,
+                contentType: false,
+                processData: false,
+                method: 'POST',
+                type: 'POST',
+                success:function(resp){
+                    console.log(resp);
+                    if(resp == 0){
+                        swal('Alert!!',"Login Succesfull","success");
+                        setTimeout(function(){
+                            location.replace('../home/')
+                        },1000)
+                    }else if(resp == 1){
+                        swal('Alert!!',"Incorrect Login Details, Please Try Again.","error");
+                    }
+                    else if(resp == 2){
+                        swal('Alert!!',"Sorry, Your Account Have Been Blocked By Admin. Please Contact Admin For Futher Support.","error");
+                    }
+                   else{
+                        swal('Alert!!',"Unknow Error, Please Contact Admin","error");
+                   }
+
+                   $('#submit-btn').removeClass("btn-secondary");
+                   $('#submit-btn').addClass("gradient-highlight");
+                   $('#submit-btn').html("Login");
+
+                }
+            })
+        });
+
+});
+
+    function checkIfPhoneNumberSaved() {
+        $phone = atob(unescape(getCookie("loginPhone")));
+        $name = atob(unescape(getCookie("loginName")));
+        if($phone != null && $phone != ""){
+            //let msg='<p class="mb-3"><a href="javascript:showNumber();"><b class="text-danger">Login With Another Account?</b></a></p>';
+            //$("#accountname").after(msg);
+            $("#accountname").append(" "+$name+"!");
+            //$("#phonediv").hide();
+            $("#phone").val($phone);
+        }
+    }
+
+    function showNumber(){
+        $("#phonediv").show();
+    }
+    
+    function getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for(var i=0; i<ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0)==' ') c = c.substring(1);
+            if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
+        }
+        return "";
+    }
+
+</script>
+
+</body>

@@ -1,0 +1,723 @@
+{
+	"info": {
+		"_postman_id": "f71c4ab4-3b51-486d-a011-8efc604ea10c",
+		"name": "UZOBESTGSM API DOCUMENTATION",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24040610"
+	},
+	"item": [
+		{
+			"name": "Buy Data",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "Token 66f2e5c39ac8640f13cd888f161385b12f7e5e92",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Authorization",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"network\": 1, //query \"/api/get/network/\"  to get all available networks, and their ID\r\n    \"mobile_number\": \"09037346247\",\r\n    \"plan\": 212, //query \"/api/network/ Plans\" endpoint to get all available data plans\r\n    \"Ported_number\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://uzobestgsm.com/api/data/",
+					"protocol": "https",
+					"host": [
+						"uzobestgsm",
+						"com"
+					],
+					"path": [
+						"api",
+						"data",
+						""
+					],
+					"query": [
+						{
+							"key": "network",
+							"value": "networ_id",
+							"description": "query \"Get Network(s)\" to get all available networks, and their ID",
+							"disabled": true
+						},
+						{
+							"key": "mobile_number",
+							"value": "080*******",
+							"description": "phone number to purchase for",
+							"disabled": true
+						},
+						{
+							"key": "plan",
+							"value": "plan_id",
+							"description": "query \"Get DATA Plans\" endpoint to get all available data plans",
+							"disabled": true
+						},
+						{
+							"key": "Ported_number",
+							"value": "true",
+							"description": "true OR false",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Airtime To Cash",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "Token 66f2e5c39ac8640f13cd888f161385b12f7e5e92",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Authorization",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"network\":network, //query \"/api/get/network/\"  to get all available networks, and their ID\r\n    \"mobile_number\": mobile_number,\r\n    \"amount\": amount\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://uzobestgsm.com/api/Airtime_funding/",
+					"protocol": "https",
+					"host": [
+						"uzobestgsm",
+						"com"
+					],
+					"path": [
+						"api",
+						"Airtime_funding",
+						""
+					],
+					"query": [
+						{
+							"key": "network",
+							"value": "network_id",
+							"description": "query \"Get Network(s)\" to get all available networks, and their ID",
+							"disabled": true
+						},
+						{
+							"key": "mobile_number",
+							"value": "080*******",
+							"description": "phone number to purchase for",
+							"disabled": true
+						},
+						{
+							"key": "amount",
+							"value": "100",
+							"description": "amount",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Buy Airtime Topup And Get All Airtime Transaction",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "Token 66f2e5c39ac8640f13cd888f161385b12f7e5e92",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Authorization",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"network\": network_id, // query \"/api/get/network/\"  to get all available networks, and their ID\r\n    \"amount\":amount,\r\n    \"mobile_number\": phone,\r\n    \"Ported_number\": true,\r\n    \"airtime_type\": \"VTU\" //VTU or awuf4U or Share and Sell\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://uzobestgsm.com/api/topup/",
+					"protocol": "https",
+					"host": [
+						"uzobestgsm",
+						"com"
+					],
+					"path": [
+						"api",
+						"topup",
+						""
+					],
+					"query": [
+						{
+							"key": "network",
+							"value": "network_id",
+							"description": "query \"Get Network(s)\" to get all available networks, and their ID",
+							"disabled": true
+						},
+						{
+							"key": "amount",
+							"value": "100",
+							"description": "amount to buy",
+							"disabled": true
+						},
+						{
+							"key": "mobile_number",
+							"value": "080****",
+							"description": "phone number to purchase for",
+							"disabled": true
+						},
+						{
+							"key": "Ported_number",
+							"value": "true",
+							"description": "true OR false",
+							"disabled": true
+						},
+						{
+							"key": "airtime_type",
+							"value": "VTU",
+							"description": "VTU / awuf4U / Share and Sell",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Buy CableSub And Get All Transactions",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "Token 66f2e5c39ac8640f13cd888f161385b12f7e5e92",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Authorization",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"cablename\": cablename id,\r\n    \"cableplan\":cableplan id,\r\n    \"smart_card_number\": iuc\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://uzobestgsm.com/api/cablesub/",
+					"protocol": "https",
+					"host": [
+						"uzobestgsm",
+						"com"
+					],
+					"path": [
+						"api",
+						"cablesub",
+						""
+					],
+					"query": [
+						{
+							"key": "cablename",
+							"value": "cablename",
+							"description": "Check documentation for cablename",
+							"disabled": true
+						},
+						{
+							"key": "cableplan",
+							"value": "cable plan id",
+							"description": "check documentation for id",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Buy Electricity Bill Payment And Get Transaction",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "Token 66f2e5c39ac8640f13cd888f161385b12f7e5e92",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Authorization",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"disco_name\": disco,\r\n\"amount\" : amount to pay,\r\n\"meter_number\": meter number, \r\n\"MeterType\": meter type id (PREPAID:1,POSTAID:2) \r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://uzobestgsm.com/api/billpayment/",
+					"protocol": "https",
+					"host": [
+						"uzobestgsm",
+						"com"
+					],
+					"path": [
+						"api",
+						"billpayment",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Data Plans",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "Token 66f2e5c39ac8640f13cd888f161385b12f7e5e92",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Authorization",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://uzobestgsm.com/api/network/",
+					"protocol": "https",
+					"host": [
+						"uzobestgsm",
+						"com"
+					],
+					"path": [
+						"api",
+						"network",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Data Transaction",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "Token 66f2e5c39ac8640f13cd888f161385b12f7e5e92",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Authorization",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://uzobestgsm.com/api/data/",
+					"protocol": "https",
+					"host": [
+						"uzobestgsm",
+						"com"
+					],
+					"path": [
+						"api",
+						"data",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query Data Transaction",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "Token 66f2e5c39ac8640f13cd888f161385b12f7e5e92",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Authorization",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://uzobestgsm.com/api/data/00",
+					"protocol": "https",
+					"host": [
+						"uzobestgsm",
+						"com"
+					],
+					"path": [
+						"api",
+						"data",
+						"00"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query Airtime Transaction",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "Token 66f2e5c39ac8640f13cd888f161385b12f7e5e92",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Authorization",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://uzobestgsm.com/api/data/1",
+					"protocol": "https",
+					"host": [
+						"uzobestgsm",
+						"com"
+					],
+					"path": [
+						"api",
+						"data",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Validate IUC Number",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "Token 66f2e5c39ac8640f13cd888f161385b12f7e5e92",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Authorization",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://uzobestgsm.com/api/validateiuc?smart_card_number=iuc&cablename=id",
+					"protocol": "https",
+					"host": [
+						"uzobestgsm",
+						"com"
+					],
+					"path": [
+						"api",
+						"validateiuc"
+					],
+					"query": [
+						{
+							"key": "smart_card_number",
+							"value": "iuc"
+						},
+						{
+							"key": "cablename",
+							"value": "id"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Validate Meter",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "Token 66f2e5c39ac8640f13cd888f161385b12f7e5e92",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Authorization",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://uzobestgsm.com/api/validatemeter?meternumber=meter& &disconame=id& &mtype=metertype",
+					"protocol": "https",
+					"host": [
+						"uzobestgsm",
+						"com"
+					],
+					"path": [
+						"api",
+						"validatemeter"
+					],
+					"query": [
+						{
+							"key": "meternumber",
+							"value": "meter"
+						},
+						{
+							"key": " ",
+							"value": ""
+						},
+						{
+							"key": "disconame",
+							"value": "id"
+						},
+						{
+							"key": " ",
+							"value": ""
+						},
+						{
+							"key": "mtype",
+							"value": "metertype"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check User Details",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "Token 66f2e5c39ac8640f13cd888f161385b12f7e5e92",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Authorization",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://uzobestgsm.com/api/user/",
+					"protocol": "https",
+					"host": [
+						"uzobestgsm",
+						"com"
+					],
+					"path": [
+						"api",
+						"user",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query Bill Payment",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "Token 66f2e5c39ac8640f13cd888f161385b12f7e5e92",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Authorization",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://uzobestgsm.com/api/billpayment/01",
+					"protocol": "https",
+					"host": [
+						"uzobestgsm",
+						"com"
+					],
+					"path": [
+						"api",
+						"billpayment",
+						"01"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query Cablesub",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "Token 66f2e5c39ac8640f13cd888f161385b12f7e5e92",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Authorization",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://uzobestgsm.com/api/cablesub/2",
+					"protocol": "https",
+					"host": [
+						"uzobestgsm",
+						"com"
+					],
+					"path": [
+						"api",
+						"cablesub",
+						"2"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": " 66f2e5c39ac8640f13cd888f161385b12f7e5e92",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "Token",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

@@ -1,0 +1,17 @@
+[03-Aug-2023 10:34:37 UTC] PHP Notice:  Undefined variable: data in /home/dannvtuc/public_html/mobile/cardapi.php on line 13
+[03-Aug-2023 10:34:37 UTC] PHP Notice:  Trying to get property 'transref' of non-object in /home/dannvtuc/public_html/mobile/cardapi.php on line 13
+[03-Aug-2023 10:34:37 UTC] PHP Notice:  Undefined variable: data in /home/dannvtuc/public_html/mobile/cardapi.php on line 17
+[03-Aug-2023 10:34:37 UTC] PHP Notice:  Trying to get property 'servicename' of non-object in /home/dannvtuc/public_html/mobile/cardapi.php on line 17
+[03-Aug-2023 10:34:37 UTC] PHP Notice:  Undefined variable: data in /home/dannvtuc/public_html/mobile/cardapi.php on line 21
+[03-Aug-2023 10:34:37 UTC] PHP Notice:  Trying to get property 'servicedesc' of non-object in /home/dannvtuc/public_html/mobile/cardapi.php on line 21
+[03-Aug-2023 10:34:37 UTC] PHP Notice:  Undefined variable: data in /home/dannvtuc/public_html/mobile/cardapi.php on line 26
+[03-Aug-2023 10:34:37 UTC] PHP Notice:  Trying to get property 'amount' of non-object in /home/dannvtuc/public_html/mobile/cardapi.php on line 26
+[03-Aug-2023 10:34:37 UTC] PHP Notice:  Undefined variable: data in /home/dannvtuc/public_html/mobile/cardapi.php on line 30
+[03-Aug-2023 10:34:37 UTC] PHP Notice:  Trying to get property 'oldbal' of non-object in /home/dannvtuc/public_html/mobile/cardapi.php on line 30
+[03-Aug-2023 10:34:37 UTC] PHP Notice:  Undefined variable: data in /home/dannvtuc/public_html/mobile/cardapi.php on line 34
+[03-Aug-2023 10:34:37 UTC] PHP Notice:  Trying to get property 'newbal' of non-object in /home/dannvtuc/public_html/mobile/cardapi.php on line 34
+[03-Aug-2023 10:34:37 UTC] PHP Notice:  Undefined variable: controller in /home/dannvtuc/public_html/mobile/cardapi.php on line 39
+[03-Aug-2023 10:34:37 UTC] PHP Fatal error:  Uncaught Error: Call to a member function formatStatus() on null in /home/dannvtuc/public_html/mobile/cardapi.php:39
+Stack trace:
+#0 {main}
+  thrown in /home/dannvtuc/public_html/mobile/cardapi.php on line 39

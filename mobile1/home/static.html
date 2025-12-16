@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VTU Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #f5f5f5; }
+        .card { background: white; padding: 20px; border-radius: 8px; margin: 10px 0; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .header { background: #007bff; color: white; padding: 15px; text-align: center; margin: -20px -20px 20px -20px; }
+        .service-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin: 20px 0; }
+        .service-item { background: #007bff; color: white; padding: 20px; text-align: center; border-radius: 8px; text-decoration: none; }
+        .service-item:hover { background: #0056b3; }
+        .balance { background: linear-gradient(45deg, #007bff, #0056b3); color: white; text-align: center; padding: 30px; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="header">
+            <h1><i class="fas fa-mobile-alt"></i> VTU Platform</h1>
+        </div>
+        
+        <h2>Welcome, User!</h2>
+        <p>Your VTU Dashboard</p>
+        
+        <div class="card balance">
+            <h3>Wallet Balance</h3>
+            <h1>₦0.00</h1>
+            <button style="background: rgba(255,255,255,0.2); color: white; border: 1px solid white; padding: 10px 20px; border-radius: 5px;">
+                <i class="fas fa-plus"></i> Fund Wallet
+            </button>
+        </div>
+        
+        <h3>Quick Services</h3>
+        <div class="service-grid">
+            <a href="buy-airtime" class="service-item">
+                <i class="fas fa-phone fa-2x"></i><br><br>
+                Buy Airtime
+            </a>
+            <a href="buy-data" class="service-item">
+                <i class="fas fa-wifi fa-2x"></i><br><br>
+                Buy Data
+            </a>
+            <a href="cable-tv" class="service-item">
+                <i class="fas fa-tv fa-2x"></i><br><br>
+                Cable TV
+            </a>
+            <a href="electricity" class="service-item">
+                <i class="fas fa-bolt fa-2x"></i><br><br>
+                Electricity
+            </a>
+        </div>
+        
+        <h3>More Services</h3>
+        <div style="list-style: none; padding: 0;">
+            <a href="recharge-pin" style="display: block; padding: 10px; border-bottom: 1px solid #eee; text-decoration: none; color: #333;">
+                <i class="fas fa-credit-card" style="color: #007bff; margin-right: 10px;"></i>
+                Recharge Pins
+                <i class="fas fa-chevron-right" style="float: right; color: #ccc;"></i>
+            </a>
+            <a href="buy-data-pin" style="display: block; padding: 10px; border-bottom: 1px solid #eee; text-decoration: none; color: #333;">
+                <i class="fas fa-sim-card" style="color: #28a745; margin-right: 10px;"></i>
+                Data Pins
+                <i class="fas fa-chevron-right" style="float: right; color: #ccc;"></i>
+            </a>
+            <a href="exam-pins" style="display: block; padding: 10px; border-bottom: 1px solid #eee; text-decoration: none; color: #333;">
+                <i class="fas fa-graduation-cap" style="color: #dc3545; margin-right: 10px;"></i>
+                Exam Pins
+                <i class="fas fa-chevron-right" style="float: right; color: #ccc;"></i>
+            </a>
+            <a href="transfer" style="display: block; padding: 10px; border-bottom: 1px solid #eee; text-decoration: none; color: #333;">
+                <i class="fas fa-exchange-alt" style="color: #ffc107; margin-right: 10px;"></i>
+                Transfer Money
+                <i class="fas fa-chevron-right" style="float: right; color: #ccc;"></i>
+            </a>
+        </div>
+        
+        <h3>Recent Transactions</h3>
+        <p style="text-align: center; color: #666; padding: 20px;">No recent transactions</p>
+    </div>
+    
+    <!-- Footer -->
+    <div style="position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 1px solid #ddd; display: flex; justify-content: space-around; padding: 10px;">
+        <a href="index" style="text-decoration: none; color: #007bff; text-align: center;">
+            <i class="fas fa-home"></i><br><small>Home</small>
+        </a>
+        <a href="fund-wallet" style="text-decoration: none; color: #666; text-align: center;">
+            <i class="fas fa-wallet"></i><br><small>Wallet</small>
+        </a>
+        <a href="transactions" style="text-decoration: none; color: #666; text-align: center;">
+            <i class="fas fa-history"></i><br><small>History</small>
+        </a>
+        <a href="account" style="text-decoration: none; color: #666; text-align: center;">
+            <i class="fas fa-user"></i><br><small>Account</small>
+        </a>
+    </div>
+    
+    <div style="height: 80px;"></div> <!-- Space for fixed footer -->
+</body>
+</html>

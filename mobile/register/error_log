@@ -1,0 +1,36 @@
+[03-Dec-2023 07:17:49 Africa/Lagos] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'dbdconce_apps'@'localhost' (using password: YES) in /home/dbdconce/apps.dbdconcepts.com.ng/core/Models/Model.php:29
+Stack trace:
+#0 /home/dbdconce/apps.dbdconcepts.com.ng/core/Models/Model.php(29): PDO->__construct('mysql:host=loca...', 'dbdconce_apps', 'password')
+#1 /home/dbdconce/apps.dbdconcepts.com.ng/core/Models/Model.php(23): Model->connectDb()
+#2 /home/dbdconce/apps.dbdconcepts.com.ng/core/Controllers/Subscriber.php(53): Model->__construct()
+#3 /home/dbdconce/apps.dbdconcepts.com.ng/mobile/home/includes/route.php(55): Subscriber->__construct()
+#4 /home/dbdconce/apps.dbdconcepts.com.ng/mobile/register/index.php(24): require_once('/home/dbdconce/...')
+#5 {main}
+  thrown in /home/dbdconce/apps.dbdconcepts.com.ng/core/Models/Model.php on line 29
+[03-Dec-2023 07:17:53 Africa/Lagos] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'dbdconce_apps'@'localhost' (using password: YES) in /home/dbdconce/apps.dbdconcepts.com.ng/core/Models/Model.php:29
+Stack trace:
+#0 /home/dbdconce/apps.dbdconcepts.com.ng/core/Models/Model.php(29): PDO->__construct('mysql:host=loca...', 'dbdconce_apps', 'password')
+#1 /home/dbdconce/apps.dbdconcepts.com.ng/core/Models/Model.php(23): Model->connectDb()
+#2 /home/dbdconce/apps.dbdconcepts.com.ng/core/Controllers/Subscriber.php(53): Model->__construct()
+#3 /home/dbdconce/apps.dbdconcepts.com.ng/mobile/home/includes/route.php(55): Subscriber->__construct()
+#4 /home/dbdconce/apps.dbdconcepts.com.ng/mobile/register/index.php(24): require_once('/home/dbdconce/...')
+#5 {main}
+  thrown in /home/dbdconce/apps.dbdconcepts.com.ng/core/Models/Model.php on line 29
+[03-Dec-2023 07:17:55 Africa/Lagos] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'dbdconce_apps'@'localhost' (using password: YES) in /home/dbdconce/apps.dbdconcepts.com.ng/core/Models/Model.php:29
+Stack trace:
+#0 /home/dbdconce/apps.dbdconcepts.com.ng/core/Models/Model.php(29): PDO->__construct('mysql:host=loca...', 'dbdconce_apps', 'password')
+#1 /home/dbdconce/apps.dbdconcepts.com.ng/core/Models/Model.php(23): Model->connectDb()
+#2 /home/dbdconce/apps.dbdconcepts.com.ng/core/Controllers/Subscriber.php(53): Model->__construct()
+#3 /home/dbdconce/apps.dbdconcepts.com.ng/mobile/home/includes/route.php(55): Subscriber->__construct()
+#4 /home/dbdconce/apps.dbdconcepts.com.ng/mobile/register/index.php(24): require_once('/home/dbdconce/...')
+#5 {main}
+  thrown in /home/dbdconce/apps.dbdconcepts.com.ng/core/Models/Model.php on line 29
+[03-Dec-2023 07:17:55 Africa/Lagos] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'dbdconce_apps'@'localhost' (using password: YES) in /home/dbdconce/apps.dbdconcepts.com.ng/core/Models/Model.php:29
+Stack trace:
+#0 /home/dbdconce/apps.dbdconcepts.com.ng/core/Models/Model.php(29): PDO->__construct('mysql:host=loca...', 'dbdconce_apps', 'password')
+#1 /home/dbdconce/apps.dbdconcepts.com.ng/core/Models/Model.php(23): Model->connectDb()
+#2 /home/dbdconce/apps.dbdconcepts.com.ng/core/Controllers/Subscriber.php(53): Model->__construct()
+#3 /home/dbdconce/apps.dbdconcepts.com.ng/mobile/home/includes/route.php(55): Subscriber->__construct()
+#4 /home/dbdconce/apps.dbdconcepts.com.ng/mobile/register/index.php(24): require_once('/home/dbdconce/...')
+#5 {main}
+  thrown in /home/dbdconce/apps.dbdconcepts.com.ng/core/Models/Model.php on line 29

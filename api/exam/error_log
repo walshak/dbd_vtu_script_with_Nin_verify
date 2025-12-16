@@ -1,0 +1,6 @@
+[14-Aug-2023 12:24:23 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dharehx/jossyfeydataservice.com.ng/core/Controllers/Exam.php on line 68
+[14-Aug-2023 12:24:23 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$status in /home/dharehx/jossyfeydataservice.com.ng/core/Controllers/Exam.php on line 68
+[14-Aug-2023 12:24:23 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$msg in /home/dharehx/jossyfeydataservice.com.ng/core/Controllers/Exam.php on line 78
+[14-Aug-2023 12:29:54 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$Status in /home/dharehx/jossyfeydataservice.com.ng/core/Controllers/Exam.php on line 68
+[14-Aug-2023 12:29:54 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$status in /home/dharehx/jossyfeydataservice.com.ng/core/Controllers/Exam.php on line 68
+[14-Aug-2023 12:29:54 Africa/Lagos] PHP Notice:  Undefined property: stdClass::$msg in /home/dharehx/jossyfeydataservice.com.ng/core/Controllers/Exam.php on line 78

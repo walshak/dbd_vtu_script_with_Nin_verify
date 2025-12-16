@@ -1,0 +1,649 @@
+@extends('layouts.user-layout')
+
+@section('title', 'Electricity Bill Payment')
+
+@section('content')
+<div class="min-h-screen bg-gradient-to-br from-gray-50 to-orange-50 py-8">
+    <div class="container mx-auto px-4">
+        <!-- Enhanced Header -->
+        <div class="mb-8">
+            <div class="bg-gradient-to-r from-yellow-500 via-orange-600 to-red-700 rounded-2xl p-8 text-white relative overflow-hidden">
+                <!-- Background Pattern -->
+                <div class="absolute inset-0 opacity-10">
+                    <div class="absolute -top-6 -right-6 w-40 h-40 bg-white rounded-full"></div>
+                    <div class="absolute -bottom-8 -left-8 w-32 h-32 bg-white rounded-full"></div>
+                    <div class="absolute top-1/3 left-1/3 w-20 h-20 bg-white rounded-full"></div>
+                </div>
+
+                <div class="relative z-10">
+                    <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center">
+                        <div>
+                            <h1 class="text-3xl lg:text-4xl font-bold mb-3 flex items-center">
+                                <div class="bg-white bg-opacity-20 p-3 rounded-xl mr-4">
+                                    <i class="fas fa-bolt text-2xl"></i>
+                                </div>
+                                Electricity Bill Payment
+                            </h1>
+                            <p class="text-yellow-100 text-lg mb-4">Purchase electricity tokens for all major Nigerian DISCOs</p>
+                            <div class="flex flex-wrap gap-4 text-sm">
+                                <div class="flex items-center bg-white bg-opacity-15 rounded-full px-3 py-1">
+                                    <i class="fas fa-zap text-yellow-300 mr-2"></i>Instant Token
+                                </div>
+                                <div class="flex items-center bg-white bg-opacity-15 rounded-full px-3 py-1">
+                                    <i class="fas fa-shield-alt text-green-300 mr-2"></i>All DISCOs
+                                </div>
+                                <div class="flex items-center bg-white bg-opacity-15 rounded-full px-3 py-1">
+                                    <i class="fas fa-clock text-blue-300 mr-2"></i>24/7 Available
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-6 lg:mt-0">
+                            <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-xl px-6 py-4 border border-white border-opacity-30">
+                                <div class="text-center">
+                                    <div class="text-sm text-yellow-100 mb-1">Wallet Balance</div>
+                                    <div class="flex items-center justify-center space-x-2">
+                                        <i class="fas fa-wallet text-yellow-300"></i>
+                                        <span class="font-bold text-xl" id="walletBalance">₦{{ number_format(auth()->user()->sWallet, 2) }}</span>
+                                    </div>
+                                    <a href="{{ route('wallet.fund') }}" class="text-xs text-yellow-200 hover:text-white transition-colors">
+                                        <i class="fas fa-plus mr-1"></i>Add Funds
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress Steps -->
+        <div class="mb-8">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                <div class="flex items-center justify-between relative">
+                    <!-- Progress Line -->
+                    <div class="absolute top-1/2 left-0 w-full h-0.5 bg-gray-200 transform -translate-y-1/2 z-0"></div>
+                    <div id="progressLine" class="absolute top-1/2 left-0 h-0.5 bg-gradient-to-r from-orange-500 to-red-600 transform -translate-y-1/2 z-0 transition-all duration-500" style="width: 25%"></div>
+
+                    <!-- Steps -->
+                    <div class="flex justify-between w-full relative z-10">
+                        <div class="progress-step active flex flex-col items-center">
+                            <div class="w-10 h-10 rounded-full border-2 border-orange-500 bg-orange-500 flex items-center justify-center text-white font-semibold text-sm">1</div>
+                            <span class="text-xs font-medium text-gray-600 mt-2">DISCO</span>
+                        </div>
+                        <div class="progress-step flex flex-col items-center">
+                            <div class="w-10 h-10 rounded-full border-2 border-gray-300 bg-white flex items-center justify-center text-gray-500 font-semibold text-sm">2</div>
+                            <span class="text-xs font-medium text-gray-500 mt-2">Meter Info</span>
+                        </div>
+                        <div class="progress-step flex flex-col items-center">
+                            <div class="w-10 h-10 rounded-full border-2 border-gray-300 bg-white flex items-center justify-center text-gray-500 font-semibold text-sm">3</div>
+                            <span class="text-xs font-medium text-gray-500 mt-2">Amount</span>
+                        </div>
+                        <div class="progress-step flex flex-col items-center">
+                            <div class="w-10 h-10 rounded-full border-2 border-gray-300 bg-white flex items-center justify-center text-gray-500 font-semibold text-sm">4</div>
+                            <span class="text-xs font-medium text-gray-500 mt-2">Payment</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @if($maintenanceMode)
+        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
+            <div class="flex items-start">
+                <i class="fas fa-exclamation-triangle text-yellow-500 mt-1 mr-3"></i>
+                <div>
+                    <strong class="text-yellow-800">Maintenance Notice:</strong>
+                    <span class="text-yellow-700 ml-2">{{ $maintenanceMessage }}</span>
+                </div>
+            </div>
+        </div>
+        @endif
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Enhanced Payment Form -->
+            <div class="lg:col-span-2">
+                <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                    <h2 class="text-xl font-semibold text-gray-900 mb-6 flex items-center">
+                        <div class="bg-orange-100 p-2 rounded-lg mr-3">
+                            <i class="fas fa-bolt text-orange-600"></i>
+                        </div>
+                        Purchase Electricity Token
+                    </h2>
+
+                    <form id="electricityForm" class="space-y-6">
+                        @csrf
+
+                        <!-- Enhanced DISCO Selection -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-4 flex items-center">
+                                <i class="fas fa-building mr-2 text-orange-600"></i>
+                                Step 1: Select Electricity Distribution Company (DISCO)
+                                <span class="ml-2 text-xs text-gray-500">(Required)</span>
+                            </label>
+
+                            @php
+                                $discoLogos = [
+                                    'aedc' => 'https://aedcelectricity.com/wp-content/uploads/2020/10/AEDC-LOGO.png',
+                                    'bedc' => 'https://bedcpower.com/assets/images/logo.png',
+                                    'eedc' => 'https://www.eedcng.com/wp-content/uploads/2019/07/eedc-logo.png',
+                                    'eko' => 'https://www.ekedp.com/wp-content/uploads/2019/06/logo.png',
+                                    'ibadan' => 'https://www.ibedc.com/wp-content/uploads/2019/04/logo.png',
+                                    'ikeja' => 'https://www.ikejaelectric.com/wp-content/uploads/2019/05/logo.png',
+                                    'jos' => 'https://www.jed.ng/wp-content/uploads/2019/06/jed-logo.png',
+                                    'kaduna' => 'https://www.kedco.ng/wp-content/uploads/2019/05/kedco-logo.png',
+                                    'kano' => 'https://www.kedco.ng/wp-content/uploads/2019/05/kedco-logo.png',
+                                    'phed' => 'https://www.phed.ng/wp-content/uploads/2019/06/phed-logo.png',
+                                    'yola' => 'https://www.yedcng.com/wp-content/uploads/2019/06/yedc-logo.png'
+                                ];
+                            @endphp
+
+                            <div class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                                @foreach($providers as $provider)
+                                    @php
+                                        $discoKey = strtolower(str_replace(' ', '', $provider->ePlan));
+                                        $discoName = strtoupper($provider->ePlan);
+                                    @endphp
+                                    <label class="relative cursor-pointer disco-option">
+                                        <input type="radio" name="provider" value="{{ $provider->ePlan }}"
+                                               data-rate="{{ $provider->ePrice }}"
+                                               data-charges="{{ $serviceCharges }}"
+                                               class="sr-only peer" required>
+                                        <div class="disco-card group bg-white border-2 border-gray-200 rounded-xl p-4 text-center hover:border-orange-300 hover:shadow-md peer-checked:border-orange-500 peer-checked:bg-orange-50 peer-checked:shadow-lg transition-all duration-300 transform hover:scale-105">
+                                            <div class="flex flex-col items-center space-y-3">
+                                                <!-- Logo Section -->
+                                                <div class="relative">
+                                                    <img src="{{ $discoLogos[$discoKey] ?? 'data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 40\"><rect width=\"100\" height=\"40\" fill=\"%23ea580c\"/><text x=\"50\" y=\"25\" text-anchor=\"middle\" fill=\"white\" font-size=\"10\">' . strtoupper(substr($discoName, 0, 5)) . '</text></svg>' }}"
+                                                         alt="{{ $discoName }}"
+                                                         class="h-12 w-auto max-w-20 group-hover:scale-110 transition-transform duration-300"
+                                                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                                    <div class="hidden flex-col items-center justify-center h-12 w-20 bg-orange-100 rounded text-orange-600">
+                                                        <i class="fas fa-bolt text-xl"></i>
+                                                    </div>
+                                                </div>
+
+                                                <!-- DISCO Info -->
+                                                <div>
+                                                    <div class="font-semibold text-gray-900 text-sm">{{ $discoName }}</div>
+                                                    <div class="text-xs text-gray-500 mt-1">₦{{ number_format($provider->ePrice, 2) }}/kWh</div>
+                                                </div>
+
+                                                <!-- Selection Indicator -->
+                                                <div class="absolute top-2 right-2 opacity-0 peer-checked:opacity-100 transition-opacity duration-300">
+                                                    <div class="w-5 h-5 bg-orange-500 rounded-full flex items-center justify-center">
+                                                        <i class="fas fa-check text-white text-xs"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </label>
+                                @endforeach
+                            </div>
+                            <div class="text-red-500 text-sm mt-2 hidden" id="provider-error">Please select an electricity provider.</div>
+                        </div>
+
+                        <!-- Enhanced Meter Type Selection -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-4 flex items-center">
+                                <i class="fas fa-tachometer-alt mr-2 text-orange-600"></i>
+                                Step 2: Select Meter Type
+                                <span class="ml-2 text-xs text-gray-500">(Required)</span>
+                            </label>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <label class="relative cursor-pointer meter-type-option">
+                                    <input type="radio" name="meter_type" value="prepaid"
+                                           class="sr-only peer" required>
+                                    <div class="meter-type-card bg-white border-2 border-gray-200 rounded-xl p-4 hover:border-green-300 hover:shadow-md peer-checked:border-green-500 peer-checked:bg-green-50 peer-checked:shadow-lg transition-all duration-300">
+                                        <div class="flex items-center space-x-4">
+                                            <div class="bg-green-100 p-3 rounded-full">
+                                                <i class="fas fa-credit-card text-green-600 text-xl"></i>
+                                            </div>
+                                            <div class="flex-1">
+                                                <div class="font-semibold text-gray-900">Prepaid Meter</div>
+                                                <div class="text-sm text-gray-600 mt-1">Pay before you consume electricity</div>
+                                                <div class="text-xs text-green-600 mt-1">
+                                                    <i class="fas fa-check mr-1"></i>Instant token generation
+                                                </div>
+                                            </div>
+                                            <div class="absolute top-2 right-2 opacity-0 peer-checked:opacity-100 transition-opacity duration-300">
+                                                <div class="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
+                                                    <i class="fas fa-check text-white text-xs"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </label>
+
+                                <label class="relative cursor-pointer meter-type-option">
+                                    <input type="radio" name="meter_type" value="postpaid"
+                                           class="sr-only peer">
+                                    <div class="meter-type-card bg-white border-2 border-gray-200 rounded-xl p-4 hover:border-blue-300 hover:shadow-md peer-checked:border-blue-500 peer-checked:bg-blue-50 peer-checked:shadow-lg transition-all duration-300">
+                                        <div class="flex items-center space-x-4">
+                                            <div class="bg-blue-100 p-3 rounded-full">
+                                                <i class="fas fa-file-invoice-dollar text-blue-600 text-xl"></i>
+                                            </div>
+                                            <div class="flex-1">
+                                                <div class="font-semibold text-gray-900">Postpaid Meter</div>
+                                                <div class="text-sm text-gray-600 mt-1">Pay after consuming electricity</div>
+                                                <div class="text-xs text-blue-600 mt-1">
+                                                    <i class="fas fa-calendar mr-1"></i>Monthly billing cycle
+                                                </div>
+                                            </div>
+                                            <div class="absolute top-2 right-2 opacity-0 peer-checked:opacity-100 transition-opacity duration-300">
+                                                <div class="w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center">
+                                                    <i class="fas fa-check text-white text-xs"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="text-red-500 text-sm mt-2 hidden" id="meter-type-error">Please select a meter type.</div>
+                        </div>
+
+                        <!-- Enhanced Meter Number Input -->
+                        <div>
+                            <label for="meter_number" class="block text-sm font-medium text-gray-700 mb-4 flex items-center">
+                                <i class="fas fa-hashtag mr-2 text-orange-600"></i>
+                                Step 3: Enter Meter Number
+                                <span class="ml-2 text-xs text-gray-500">(Required)</span>
+                            </label>
+                            <div class="relative">
+                                <input type="text" id="meter_number" name="meter_number" required
+                                       class="w-full px-4 py-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300 pr-12"
+                                       placeholder="Enter your meter number"
+                                       maxlength="15">
+                                <div class="absolute inset-y-0 right-0 flex items-center pr-3">
+                                    <div id="meterValidationIcon" class="hidden">
+                                        <i class="fas fa-spinner fa-spin text-gray-400"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-red-500 text-sm mt-2 hidden" id="meter-error">Please enter a valid meter number.</div>
+
+                            <!-- Customer Verification Section -->
+                            <div id="customer-info" class="hidden mt-6">
+                                <div class="bg-green-50 border border-green-200 rounded-xl p-6">
+                                    <h4 class="text-green-800 font-semibold mb-3 flex items-center">
+                                        <i class="fas fa-user-check mr-2"></i>Customer Information Verified
+                                    </h4>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                                        <div>
+                                            <span class="text-gray-600">Customer Name:</span>
+                                            <span id="customer-name" class="font-medium text-gray-900 ml-2">-</span>
+                                        </div>
+                                        <div>
+                                            <span class="text-gray-600">Customer Address:</span>
+                                            <span id="customer-address" class="font-medium text-gray-900 ml-2">-</span>
+                                        </div>
+                                        <div>
+                                            <span class="text-gray-600">Tariff Class:</span>
+                                            <span id="tariff-class" class="font-medium text-gray-900 ml-2">-</span>
+                                        </div>
+                                        <div>
+                                            <span class="text-gray-600">Outstanding Balance:</span>
+                                            <span id="outstanding-balance" class="font-medium text-gray-900 ml-2">₦0.00</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Customer Error Section -->
+                            <div id="customer-error" class="hidden mt-4">
+                                <div class="bg-red-50 border border-red-200 rounded-xl p-4">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-exclamation-circle text-red-500 mr-3"></i>
+                                        <div>
+                                            <h4 class="text-red-800 font-medium">Invalid Meter Number</h4>
+                                            <p class="text-red-600 text-sm mt-1" id="customer-error-message">Please check the meter number and try again.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                                </select>
+                                <div class="text-red-500 text-sm mt-1 hidden" id="meter-type-error">Please select your meter type.</div>
+                            </div>
+                        </div>
+
+                        <!-- Meter Number and Amount -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="meterNumber" class="block text-sm font-medium text-gray-700 mb-2">
+                                    <i class="fas fa-hashtag mr-2"></i>Meter Number
+                                </label>
+                                <input type="text" id="meterNumber" name="meter_number" required
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                                       placeholder="Enter your meter number">
+                                <div class="text-red-500 text-sm mt-1 hidden" id="meter-number-error">Please enter a valid meter number.</div>
+                                <div class="text-sm text-gray-500 mt-1">
+                                    <i class="fas fa-info-circle mr-1"></i>Enter your 11-digit meter number
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="amount" class="block text-sm font-medium text-gray-700 mb-2">
+                                    <i class="fas fa-naira-sign mr-2"></i>Amount (₦)
+                                </label>
+                                <input type="number" id="amount" name="amount" required
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                                       placeholder="Enter amount" min="{{ $minimumAmount }}"
+                                       max="{{ $maximumAmount }}">
+                                <div class="text-red-500 text-sm mt-1 hidden" id="amount-error">
+                                    Amount must be between ₦{{ number_format($minimumAmount) }} and ₦{{ number_format($maximumAmount) }}.
+                                </div>
+                                <div class="text-sm text-gray-500 mt-1">
+                                    <i class="fas fa-info-circle mr-1"></i>Min: ₦{{ number_format($minimumAmount) }} | Max: ₦{{ number_format($maximumAmount) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Customer Information -->
+                        <div id="customerInfo" class="hidden">
+                            <div class="bg-blue-50 border border-blue-200 rounded-lg p-6">
+                                <h3 class="text-lg font-medium text-blue-800 mb-4">
+                                    <i class="fas fa-user mr-2"></i>Customer Information
+                                </h3>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <strong class="text-blue-700">Customer Name:</strong>
+                                        <span id="customerName" class="text-blue-600">-</span>
+                                    </div>
+                                    <div>
+                                        <strong class="text-blue-700">Meter Type:</strong>
+                                        <span id="customerMeterType" class="text-blue-600">-</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Transaction Summary -->
+                        <div id="transactionSummary" class="hidden">
+                            <div class="bg-gray-50 border border-gray-200 rounded-lg p-6">
+                                <h3 class="text-lg font-medium text-gray-800 mb-4">
+                                    <i class="fas fa-calculator mr-2"></i>Transaction Summary
+                                </h3>
+                                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                    <div class="text-center">
+                                        <div class="text-2xl font-bold text-orange-600" id="summaryAmount">₦0.00</div>
+                                        <div class="text-sm text-gray-500">Amount</div>
+                                    </div>
+                                    <div class="text-center">
+                                        <div class="text-2xl font-bold text-yellow-600" id="summaryCharges">₦0.00</div>
+                                        <div class="text-sm text-gray-500">Service Charge</div>
+                                    </div>
+                                    <div class="text-center">
+                                        <div class="text-2xl font-bold text-green-600" id="summaryTotal">₦0.00</div>
+                                        <div class="text-sm text-gray-500">Total</div>
+                                    </div>
+                                    <div class="text-center">
+                                        <div class="text-2xl font-bold text-blue-600" id="summaryUnits">0 kWh</div>
+                                        <div class="text-sm text-gray-500">Units (Estimated)</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <button type="button" id="validateMeterBtn"
+                                    class="flex-1 bg-white border-2 border-orange-500 text-orange-600 px-6 py-3 rounded-lg font-semibold hover:bg-orange-50 transition-all duration-300">
+                                <i class="fas fa-check-circle mr-2"></i>Validate Meter
+                            </button>
+
+                            <button type="submit" id="purchaseBtn" disabled
+                                    class="flex-1 bg-gradient-to-r from-orange-500 to-red-600 text-white px-6 py-3 rounded-lg font-semibold hover:from-orange-600 hover:to-red-700 transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed">
+                                <i class="fas fa-shopping-cart mr-2"></i>Purchase Token
+                            </button>
+
+                            <button type="button" id="resetFormBtn"
+                                    class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300">
+                                <i class="fas fa-refresh mr-2"></i>Reset
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Information Sidebar -->
+            <div class="lg:col-span-1">
+                <!-- Quick Information -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-6">
+                        <i class="fas fa-info-circle mr-2"></i>Quick Information
+                    </h3>
+
+                    <div class="space-y-6">
+                        <div class="flex items-start space-x-3">
+                            <div class="bg-blue-100 p-2 rounded-full">
+                                <i class="fas fa-clock text-blue-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-gray-900">Service Hours</h4>
+                                <p class="text-sm text-gray-500">24/7 Available</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-3">
+                            <div class="bg-green-100 p-2 rounded-full">
+                                <i class="fas fa-shield-alt text-green-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-gray-900">Secure Payment</h4>
+                                <p class="text-sm text-gray-500">Your transactions are protected with bank-level security</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-3">
+                            <div class="bg-yellow-100 p-2 rounded-full">
+                                <i class="fas fa-mobile-alt text-yellow-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-gray-900">Instant Delivery</h4>
+                                <p class="text-sm text-gray-500">Tokens delivered instantly via SMS and email</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-3">
+                            <div class="bg-purple-100 p-2 rounded-full">
+                                <i class="fas fa-headset text-purple-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-gray-900">Support</h4>
+                                <p class="text-sm text-gray-500">24/7 customer support available</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Available Providers -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">
+                        <i class="fas fa-plug mr-2"></i>Available Providers
+                    </h3>
+                    <div class="grid grid-cols-2 gap-3">
+                        @foreach($providers as $provider)
+                        <div class="provider-card bg-gray-50 border border-gray-200 rounded-lg p-3 text-center cursor-pointer hover:border-orange-300 hover:bg-orange-50 transition-all duration-300"
+                             data-provider="{{ $provider->ePlan }}"
+                             data-rate="{{ $provider->ePrice }}">
+                            <img src="{{ $provider->logo_path }}" alt="{{ $provider->ePlan }}"
+                                 class="provider-logo w-8 h-8 mx-auto mb-2 object-contain">
+                            <div class="text-sm font-medium text-gray-800">{{ strtoupper($provider->ePlan) }}</div>
+                            <div class="text-xs text-gray-500">₦{{ number_format($provider->ePrice, 2) }}/kWh</div>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+
+                <!-- Recent Transactions -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">
+                        <i class="fas fa-history mr-2"></i>Recent Transactions
+                    </h3>
+
+                    @if($recentTransactions->count() > 0)
+                    <div class="space-y-3">
+                        @foreach($recentTransactions as $transaction)
+                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                            <div class="flex-1">
+                                <div class="font-medium text-gray-900">{{ $transaction->extractProvider() }}</div>
+                                <div class="text-sm text-gray-500">{{ $transaction->extractMeterNumber() }}</div>
+                            </div>
+                            <div class="text-right">
+                                <div class="font-semibold text-gray-900">₦{{ number_format($transaction->amount, 2) }}</div>
+                                <div class="text-sm">
+                                    <span class="px-2 py-1 text-xs rounded-full {{ $transaction->status_badge_class === 'badge-success' ? 'bg-green-100 text-green-800' : ($transaction->status_badge_class === 'badge-warning' ? 'bg-yellow-100 text-yellow-800' : 'bg-red-100 text-red-800') }}">
+                                        {{ $transaction->status_text }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                    <div class="text-center mt-4">
+                        <a href="{{ route('electricity.history') }}" class="inline-flex items-center px-4 py-2 border border-orange-300 rounded-lg text-sm text-orange-600 hover:bg-orange-50 transition-colors">
+                            View All Transactions
+                        </a>
+                    </div>
+                    @else
+                    <div class="text-center py-8">
+                        <i class="fas fa-inbox text-4xl text-gray-400 mb-4"></i>
+                        <p class="text-gray-500">No recent transactions</p>
+                    </div>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Transaction PIN Modal -->
+<div id="transactionPinModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden">
+    <div class="bg-white rounded-xl max-w-lg mx-4 overflow-hidden">
+        <div class="bg-gradient-to-r from-orange-500 to-orange-600 px-6 py-4 text-white">
+            <h3 class="text-lg font-semibold">
+                <i class="fas fa-lock mr-2"></i>Enter Transaction PIN
+            </h3>
+        </div>
+        <div class="p-6">
+            <p class="mb-4 text-gray-700">Please enter your 4-digit transaction PIN to complete this purchase:</p>
+
+            <div class="mb-6">
+                <label for="transactionPin" class="block text-sm font-medium text-gray-700 mb-2">Transaction PIN</label>
+                <input type="password" id="transactionPin" maxlength="4" placeholder="****"
+                       class="w-full px-4 py-3 text-center text-2xl tracking-widest border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                <div class="text-sm text-gray-500 mt-2">
+                    <i class="fas fa-info-circle mr-1"></i>Enter your 4-digit transaction PIN
+                </div>
+            </div>
+
+            <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                <div class="text-sm text-blue-800">
+                    <strong>Transaction Details:</strong><br>
+                    <div class="mt-2 space-y-1">
+                        <div>Provider: <span id="confirmProvider" class="font-semibold">-</span></div>
+                        <div>Meter Number: <span id="confirmMeterNumber" class="font-semibold">-</span></div>
+                        <div>Amount: <span id="confirmAmount" class="font-semibold">-</span></div>
+                        <div>Total: <span id="confirmTotal" class="font-semibold">-</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="px-6 py-4 bg-gray-50 flex justify-end space-x-3">
+            <button type="button" onclick="hideModal('transactionPinModal')"
+                    class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded-lg transition-colors">
+                Cancel
+            </button>
+            <button type="button" id="confirmPurchaseBtn"
+                    class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg transition-colors">
+                <i class="fas fa-check mr-2"></i>Confirm Purchase
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Success Modal -->
+<div id="successModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden">
+    <div class="bg-white rounded-xl max-w-2xl mx-4 overflow-hidden">
+        <div class="bg-gradient-to-r from-green-500 to-green-600 px-6 py-4 text-white">
+            <h3 class="text-lg font-semibold">
+                <i class="fas fa-check-circle mr-2"></i>Purchase Successful
+            </h3>
+        </div>
+        <div class="p-6">
+            <div class="text-center mb-6">
+                <i class="fas fa-check-circle text-green-500 text-6xl mb-4"></i>
+                <h4 class="text-xl font-semibold text-gray-900">Transaction Successful!</h4>
+            </div>
+
+            <div class="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
+                <h5 class="font-semibold text-green-800 mb-3">Transaction Details</h5>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                    <div><strong>Reference:</strong> <span id="successReference">-</span></div>
+                    <div><strong>Provider:</strong> <span id="successProvider">-</span></div>
+                    <div><strong>Meter Number:</strong> <span id="successMeterNumber">-</span></div>
+                    <div><strong>Amount:</strong> <span id="successAmount">-</span></div>
+                    <div class="md:col-span-2"><strong>Token:</strong> <span id="successToken" class="text-green-700 font-mono text-lg">-</span></div>
+                    <div><strong>Units:</strong> <span id="successUnits">-</span></div>
+                </div>
+            </div>
+
+            <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                <div class="flex items-start space-x-2">
+                    <i class="fas fa-info-circle text-blue-600 mt-1"></i>
+                    <p class="text-blue-800 text-sm">
+                        Your electricity token has been sent to your registered phone number via SMS.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="px-6 py-4 bg-gray-50 flex justify-end space-x-3">
+            <button type="button" id="printReceiptBtn"
+                    class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg transition-colors">
+                <i class="fas fa-print mr-2"></i>Print Receipt
+            </button>
+            <button type="button" onclick="hideModal('successModal')"
+                    class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded-lg transition-colors">
+                Close
+            </button>
+        </div>
+    </div>
+</div>
+@endsection
+
+@push('scripts')
+<script src="{{ asset('assets/js/electricity.js') }}"></script>
+
+<script>
+// Modal helper functions
+function hideModal(modalId) {
+    document.getElementById(modalId).classList.add('hidden');
+}
+
+function showModal(modalId) {
+    document.getElementById(modalId).classList.remove('hidden');
+}
+
+// Provider card selection
+document.querySelectorAll('.provider-card').forEach(card => {
+    card.addEventListener('click', function() {
+        const provider = this.dataset.provider;
+        const rate = this.dataset.rate;
+
+        // Update form
+        document.getElementById('provider').value = provider;
+
+        // Update visual selection
+        document.querySelectorAll('.provider-card').forEach(c => {
+            c.classList.remove('border-orange-500', 'bg-orange-100');
+            c.classList.add('border-gray-200', 'bg-gray-50');
+        });
+
+        this.classList.remove('border-gray-200', 'bg-gray-50');
+        this.classList.add('border-orange-500', 'bg-orange-100');
+
+        // Trigger change event
+        document.getElementById('provider').dispatchEvent(new Event('change'));
+    });
+});
+</script>
+@endpush

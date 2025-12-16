@@ -1,0 +1,4 @@
+[28-Jul-2023 12:46:00 UTC] PHP Fatal error:  Uncaught Error: Class 'Controller' not found in /home/dannvtuc/public_html/core/Controllers/Subscriber.php:3
+Stack trace:
+#0 {main}
+  thrown in /home/dannvtuc/public_html/core/Controllers/Subscriber.php on line 3

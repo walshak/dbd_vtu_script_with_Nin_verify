@@ -1,0 +1,1 @@
+{"status":"fail","amount":"\u20a698.50","quantity":"1","pin":"null","serial":"null","load_pin":"null","network":"GLO"}
