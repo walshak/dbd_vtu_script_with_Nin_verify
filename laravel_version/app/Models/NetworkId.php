@@ -213,13 +213,14 @@ class NetworkId extends Model
     public function getLogoPathAttribute()
     {
         $logos = [
-            'mtn' => '/assets/images/mtn-logo.png',
-            'glo' => '/assets/images/glo-logo.png',
-            'airtel' => '/assets/images/airtel-logo.png',
-            '9mobile' => '/assets/images/9mobile-logo.png'
+            'mtn' => '/images/providers/mtn.png',
+            'glo' => '/images/providers/glo.png',
+            'airtel' => '/images/providers/airtel.png',
+            '9mobile' => '/images/providers/9mobile.png',
+            'smile' => '/images/providers/smile.png'
         ];
 
-        return $logos[strtolower($this->network)] ?? '/assets/images/default-network.png';
+        return $logos[strtolower($this->network)] ?? '/images/providers/default-network.png';
     }
 
     /**

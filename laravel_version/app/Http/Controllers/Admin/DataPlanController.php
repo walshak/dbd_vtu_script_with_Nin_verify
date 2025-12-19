@@ -238,14 +238,14 @@ class DataPlanController extends Controller
     /**
      * Display the specified data plan
      */
-    public function show(DataPlan $dataPlan)
+    public function show(DataPlan $plan)
     {
-        $dataPlan->load('network');
+        $plan->load('network');
 
         // Always return JSON for AJAX requests (from edit modal)
         return response()->json([
             'success' => true,
-            'plan' => $dataPlan
+            'plan' => $plan
         ]);
     }
 
@@ -262,7 +262,7 @@ class DataPlanController extends Controller
     /**
      * Update the specified data plan
      */
-    public function update(Request $request, DataPlan $dataPlan)
+    public function update(Request $request, DataPlan $plan)
     {
         // Simplified validation - only allow updating selling_price
         $validator = Validator::make($request->all(), [
@@ -270,33 +270,29 @@ class DataPlanController extends Controller
         ]);
 
         if ($validator->fails()) {
-            if ($request->ajax()) {
-                return response()->json(['errors' => $validator->errors()], 422);
-            }
-            return redirect()->back()->withErrors($validator)->withInput();
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed',
+                'errors' => $validator->errors()
+            ], 422);
         }
 
         // Calculate profit margin
-        $costPrice = $dataPlan->cost_price ?? $dataPlan->dAmount ?? 0;
-        $sellingPrice = $request->selling_price;
+        $costPrice = floatval($plan->cost_price ?? $plan->dAmount ?? 0);
+        $sellingPrice = floatval($request->selling_price);
         $profitMargin = $sellingPrice - $costPrice;
 
-        $dataPlan->update([
+        $plan->update([
             'selling_price' => $sellingPrice,
             'profit_margin' => $profitMargin,
             'userPrice' => $sellingPrice, // Keep userPrice in sync for backwards compatibility
         ]);
 
-        if ($request->ajax()) {
-            return response()->json([
-                'success' => true,
-                'message' => 'Selling price updated successfully',
-                'plan' => $dataPlan->load('network')
-            ]);
-        }
-
-        return redirect()->route('admin.data-plans.index')
-            ->with('success', 'Selling price updated successfully');
+        return response()->json([
+            'success' => true,
+            'message' => 'Selling price updated successfully',
+            'plan' => $plan->load('network')
+        ]);
     }
 
     /**
@@ -509,6 +505,13 @@ class DataPlanController extends Controller
             // Fetch data plans from Uzobest
             $result = $syncService->fetchDataPlans();
 
+            // Log the raw response for debugging
+            Log::info('Uzobest API Raw Response', [
+                'success' => $result['success'],
+                'data_keys' => isset($result['data']) ? array_keys($result['data']) : [],
+                'sample_data' => isset($result['data']) ? array_slice($result['data'], 0, 2, true) : null
+            ]);
+
             if (!$result['success']) {
                 return response()->json([
                     'success' => false,
@@ -519,6 +522,14 @@ class DataPlanController extends Controller
             // Parse the plans
             $organizedPlans = $syncService->parseDataPlans($result['data']);
 
+            // Log organized plans structure
+            Log::info('Organized Plans Structure', [
+                'networks' => array_keys($organizedPlans),
+                'plan_counts' => array_map(function($network) {
+                    return array_map('count', $network);
+                }, $organizedPlans)
+            ]);
+
             if (empty($organizedPlans)) {
                 return response()->json([
                     'success' => false,
@@ -528,33 +539,67 @@ class DataPlanController extends Controller
 
             $syncedCount = 0;
             $createdCount = 0;
-            $updatedCount = 0;
             $errors = [];
 
             DB::beginTransaction();
 
             try {
+                // Delete all existing data plans for fresh sync
+                DataPlan::query()->delete();
+                Log::info('Deleted all existing data plans for fresh sync');
+
                 // Get network mappings
                 $networkMapping = $syncService->getNetworkMapping();
 
                 foreach ($organizedPlans as $networkName => $planTypes) {
-                    // Find or create network in our database
-                    $network = NetworkId::firstOrCreate([
-                        'network' => strtoupper($networkName)
-                    ], [
-                        'network' => strtoupper($networkName),
-                        'nStatus' => 1
-                    ]);
+                    // Extract network name from keys like "MTN_PLAN" -> "MTN"
+                    $cleanNetworkName = str_replace('_PLAN', '', strtoupper($networkName));
+
+                    // Map to our network IDs: MTN=1, GLO=2, AIRTEL=3, 9MOBILE=4
+                    $networkIdMap = [
+                        'MTN' => 1,
+                        'GLO' => 2,
+                        'AIRTEL' => 3,
+                        '9MOBILE' => 4,
+                        'ETISALAT' => 4, // Old name for 9mobile
+                    ];
+
+                    if (!isset($networkIdMap[$cleanNetworkName])) {
+                        Log::warning("Unknown network: {$cleanNetworkName}, skipping");
+                        continue;
+                    }
+
+                    // Get the network by ID
+                    $network = NetworkId::find($networkIdMap[$cleanNetworkName]);
+
+                    if (!$network) {
+                        Log::error("Network ID {$networkIdMap[$cleanNetworkName]} not found in database");
+                        continue;
+                    }
 
                     // Process each plan type (SME, Gifting, Corporate)
                     foreach ($planTypes as $planType => $plans) {
                         foreach ($plans as $plan) {
                             try {
                                 // Extract plan details from Uzobest format
-                                $planId = $plan['id'] ?? $plan['plan_id'] ?? null;
+                                $planId = $plan['id'] ?? $plan['dataplan_id'] ?? $plan['plan_id'] ?? null;
                                 $planName = $plan['plan'] ?? $plan['name'] ?? null;
-                                $price = $plan['price'] ?? 0;
-                                $validity = $plan['validity'] ?? $plan['day'] ?? 30;
+                                $price = $plan['plan_amount'] ?? $plan['price'] ?? 0;
+
+                                // Extract validity from month_validate field (e.g., "30 Days", "1 Week")
+                                $validityString = $plan['month_validate'] ?? '30 Days';
+                                $validity = 30; // Default
+                                if (preg_match('/(\d+)\s*(day|week|month)/i', $validityString, $matches)) {
+                                    $number = intval($matches[1]);
+                                    $unit = strtolower($matches[2]);
+                                    if ($unit === 'week') {
+                                        $validity = $number * 7;
+                                    } elseif ($unit === 'month') {
+                                        $validity = $number * 30;
+                                    } else {
+                                        $validity = $number;
+                                    }
+                                }
 
                                 if (!$planId || !$planName) {
                                     continue; // Skip invalid plans
@@ -567,17 +612,13 @@ class DataPlanController extends Controller
                                 $agentPrice = $basePrice * 1.03; // 3% markup for agents
                                 $vendorPrice = $basePrice * 1.02; // 2% markup for vendors
 
-                                // Check if plan exists
-                                $existingPlan = DataPlan::where('dPlanId', $planId)
-                                    ->where('nId', $network->nId)
-                                    ->where('dGroup', $planType)
-                                    ->first();
-
+                                // Create plan data - all plans deleted before sync, so just insert fresh
                                 $planData = [
                                     'nId' => $network->nId,
                                     'dPlan' => $planName,
                                     'dGroup' => $planType,
                                     'dPlanId' => $planId,
+                                    'uzobest_plan_id' => $planId,
                                     'dValidity' => intval($validity),
                                     'dAmount' => $basePrice,
                                     'userPrice' => $userPrice,
@@ -585,15 +626,9 @@ class DataPlanController extends Controller
                                     'apiPrice' => $vendorPrice,
                                 ];
 
-                                if ($existingPlan) {
-                                    // Update existing plan
-                                    $existingPlan->update($planData);
-                                    $updatedCount++;
-                                } else {
-                                    // Create new plan
-                                    DataPlan::create($planData);
-                                    $createdCount++;
-                                }
+                                // Create new plan
+                                DataPlan::create($planData);
+                                $createdCount++;
 
                                 $syncedCount++;
                             } catch (\Exception $e) {
@@ -610,9 +645,7 @@ class DataPlanController extends Controller
                 DB::commit();
 
                 Log::info('Data plans synced from Uzobest', [
-                    'total_synced' => $syncedCount,
                     'created' => $createdCount,
-                    'updated' => $updatedCount,
                     'errors' => count($errors)
                 ]);
 
@@ -622,7 +655,6 @@ class DataPlanController extends Controller
                     'data' => [
                         'total_synced' => $syncedCount,
                         'created' => $createdCount,
-                        'updated' => $updatedCount,
                         'errors' => $errors
                     ]
                 ]);
@@ -644,44 +676,11 @@ class DataPlanController extends Controller
     }
 
     /**
-     * Sync data plans from Uzobest API using artisan command
+     * Sync data plans from Uzobest API
      */
-    public function syncPlans()
+    public function syncPlans(UzobestSyncService $syncService)
     {
-        try {
-            // Run the sync command
-            \Artisan::call('data:sync-plans');
-            $output = \Artisan::output();
-
-            // Parse the output to get statistics
-            preg_match('/Total plans processed\s+\|\s+(\d+)/', $output, $totalMatch);
-            preg_match('/Plans updated\s+\|\s+(\d+)/', $output, $updatedMatch);
-            preg_match('/New plans created\s+\|\s+(\d+)/', $output, $newMatch);
-
-            $totalPlans = isset($totalMatch[1]) ? (int)$totalMatch[1] : 0;
-            $updatedPlans = isset($updatedMatch[1]) ? (int)$updatedMatch[1] : 0;
-            $newPlans = isset($newMatch[1]) ? (int)$newMatch[1] : 0;
-
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Data plans synced successfully',
-                'data' => [
-                    'total_plans' => $totalPlans,
-                    'updated_plans' => $updatedPlans,
-                    'new_plans' => $newPlans,
-                ]
-            ]);
-
-        } catch (\Exception $e) {
-            Log::error('Data plans sync failed', [
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString()
-            ]);
-
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Sync failed: ' . $e->getMessage()
-            ], 500);
-        }
+        // Just redirect to the syncFromUzobest method
+        return $this->syncFromUzobest($syncService);
     }
 }

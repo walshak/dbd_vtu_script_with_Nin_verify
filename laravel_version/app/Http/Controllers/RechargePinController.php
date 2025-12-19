@@ -59,7 +59,7 @@ class RechargePinController extends Controller
 
         $user = Auth::user();
         $rechargePin = RechargePin::getByNetworkAndDenomination($network->nId, $request->denomination);
-        
+
         if (!$rechargePin) {
             return response()->json([
                 'status' => 'error',
@@ -112,7 +112,7 @@ class RechargePinController extends Controller
 
         $user = Auth::user();
         $rechargePin = RechargePin::getByNetworkAndDenomination($network->nId, $request->denomination);
-        
+
         if (!$rechargePin) {
             return response()->json([
                 'status' => 'error',
@@ -166,7 +166,7 @@ class RechargePinController extends Controller
 
         // Use the RechargePinService to handle the purchase
         $result = $this->rechargePinService->purchaseRechargePin(
-            Auth::id(),
+            Auth::user()->id,
             $request->network,
             $request->denomination,
             $request->quantity
@@ -180,8 +180,8 @@ class RechargePinController extends Controller
      */
     public function history()
     {
-        $history = $this->rechargePinService->getRechargePinHistory(Auth::id());
-        
+        $history = $this->rechargePinService->getRechargePinHistory(Auth::user()->id);
+
         return view('user.recharge-pin-history', [
             'transactions' => $history
         ]);
@@ -193,7 +193,7 @@ class RechargePinController extends Controller
     public function getNetworks()
     {
         $networks = NetworkId::getAllActive();
-        
+
         return response()->json([
             'status' => 'success',
             'data' => $networks->map(function ($network) {
@@ -212,7 +212,7 @@ class RechargePinController extends Controller
     public function getDenominations()
     {
         $denominations = RechargePin::getAvailableDenominations();
-        
+
         return response()->json([
             'status' => 'success',
             'data' => $denominations

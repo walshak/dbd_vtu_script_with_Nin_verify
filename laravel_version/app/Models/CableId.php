@@ -66,4 +66,27 @@ class CableId extends Model
     {
         return self::where('cableid', $cableId)->first();
     }
+
+    /**
+     * Get provider logo path
+     */
+    public function getLogoPathAttribute()
+    {
+        $logos = [
+            'dstv' => '/images/providers/dstv.png',
+            'gotv' => '/images/providers/gotv.png',
+            'startimes' => '/images/providers/startimes.png',
+        ];
+
+        $providerKey = strtolower(trim($this->provider));
+        return $logos[$providerKey] ?? '/images/providers/default-cable.png';
+    }
+
+    /**
+     * Get formatted provider name
+     */
+    public function getFormattedNameAttribute()
+    {
+        return strtoupper($this->provider);
+    }
 }

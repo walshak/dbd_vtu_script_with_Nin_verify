@@ -176,9 +176,28 @@ class ExternalApiService
         $responseBody = $response->body();
 
         if (!$response->successful()) {
+            // Try to extract error message from JSON response
+            $errorMessage = "HTTP Error {$statusCode}: " . $response->reason();
+
+            try {
+                $jsonResponse = $response->json();
+                if (isset($jsonResponse['error'])) {
+                    // Handle array of errors
+                    if (is_array($jsonResponse['error'])) {
+                        $errorMessage = implode(', ', $jsonResponse['error']);
+                    } else {
+                        $errorMessage = $jsonResponse['error'];
+                    }
+                } elseif (isset($jsonResponse['message'])) {
+                    $errorMessage = $jsonResponse['message'];
+                }
+            } catch (\Exception $e) {
+                // If JSON parsing fails, use default error message
+            }
+
             return [
                 'success' => false,
-                'message' => "HTTP Error {$statusCode}: " . $response->reason(),
+                'message' => $errorMessage,
                 'status_code' => $statusCode,
                 'response_body' => $responseBody,
                 'error_code' => 'HTTP_ERROR'
@@ -344,10 +363,15 @@ class ExternalApiService
         try {
             $uzobestConfig = $this->getUzobestConfig();
 
-            // Use adapter to get disco provider ID and meter type ID
+            // Get disco provider name from database (preferred) or use adapter as fallback
+            $provider = \App\Models\ElectricityProvider::where('ePlan', strtoupper($discoCode))->first();
+            $discoProviderName = $provider && $provider->uzobest_disco_name
+                ? $provider->uzobest_disco_name
+                : (new UzobestApiAdapter())->getDiscoProviderId($discoCode);
+
+            // Get meter type string
             $adapter = new UzobestApiAdapter();
-            $discoProviderId = $adapter->getDiscoProviderId($discoCode);
-            $meterTypeId = strtoupper($meterType) === 'PREPAID' ? 1 : 2;
+            $meterTypeString = $adapter->getMeterTypeString($meterType); // Returns "PREPAID" or "POSTPAID"
 
             $authConfig = $uzobestConfig['auth_config'];
 
@@ -355,11 +379,21 @@ class ExternalApiService
             $url = $uzobestConfig['base_url'] . '/validatemeter';
             $queryParams = [
                 'meternumber' => $meterNumber,
-                'disconame' => $discoProviderId,
-                'mtype' => $meterTypeId
+                'disconame' => $discoProviderName,  // Full disco name like "Jos Electric"
+                'mtype' => $meterTypeString          // "PREPAID" or "POSTPAID"
             ];
 
+            Log::info('ExternalApiService verifyMeter - Calling Uzobest API', [
+                'url' => $url,
+                'query_params' => $queryParams,
+                'full_url' => $url . '?' . http_build_query($queryParams)
+            ]);
+
             $result = $this->makeRequest($url . '?' . http_build_query($queryParams), [], 'GET', [], $authConfig);
+
+            Log::info('ExternalApiService verifyMeter - Uzobest API Response', [
+                'result' => $result
+            ]);
 
             if (!$result['success']) {
                 return $result;
@@ -586,13 +620,27 @@ class ExternalApiService
     public function purchaseData(string $network, string $phone, string $planId, string $dataType = 'SME', bool $portedNumber = false): array
     {
         try {
-            // Get provider configuration for this network and data type
-            $providerConfig = $this->configService->getProviderConfig('data', $network, $dataType);
+            // Use Uzobest API configuration for data purchases
+            $apiLink = \App\Models\ApiLink::where('name', 'Uzobest')
+                ->where('type', 'data')
+                ->where('is_active', true)
+                ->first();
 
-            if (empty($providerConfig['provider_url']) || empty($providerConfig['api_key'])) {
+            if (!$apiLink) {
                 return [
                     'success' => false,
-                    'message' => "Data provider not configured for {$network} {$dataType}",
+                    'message' => "Data provider (Uzobest) not configured",
+                    'error_code' => 'CONFIG_ERROR'
+                ];
+            }
+
+            // Get API token from config (uses services.uzobest.key which reads from env or database)
+            $apiToken = config('services.uzobest.key');
+
+            if (empty($apiToken)) {
+                return [
+                    'success' => false,
+                    'message' => "Uzobest API token not configured",
                     'error_code' => 'CONFIG_ERROR'
                 ];
             }
@@ -601,16 +649,17 @@ class ExternalApiService
             $adapter = new UzobestApiAdapter();
             $requestData = $adapter->transformDataPurchaseRequest($network, $phone, $planId, $portedNumber);
 
+            // Use auth_params from apilinks if available, otherwise use defaults
             $authConfig = [
-                'auth_type' => $providerConfig['auth_type'],
-                'api_key' => $providerConfig['api_key']
+                'auth_type' => $apiLink->auth_type ?? 'header',
+                'api_key' => $apiToken
             ];
 
-            if (isset($providerConfig['auth_params'])) {
-                $authConfig = array_merge($authConfig, $providerConfig['auth_params']);
+            if (!empty($apiLink->auth_params)) {
+                $authConfig = array_merge($authConfig, $apiLink->auth_params);
             }
 
-            $result = $this->makeRequest($providerConfig['provider_url'], $requestData, 'POST', [], $authConfig);
+            $result = $this->makeRequest($apiLink->value, $requestData, 'POST', [], $authConfig);
 
             if (!$result['success']) {
                 return $result;

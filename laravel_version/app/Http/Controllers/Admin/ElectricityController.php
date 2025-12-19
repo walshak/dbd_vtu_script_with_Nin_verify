@@ -80,16 +80,22 @@ class ElectricityController extends Controller
                 $providerData = [
                     'ePlan' => $discoName,
                     'eProviderId' => strtolower($discoName),
+                    'uzobest_disco_id' => $discoId,
                     'eBuyingPrice' => 45.00,
                     'ePrice' => 50.00,
+                    'cost_price' => 45.00,
+                    'selling_price' => 50.00,
+                    'profit_margin' => 5.00,
                     'eStatus' => 1
                 ];
 
                 if ($provider) {
-                    // Update only if prices haven't been customized
-                    if ($provider->eBuyingPrice == 45.00 && $provider->ePrice == 50.00) {
-                        $provider->update($providerData);
-                    }
+                    // Always update provider IDs and status
+                    $provider->update([
+                        'eProviderId' => strtolower($discoName),
+                        'uzobest_disco_id' => $discoId,
+                        'eStatus' => 1
+                    ]);
                     $updated++;
                 } else {
                     ElectricityProvider::create($providerData);
@@ -167,13 +173,11 @@ class ElectricityController extends Controller
     /**
      * Update electricity provider
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, ElectricityProvider $provider)
     {
         try {
-            $provider = ElectricityProvider::findOrFail($id);
-
             $validator = Validator::make($request->all(), [
-                'ePlan' => 'required|string|max:100|unique:electricity,ePlan,' . $id . ',eId',
+                'ePlan' => 'required|string|max:100|unique:electricity,ePlan,' . $provider->eId . ',eId',
                 'eProviderId' => 'nullable|string|max:50',
                 'eBuyingPrice' => 'required|numeric|min:0',
                 'ePrice' => 'required|numeric|min:0|gt:eBuyingPrice',
@@ -667,30 +671,58 @@ class ElectricityController extends Controller
     public function validateMeter(Request $request, UzobestSyncService $syncService)
     {
         $validator = Validator::make($request->all(), [
-            'meter_number' => 'required|string',
-            'provider_id' => 'required|exists:electricity,eId',
-            'meter_type' => 'required|in:PREPAID,POSTPAID'
+            'meter_number' => 'required|string|min:10|max:15',
+            'provider' => 'required|string',
+            'meter_type' => 'required|string|in:prepaid,postpaid,PREPAID,POSTPAID'
         ]);
 
         if ($validator->fails()) {
+            $errors = $validator->errors();
+            $firstError = $errors->first();
+
             return response()->json([
                 'status' => 'error',
-                'message' => 'Validation failed',
-                'errors' => $validator->errors()
+                'message' => $firstError ?: 'Validation failed',
+                'errors' => $errors->toArray(),
+                'data' => [],
+                'debug' => [
+                    'received' => $request->all()
+                ]
             ], 422);
         }
 
         try {
-            // Get electricity provider
-            $provider = ElectricityProvider::find($request->provider_id);
+            // Get electricity provider by name
+            $providerName = strtoupper($request->provider);
+            $provider = ElectricityProvider::where('ePlan', $providerName)->first();
 
-            // Get Uzobest provider ID from mapping
-            $discoMapping = $syncService->getDiscoProviderMapping();
-            $uzobestProviderId = $discoMapping[strtoupper($provider->ePlan)] ?? 1;
+            if (!$provider) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Invalid electricity provider',
+                    'data' => []
+                ], 400);
+            }
+
+            // Get Uzobest provider ID from mapping or use the one stored in database
+            $uzobestProviderId = $provider->uzobest_disco_id;
+
+            if (!$uzobestProviderId) {
+                $discoMapping = $syncService->getDiscoProviderMapping();
+                $uzobestProviderId = $discoMapping[$providerName] ?? null;
+
+                if (!$uzobestProviderId) {
+                    return response()->json([
+                        'status' => 'error',
+                        'message' => 'Provider not configured for Uzobest API',
+                        'data' => []
+                    ], 400);
+                }
+            }
 
             // Get meter type ID
             $meterTypeMapping = $syncService->getMeterTypeMapping();
-            $meterTypeId = $meterTypeMapping[$request->meter_type] ?? 1;
+            $meterTypeId = $meterTypeMapping[strtoupper($request->meter_type)] ?? 1;
 
             // Validate meter via Uzobest
             $result = $syncService->validateMeter(
@@ -710,19 +742,21 @@ class ElectricityController extends Controller
             } else {
                 return response()->json([
                     'status' => 'error',
-                    'message' => $result['message'] ?? 'Invalid meter number'
+                    'message' => $result['message'] ?? 'Invalid meter number',
+                    'data' => []
                 ], 400);
             }
         } catch (\Exception $e) {
             Log::error('Meter validation error', [
                 'meter' => $request->meter_number,
-                'provider' => $request->provider_id,
+                'provider' => $request->provider,
                 'error' => $e->getMessage()
             ]);
 
             return response()->json([
                 'status' => 'error',
-                'message' => 'Failed to validate meter number: ' . $e->getMessage()
+                'message' => 'Failed to validate meter number: ' . $e->getMessage(),
+                'data' => []
             ], 500);
         }
     }

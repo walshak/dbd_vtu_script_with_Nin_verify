@@ -246,7 +246,7 @@ $(document).ready(function() {
             const planId = $(this).data('plan-id');
             const planPrice = $(this).data('plan-price');
             const planName = $(this).data('plan-name');
-            
+
             selectedPlan = {
                 id: planId,
                 name: planName,
@@ -371,8 +371,17 @@ $(document).ready(function() {
                                 <p><strong>New Balance:</strong> ₦${parseFloat(response.data.balance).toLocaleString()}</p>
                             </div>
                         `,
-                        confirmButtonColor: '#10B981'
-                    }).then(() => {
+                        showCancelButton: true,
+                        confirmButtonText: '<i class="fas fa-receipt mr-2"></i>View Receipt',
+                        cancelButtonText: 'Close',
+                        confirmButtonColor: '#10B981',
+                        cancelButtonColor: '#6B7280'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Open receipt in new window
+                            window.open(`/receipt/${response.data.transaction_id}`, '_blank');
+                        }
+
                         // Reset form
                         $('#data-form')[0].reset();
                         $('.network-option .network-label').removeClass('border-blue-500 bg-blue-50');

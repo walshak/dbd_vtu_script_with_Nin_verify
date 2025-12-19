@@ -13,6 +13,14 @@ class DataPlan extends Model
     protected $primaryKey = 'dId';
     public $timestamps = false;
 
+    /**
+     * Get the route key name for Laravel.
+     */
+    public function getRouteKeyName()
+    {
+        return 'dId';
+    }
+
     protected $fillable = [
         'nId',
         'dPlan',
@@ -109,13 +117,18 @@ class DataPlan extends Model
     {
         // Use stored profit_margin if available, otherwise calculate
         if ($this->profit_margin !== null) {
-            return $this->profit_margin;
+            return (float) $this->profit_margin;
         }
 
         // Calculate: selling price - cost price
         $cost = $this->cost_price ?? $this->dAmount ?? $this->apiPrice;
         $selling = $finalAmount ?? $this->selling_price ?? $this->userPrice;
-        return max(0, $selling - $cost);
+
+        // Convert to float to avoid non-numeric errors
+        $costFloat = is_numeric($cost) ? (float) $cost : 0;
+        $sellingFloat = is_numeric($selling) ? (float) $selling : 0;
+
+        return max(0, $sellingFloat - $costFloat);
     }
 
     /**

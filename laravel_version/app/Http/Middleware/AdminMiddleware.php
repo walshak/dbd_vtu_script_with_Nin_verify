@@ -18,26 +18,26 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        // Debug logging
-        Log::info('AdminMiddleware: Checking auth for URL: ' . $request->url());
-        Log::info('AdminMiddleware: Auth check result: ' . (Auth::guard('admin')->check() ? 'TRUE' : 'FALSE'));
+        // Debug logging - DISABLED
+        // Log::info('AdminMiddleware: Checking auth for URL: ' . $request->url());
+        // Log::info('AdminMiddleware: Auth check result: ' . (Auth::guard('admin')->check() ? 'TRUE' : 'FALSE'));
 
-        if (Auth::guard('admin')->user()) {
-            Log::info('AdminMiddleware: User found: ' . Auth::guard('admin')->user()->sysUsername);
-        } else {
-            Log::info('AdminMiddleware: No user found');
-        }
+        // if (Auth::guard('admin')->user()) {
+        //     Log::info('AdminMiddleware: User found: ' . Auth::guard('admin')->user()->sysUsername);
+        // } else {
+        //     Log::info('AdminMiddleware: No user found');
+        // }
 
         if (!Auth::guard('admin')->check()) {
             if ($request->expectsJson()) {
                 return response()->json(['error' => 'Unauthorized admin access'], 401);
             }
 
-            Log::info('AdminMiddleware: Redirecting to admin login');
+            // Log::info('AdminMiddleware: Redirecting to admin login');
             return redirect('/admin/login')->with('error', 'Please login to access admin panel.');
         }
 
-        Log::info('AdminMiddleware: Auth passed, proceeding');
+        // Log::info('AdminMiddleware: Auth passed, proceeding');
         return $next($request);
     }
 }

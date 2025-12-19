@@ -125,11 +125,11 @@
                                            role="radio"
                                            aria-checked="false">
                                         <div class="bg-gradient-to-br from-green-100 to-blue-100 w-16 h-16 rounded-lg flex items-center justify-center mx-auto mb-3 group-hover:shadow-lg">
-                                            @if($network->logoPath && file_exists(public_path($network->logoPath)))
-                                                <img src="{{ asset($network->logoPath) }}" alt="{{ $network->network }}" class="w-12 h-12 object-contain">
+                                            @if($network->logo_path && file_exists(public_path($network->logo_path)))
+                                                <img src="{{ asset($network->logo_path) }}" alt="{{ $network->network }}" class="w-12 h-12 object-contain">
                                             @else
                                                 <div class="w-12 h-12 rounded-lg flex items-center justify-center"
-                                                     style="background: {{ $network->brand_color ?? '#10b981' }}">
+                                                     style="background: {{ $network->color_theme === 'yellow' ? '#FFC107' : ($network->color_theme === 'red' ? '#E53935' : ($network->color_theme === 'green' ? '#4CAF50' : '#10b981')) }}">
                                                     <span class="text-white font-bold text-lg">{{ strtoupper(substr($network->network, 0, 1)) }}</span>
                                                 </div>
                                             @endif
@@ -246,6 +246,20 @@
                             <div class="text-red-500 text-sm mt-3 hidden" id="amount-error" role="alert" aria-live="polite">
                                 <i class="fas fa-exclamation-circle mr-1" aria-hidden="true"></i>Amount must be between ₦50 and ₦50,000.
                             </div>
+
+                            <!-- Balance Warning Below Amount -->
+                            <div id="balance-warning-inline" class="hidden mt-3 p-3 bg-red-50 border-l-4 border-red-500 rounded">
+                                <div class="flex items-start">
+                                    <i class="fas fa-exclamation-triangle text-red-600 mt-0.5 mr-2"></i>
+                                    <div class="flex-1">
+                                        <p id="balance-warning-inline-text" class="text-sm text-red-700 font-medium"></p>
+                                        <a href="{{ route('fund-wallet') }}" class="text-sm text-red-600 hover:text-red-800 underline mt-1 inline-block">
+                                            <i class="fas fa-plus-circle mr-1"></i>Fund your wallet now
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
                             <p class="text-gray-500 text-sm mt-2" id="amount-help">
                                 <i class="fas fa-info-circle mr-1" aria-hidden="true"></i>Minimum: ₦50, Maximum: ₦50,000
                             </p>
@@ -359,6 +373,14 @@
                                         <span id="total-amount" class="text-lg text-green-600">₦0</span>
                                     </div>
                                 </div>
+                            </div>
+
+                            <!-- Balance Warning -->
+                            <div id="balance-warning" class="hidden mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+                                <p id="balance-warning-text" class="text-sm text-red-700 font-medium"></p>
+                                <a href="{{ route('fund-wallet') }}" class="text-sm text-red-600 hover:text-red-800 underline mt-2 inline-block">
+                                    <i class="fas fa-plus-circle mr-1"></i>Fund Wallet
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -557,6 +579,7 @@ $(document).ready(function() {
 
         if (amount === 0 || !currentPricing) {
             $('#pricing-info').addClass('hidden');
+            $('#balance-warning').addClass('hidden');
             return;
         }
 
@@ -564,12 +587,37 @@ $(document).ready(function() {
         const discountAmount = (amount * discount) / 100;
         const finalAmount = amount - discountAmount;
 
+        // Get current wallet balance from the header
+        const walletText = $('#walletBalance').text().replace(/[₦,]/g, '');
+        const walletBalance = parseFloat(walletText) || 0;
+
         $('#customer-price').text('₦' + amount.toLocaleString());
         $('#our-price').text('₦' + finalAmount.toLocaleString('en-US', {minimumFractionDigits: 2}));
         $('#discount-amount').text('₦' + discountAmount.toLocaleString('en-US', {minimumFractionDigits: 2}));
         $('#total-amount').text('₦' + finalAmount.toLocaleString('en-US', {minimumFractionDigits: 2}));
 
         $('#pricing-info').removeClass('hidden');
+
+        // Check wallet balance
+        if (finalAmount > walletBalance) {
+            const shortfall = finalAmount - walletBalance;
+            const warningText = `Insufficient balance! You need ₦${shortfall.toLocaleString('en-US', {minimumFractionDigits: 2})} more.`;
+
+            // Update sidebar warning
+            $('#balance-warning-text').html(
+                `<i class="fas fa-exclamation-triangle mr-2"></i>${warningText}`
+            );
+            $('#balance-warning').removeClass('hidden');
+
+            // Update inline warning below amount input
+            $('#balance-warning-inline-text').text(warningText);
+            $('#balance-warning-inline').removeClass('hidden');
+
+            $('#purchase-btn').prop('disabled', true).addClass('opacity-50');
+        } else {
+            $('#balance-warning').addClass('hidden');
+            $('#balance-warning-inline').addClass('hidden');
+        }
     }
 
     // Update transaction summary

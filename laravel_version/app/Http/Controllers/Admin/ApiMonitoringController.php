@@ -123,7 +123,7 @@ class ApiMonitoringController extends Controller
             Log::info("API Service Status Changed", [
                 'service' => $service,
                 'action' => $action,
-                'admin_id' => Auth::id() ?? 'unknown'
+                'admin_id' => Auth::user()->id ?? 'unknown'
             ]);
 
             return response()->json([
@@ -358,7 +358,7 @@ class ApiMonitoringController extends Controller
 
             Log::info("Fallback APIs configured for {$service}", [
                 'fallback_count' => $enabledCount,
-                'admin_id' => Auth::id() ?? 'unknown'
+                'admin_id' => Auth::user()->id ?? 'unknown'
             ]);
 
             return response()->json([

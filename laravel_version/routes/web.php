@@ -121,6 +121,9 @@ Route::prefix('admin')->group(function () {
             Route::post('/update-airtime', [App\Http\Controllers\Admin\ApiConfigurationController::class, 'updateAirtime'])->name('update-airtime');
             Route::post('/update-data', [App\Http\Controllers\Admin\ApiConfigurationController::class, 'updateData'])->name('update-data');
 
+            Route::post('/test-uzobest', [App\Http\Controllers\Admin\ApiConfigurationController::class, 'testUzobestConnection'])->name('test-uzobest');
+            Route::post('/fetch-uzobest-plans', [App\Http\Controllers\Admin\ApiConfigurationController::class, 'fetchUzobestPlans'])->name('fetch-uzobest-plans');
+
             Route::get('/providers', [App\Http\Controllers\Admin\ApiConfigurationController::class, 'providers'])->name('providers');
             Route::get('/providers/create', [App\Http\Controllers\Admin\ApiConfigurationController::class, 'createProvider'])->name('providers.create');
             Route::post('/providers', [App\Http\Controllers\Admin\ApiConfigurationController::class, 'storeProvider'])->name('providers.store');

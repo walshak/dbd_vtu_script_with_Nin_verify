@@ -195,14 +195,14 @@ class UzobestSyncService
 
     /**
      * Validate meter number for electricity payment
-     * Endpoint: GET /api/validatemeter?meternumber={meter}&disconame={disco_id}&mtype={meter_type}
+     * Endpoint: GET /api/validatemeter?meternumber={meter}&disconame={disco_name}&mtype={meter_type}
      *
      * @param string $meterNumber Meter number
-     * @param int $discoProviderId Uzobest disco provider ID
-     * @param int $meterType Meter type ID (1=PREPAID, 2=POSTPAID)
+     * @param string $discoProviderName Uzobest disco provider name (e.g., "Jos Electric")
+     * @param string $meterType Meter type string ("PREPAID" or "POSTPAID")
      * @return array Validation result with customer details
      */
-    public function validateMeter(string $meterNumber, int $discoProviderId, int $meterType): array
+    public function validateMeter(string $meterNumber, string $discoProviderName, string $meterType): array
     {
         try {
             if (empty($this->apiKey)) {
@@ -216,14 +216,14 @@ class UzobestSyncService
                 'Authorization' => 'Token ' . $this->apiKey,
             ])->timeout(20)->get($this->apiUrl . '/validatemeter', [
                 'meternumber' => $meterNumber,
-                'disconame' => $discoProviderId,
+                'disconame' => $discoProviderName,
                 'mtype' => $meterType
             ]);
 
             if (!$response->successful()) {
                 Log::error('Uzobest meter validation error', [
                     'meter' => $meterNumber,
-                    'disco_id' => $discoProviderId,
+                    'disco_name' => $discoProviderName,
                     'meter_type' => $meterType,
                     'status' => $response->status(),
                     'body' => $response->body()
@@ -237,6 +237,16 @@ class UzobestSyncService
             }
 
             $data = $response->json();
+
+            // Log the full Uzobest API response for debugging
+            Log::info('Uzobest validateMeter API Response', [
+                'meter' => $meterNumber,
+                'disco_name' => $discoProviderName,
+                'meter_type' => $meterType,
+                'status_code' => $response->status(),
+                'response_data' => $data,
+                'raw_body' => $response->body()
+            ]);
 
             // Check if validation was successful
             $isValid = isset($data['name']) || isset($data['Customer_Name']);
@@ -273,31 +283,38 @@ class UzobestSyncService
 
         try {
             // Uzobest returns data in format:
-            // Each network has plans categorized by type (SME, Gifting, Corporate)
-            // Example structure:
             // {
-            //   "MTN": {
-            //     "SME": [{"id": 1, "plan": "500MB", "price": 100, "validity": "30 days"}],
-            //     "Gifting": [...],
-            //     "Corporate": [...]
-            //   },
-            //   "AIRTEL": {...}
+            //   "MTN_PLAN": [{"id": 1, "plan": "500MB", "plan_type": "SME", "plan_amount": 100, ...}],
+            //   "GLO_PLAN": [...],
+            //   "AIRTEL_PLAN": [...],
+            //   "9MOBILE_PLAN": [...]
             // }
 
-            foreach ($rawData as $networkName => $planTypes) {
-                if (!is_array($planTypes)) {
+            foreach ($rawData as $networkKey => $plans) {
+                if (!is_array($plans) || empty($plans)) {
                     continue;
                 }
 
-                $organizedPlans[$networkName] = [
-                    'SME' => $planTypes['SME'] ?? $planTypes['sme'] ?? [],
-                    'Gifting' => $planTypes['Gifting'] ?? $planTypes['gifting'] ?? [],
-                    'Corporate' => $planTypes['Corporate'] ?? $planTypes['corporate'] ?? []
-                ];
+                // Group plans by type (SME, Gifting, Corporate, etc.)
+                $groupedPlans = [];
+                foreach ($plans as $plan) {
+                    $planType = $plan['plan_type'] ?? 'SME'; // Default to SME if not specified
+
+                    if (!isset($groupedPlans[$planType])) {
+                        $groupedPlans[$planType] = [];
+                    }
+
+                    $groupedPlans[$planType][] = $plan;
+                }
+
+                $organizedPlans[$networkKey] = $groupedPlans;
             }
 
             Log::info('Uzobest data plans parsed', [
-                'networks' => array_keys($organizedPlans)
+                'networks' => array_keys($organizedPlans),
+                'total_plans' => array_sum(array_map(function($network) {
+                    return array_sum(array_map('count', $network));
+                }, $organizedPlans))
             ]);
 
             return $organizedPlans;
@@ -355,37 +372,81 @@ class UzobestSyncService
 
     /**
      * Get Uzobest cable provider IDs mapping
+     * CRITICAL: These IDs are from official Uzobest documentation
      *
      * @return array Cable provider name to ID mapping
      */
     public function getCableProviderMapping(): array
     {
         return [
-            'DSTV' => 1,
-            'GOTV' => 2,
-            'STARTIMES' => 3,
+            'GOTV' => 1,      // ✓ Official Uzobest ID
+            'DSTV' => 2,      // ✓ Official Uzobest ID
+            'STARTIME' => 3,  // ✓ Official Uzobest ID (note: STARTIME not STARTIMES)
+        ];
+    }
+
+    /**
+     * Get OFFICIAL Uzobest cable plan ID mappings
+     * Source: Uzobest API documentation (verified Dec 16, 2025)
+     *
+     * CRITICAL: These are the ACTUAL Uzobest plan IDs, not sequential numbers
+     * Format: 'provider-planname' => official_uzobest_plan_id
+     *
+     * @return array Plan identifier to Uzobest numeric ID mapping
+     */
+    public function getStandardCablePlanMapping(): array
+    {
+        return [
+            // DSTV Plans (cablename: 2)
+            'dstv-padi' => 20,              // ₦4,400
+            'dstv-yanga' => 6,              // ₦6,000
+            'dstv-confam' => 19,            // ₦11,000
+            'dstv-compact' => 7,            // ₦19,000
+            'dstv-compact-plus' => 8,       // ₦30,000
+            'dstv-premium' => 9,            // ₦44,500
+
+            // GOTV Plans (cablename: 1)
+            'gotv-smallie' => 34,           // ₦1,900 Monthly
+            'gotv-jinja' => 16,             // ₦3,900
+            'gotv-jolli' => 17,             // ₦5,800
+            'gotv-max' => 2,                // ₦8,500
+            'gotv-supa' => 47,              // ₦11,400
+
+            // STARTIME Plans (cablename: 3)
+            'startimes-nova' => 14,         // ₦2,100 Monthly
+            'startime-nova' => 14,          // Alternative spelling
+            'startimes-basic' => 12,        // ₦4,000
+            'startime-basic' => 12,         // Alternative spelling
+            'startimes-smart' => 13,        // ₦5,100
+            'startime-smart' => 13,         // Alternative spelling
+            'startimes-classic' => 11,      // ₦6,000
+            'startime-classic' => 11,       // Alternative spelling
+            'startimes-super' => 15,        // ₦9,800
+            'startime-super' => 15,         // Alternative spelling
         ];
     }
 
     /**
      * Get Uzobest electricity disco provider IDs mapping
-     * These IDs need to be determined from Uzobest documentation/testing
+     * Official mapping from Uzobest API documentation
      *
      * @return array Disco provider name to ID mapping
      */
     public function getDiscoProviderMapping(): array
     {
-        // TODO: Complete this mapping from Uzobest documentation
         return [
-            'EKEDC' => 1,
-            'IKEDC' => 2,
-            'AEDC' => 3,
-            'KEDCO' => 4,
-            'PHED' => 5,
-            'JED' => 6,
-            'IBEDC' => 7,
-            'KAEDCO' => 8,
-            'EEDC' => 9,
+            'IKEDC' => 1,    // Ikeja Electric
+            'EKEDC' => 2,    // Eko Electric
+            'AEDC' => 3,     // Abuja Electric
+            'KEDCO' => 4,    // Kano Electric
+            'EEDC' => 5,     // Enugu Electric
+            'PHED' => 6,     // Port Harcourt Electric
+            'IBEDC' => 7,    // Ibadan Electric
+            'KAEDCO' => 8,   // Kaduna Electric
+            'JED' => 9,      // Jos Electric
+            'BEDC' => 10,    // Benin Electric
+            'YEDC' => 11,    // Yola Electric
+            'ABA' => 12,     // Aba Electric
         ];
     }
 

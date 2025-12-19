@@ -324,7 +324,7 @@
                         Your Selling Price (₦) *
                     </label>
                     <input type="number" step="0.01" placeholder="Enter selling price" name="selling_price" id="editSellingPrice"
-                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500" required>
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500" required oninput="updateEditProfit()">
                     <p class="text-xs text-gray-500 mt-1">This is the price customers will pay</p>
                 </div>
 
@@ -348,81 +348,6 @@
                     </button>
                     <button type="button" onclick="submitEditDataPlan()" class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200">
                         <i class="fas fa-save mr-2"></i>Update Price
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="md:col-span-2">
-                        <label for="editNetwork" class="block text-sm font-medium text-gray-700 mb-2">Network</label>
-                        <select name="network" id="editNetwork" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
-                            <option value="">Select Network</option>
-                            @foreach($networks as $network)
-                                <option value="{{ $network->nId }}">{{ strtoupper($network->network) }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <div>
-                        <label for="editDataname" class="block text-sm font-medium text-gray-700 mb-2">Plan Name</label>
-                        <input type="text" placeholder="Plan Name" name="dataname" id="editDataname"
-                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
-                    </div>
-
-                    <div>
-                        <label for="editDatatype" class="block text-sm font-medium text-gray-700 mb-2">Data Type</label>
-                        <select name="datatype" id="editDatatype" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
-                            <option value="Gifting">Gifting</option>
-                            <option value="SME">SME</option>
-                            <option value="Corporate">Corporate</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label for="editPlanid" class="block text-sm font-medium text-gray-700 mb-2">Plan ID</label>
-                        <input type="text" placeholder="Plan ID" name="planid" id="editPlanid"
-                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
-                    </div>
-
-                    <div>
-                        <label for="editDuration" class="block text-sm font-medium text-gray-700 mb-2">Duration (Days)</label>
-                        <input type="number" placeholder="Days" name="duration" id="editDuration"
-                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
-                    </div>
-
-                    <div class="md:col-span-2">
-                        <label for="editPrice" class="block text-sm font-medium text-gray-700 mb-2">Buying Price (₦)</label>
-                        <input type="number" step="0.01" placeholder="Buying Price" name="price" id="editPrice"
-                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
-                    </div>
-
-                    <div>
-                        <label for="editUserprice" class="block text-sm font-medium text-gray-700 mb-2">User Price (₦)</label>
-                        <input type="number" step="0.01" placeholder="User Price" name="userprice" id="editUserprice"
-                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
-                    </div>
-
-                    <div>
-                        <label for="editAgentprice" class="block text-sm font-medium text-gray-700 mb-2">Agent Price (₦)</label>
-                        <input type="number" step="0.01" placeholder="Agent Price" name="agentprice" id="editAgentprice"
-                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
-                    </div>
-
-                    <div>
-                        <label for="editVendorprice" class="block text-sm font-medium text-gray-700 mb-2">Vendor Price (₦)</label>
-                        <input type="number" step="0.01" placeholder="Vendor Price" name="vendorprice" id="editVendorprice"
-                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
-                    </div>
-                </div>
-
-                <div class="flex justify-end space-x-3 pt-4">
-                    <button type="button" onclick="closeEditModal()" class="bg-gray-500 hover:bg-gray-600 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200">
-                        Cancel
-                    </button>
-                    <button type="button" onclick="updateDataPlan()" class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200">
-                        <i class="fas fa-save mr-2"></i>Update Plan
                     </button>
                 </div>
             </form>
@@ -642,12 +567,15 @@ function editDataPlan(planId) {
             document.getElementById('editPlanName').textContent = plan.dPlan;
             document.getElementById('editPlanNetwork').textContent = plan.network?.network || 'N/A';
             document.getElementById('editPlanType').textContent = plan.dGroup;
-            document.getElementById('editPlanValidity').textContent = plan.dValidity;
+            document.getElementById('editPlanValidity').textContent = plan.dValidity + ' days';
             document.getElementById('editCostPrice').value = '₦' + costPrice.toFixed(2);
-            document.getElementById('editSellingPrice').value = sellingPrice;
+            document.getElementById('editSellingPrice').value = sellingPrice.toFixed(2);
+
+            // Store cost price in data attribute for calculation
+            document.getElementById('editSellingPrice').dataset.costPrice = costPrice;
 
             // Calculate and display profit
-            updateEditProfit(costPrice, sellingPrice);
+            updateEditProfit();
 
             // Show modal
             document.getElementById('editDataPlans').classList.remove('hidden');
@@ -661,14 +589,11 @@ function editDataPlan(planId) {
     });
 }
 
-// Update profit calculation when selling price changes
-document.getElementById('editSellingPrice')?.addEventListener('input', function() {
-    const costPrice = parseFloat(document.getElementById('editCostPrice').value.replace('₦', '') || 0);
-    const sellingPrice = parseFloat(this.value || 0);
-    updateEditProfit(costPrice, sellingPrice);
-});
+function updateEditProfit() {
+    const sellingInput = document.getElementById('editSellingPrice');
+    const cost = parseFloat(sellingInput.dataset.costPrice || 0);
+    const selling = parseFloat(sellingInput.value || 0);
 
-function updateEditProfit(cost, selling) {
     const profit = selling - cost;
     const profitMargin = cost > 0 ? ((profit / cost) * 100) : 0;
 
@@ -689,14 +614,22 @@ function updateEditProfit(cost, selling) {
 }
 
 function submitEditDataPlan() {
-    const form = document.getElementById('editDataPlanForm');
-    const formData = new FormData(form);
     const planId = document.getElementById('editPlanId').value;
+    const sellingPrice = document.getElementById('editSellingPrice').value;
+
+    if (!sellingPrice || parseFloat(sellingPrice) < 0) {
+        alert('Please enter a valid selling price');
+        return;
+    }
 
     const submitBtn = event.target;
     const originalText = submitBtn.innerHTML;
     submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Updating...';
     submitBtn.disabled = true;
+
+    const formData = new FormData();
+    formData.append('selling_price', sellingPrice);
+    formData.append('_method', 'PUT');
 
     fetch(`{{ url('/admin/data-plans') }}/${planId}`, {
         method: 'POST',
@@ -718,7 +651,7 @@ function submitEditDataPlan() {
     })
     .catch(error => {
         console.error('Error:', error);
-        alert('Failed to update plan');
+        alert('Failed to update plan: ' + error.message);
         submitBtn.innerHTML = originalText;
         submitBtn.disabled = false;
     });

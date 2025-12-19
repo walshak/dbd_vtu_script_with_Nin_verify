@@ -30,27 +30,57 @@ class DataService
     public function purchaseData($userId, $network, $phone, $planId, $dataGroup = 'SME', $portedNumber = false)
     {
         try {
+            Log::info('Data purchase started', [
+                'user_id' => $userId,
+                'network' => $network,
+                'phone' => $phone,
+                'plan_id' => $planId,
+                'data_group' => $dataGroup
+            ]);
+
             // Validate user
             $user = User::find($userId);
             if (!$user) {
+                Log::warning('User not found', ['user_id' => $userId]);
                 return $this->errorResponse('User not found');
             }
 
             // Validate network
             $networkDetails = NetworkId::getByName($network);
             if (!$networkDetails) {
+                Log::warning('Invalid network', ['network' => $network]);
                 return $this->errorResponse('Invalid network selected');
             }
 
             // Get data plan
             $dataPlan = DataPlan::getByNetworkAndPlanId($networkDetails->nId, $planId);
             if (!$dataPlan) {
+                Log::warning('Invalid data plan', [
+                    'network_id' => $networkDetails->nId,
+                    'plan_id' => $planId
+                ]);
                 return $this->errorResponse('Invalid data plan selected');
+            }
+
+            // Check if uzobest_plan_id is set
+            if (empty($dataPlan->uzobest_plan_id)) {
+                Log::error('Uzobest plan ID not configured', [
+                    'plan_id' => $planId,
+                    'plan_name' => $dataPlan->dPlan,
+                    'message' => 'The uzobest_plan_id field is empty in the database. Please fetch and save Uzobest plans from the admin panel.'
+                ]);
+                return $this->errorResponse('Data plan not properly configured. Please contact administrator.');
             }
 
             // Calculate final amount after discount
             $finalAmount = $dataPlan->calculateFinalAmount($user->sType);
             $profit = $dataPlan->calculateProfit($finalAmount); // Calculate profit
+
+            Log::info('Data plan pricing calculated', [
+                'final_amount' => $finalAmount,
+                'profit' => $profit,
+                'user_type' => $user->sType
+            ]);
 
             // Check for duplicate transaction
             if (Transaction::checkDuplicate($userId, Transaction::SERVICE_DATA, $finalAmount, 60)) {
@@ -105,7 +135,16 @@ class DataService
                 return $this->errorResponse($apiResponse['message'] ?? 'Data purchase failed');
             }
         } catch (Exception $e) {
-            Log::error('Data Purchase Error: ' . $e->getMessage());
+            Log::error('Data Purchase Error', [
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+                'user_id' => $userId ?? null,
+                'network' => $network ?? null,
+                'phone' => $phone ?? null,
+                'plan_id' => $planId ?? null,
+                'line' => $e->getLine(),
+                'file' => $e->getFile()
+            ]);
             return $this->errorResponse('Data purchase failed. Please try again.');
         }
     }
@@ -113,11 +152,23 @@ class DataService
     protected function processDataAPI($networkDetails, $dataPlan, $phone, $reference, $dataGroup, $portedNumber = false)
     {
         try {
+            // Get the plan ID - use uzobest_plan_id if available, otherwise fall back to dPlanId
+            $planId = $dataPlan->uzobest_plan_id ?? $dataPlan->dPlanId ?? '';
+
+            Log::info('Processing data API call', [
+                'network' => $networkDetails->network,
+                'phone' => $phone,
+                'plan_id' => $planId,
+                'uzobest_plan_id' => $dataPlan->uzobest_plan_id,
+                'dPlanId' => $dataPlan->dPlanId,
+                'data_group' => $dataGroup
+            ]);
+
             // Use the real external API service
             $result = $this->externalApiService->purchaseData(
                 $networkDetails->network,
                 $phone,
-                $dataPlan->sPlanId, // Plan ID from the database
+                $planId, // Plan ID from the database for Uzobest API
                 $dataGroup,
                 $portedNumber // Pass ported number flag to API
             );
@@ -336,30 +387,44 @@ class DataService
         try {
             $user = User::find($userId);
             if (!$user) {
+                Log::warning('User not found for data plans', ['userId' => $userId]);
                 return [];
             }
 
             $networkDetails = NetworkId::getByName($network);
             if (!$networkDetails) {
+                Log::warning('Network not found for data plans', ['network' => $network]);
                 return [];
             }
 
+            Log::info('Fetching data plans', [
+                'network' => $network,
+                'networkId' => $networkDetails->nId,
+                'dataGroup' => $dataGroup,
+                'userType' => $user->sType
+            ]);
+
             $plans = DataPlan::getByNetworkAndGroup($networkDetails->nId, $dataGroup);
 
+            Log::info('Found data plans', ['count' => $plans->count()]);
+
             return $plans->map(function ($plan) use ($user) {
+                $price = $plan->getPriceForUserType($user->sType);
                 return [
                     'id' => $plan->dPlanId,
                     'plan_id' => $plan->dPlanId,
                     'name' => $plan->dPlan,
                     'plan' => $plan->dPlan,
                     'amount' => $plan->dAmount,
-                    'price' => $plan->getPriceForUserType($user->sType),
+                    'price' => $price,
                     'validity' => $plan->dValidity,
                     'group' => $plan->dGroup
                 ];
             })->toArray();
         } catch (Exception $e) {
-            Log::error('Get Data Plans Error: ' . $e->getMessage());
+            Log::error('Get Data Plans Error: ' . $e->getMessage(), [
+                'trace' => $e->getTraceAsString()
+            ]);
             return [];
         }
     }

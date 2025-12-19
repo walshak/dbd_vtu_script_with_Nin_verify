@@ -30,28 +30,28 @@ class ElectricityController extends Controller
         try {
             // Get active electricity providers
             $providers = ElectricityProvider::active()->orderBy('ePlan')->get();
-            
+
             // Get site settings for service charges and limits
             $siteSettings = SiteSettings::getSiteSettings();
             $serviceCharges = $siteSettings->electricitycharges ?? 50;
             $minimumAmount = $siteSettings->electricity_minimum_amount ?? 1000;
             $maximumAmount = $siteSettings->electricity_maximum_amount ?? 50000;
-            
+
             // Check maintenance mode
             $maintenanceMode = $siteSettings->electricity_maintenance_mode ?? false;
             $maintenanceMessage = $siteSettings->electricity_maintenance_message ?? 'Electricity service is temporarily unavailable.';
-            
+
             // Get recent transactions for the user
-            $recentTransactions = Transaction::where('sId', Auth::id())
+            $recentTransactions = Transaction::where('sId', Auth::user()->id)
                 ->where('servicename', 'Electricity Bill')
                 ->orderBy('date', 'desc')
                 ->limit(5)
                 ->get();
 
             return view('electricity.index', compact(
-                'providers', 
-                'serviceCharges', 
-                'minimumAmount', 
+                'providers',
+                'serviceCharges',
+                'minimumAmount',
                 'maximumAmount',
                 'maintenanceMode',
                 'maintenanceMessage',
@@ -133,7 +133,7 @@ class ElectricityController extends Controller
         }
 
         $result = $this->electricityService->purchaseElectricity(
-            Auth::id(),
+            Auth::user()->id,
             $request->provider,
             $request->meter_number,
             $request->meter_type,
@@ -150,7 +150,7 @@ class ElectricityController extends Controller
      */
     public function history()
     {
-        $transactions = Transaction::where('tUser', Auth::id())
+        $transactions = Transaction::where('tUser', Auth::user()->id)
             ->where('tType', Transaction::TYPE_ELECTRICITY)
             ->orderBy('tDate', 'desc')
             ->paginate(20);

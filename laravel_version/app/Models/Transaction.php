@@ -24,7 +24,13 @@ class Transaction extends Model
         'oldbal',
         'newbal',
         'profit',
-        'date'
+        'date',
+        // New columns
+        'service_name',
+        'service_description',
+        'old_balance',
+        'new_balance',
+        'api_response'
     ];
 
     protected $casts = [
@@ -102,14 +108,21 @@ class Transaction extends Model
         $transaction = new static();
         $transaction->sId = $data['user_id'];
         $transaction->transref = $data['reference'] ?? static::generateReference($data['type'] ?? '');
+        // Old columns
         $transaction->servicename = $data['servicename'];
         $transaction->servicedesc = $data['description'];
         $transaction->amount = (string) $data['amount'];
-        $transaction->status = $data['status'] ?? 0; // 0 = success, 1 = failed in old system
+        $transaction->status = $data['status'] ?? 1; // 1 = success (as per database schema)
         $transaction->oldbal = (string) ($data['old_balance'] ?? '0');
         $transaction->newbal = (string) ($data['new_balance'] ?? '0');
         $transaction->profit = $data['profit'] ?? 0;
         $transaction->date = now();
+        // New columns (required by schema)
+        $transaction->service_name = strtolower(str_replace([' ', '_'], '-', $data['servicename']));
+        $transaction->service_description = $data['description'];
+        $transaction->old_balance = $data['old_balance'] ?? 0;
+        $transaction->new_balance = $data['new_balance'] ?? 0;
+        $transaction->api_response = $data['api_response'] ?? null;
 
         $transaction->save();
         return $transaction;

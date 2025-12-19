@@ -35,28 +35,49 @@ class TransactionController extends Controller
             $limit = $request->get('limit', 10);
             $service = $request->get('service');
 
-            $query = Transaction::where('sId', $user->sId);
+            $query = Transaction::where('sId', $user->id);
 
             if ($service) {
-                $query->where('servicename', $service);
+                // Case-insensitive service name matching
+                $query->whereRaw('LOWER(servicename) = ?', [strtolower($service)]);
             }
 
             $transactions = $query->orderBy('date', 'desc')
                 ->limit($limit)
                 ->get()
                 ->map(function ($transaction) {
+                    // Parse service description to extract phone and network
+                    $serviceDesc = $transaction->servicedesc ?? '';
+                    $phone = '';
+                    $network = '';
+
+                    // Extract phone number (11 digits)
+                    if (preg_match('/(\d{11})/', $serviceDesc, $matches)) {
+                        $phone = $matches[1];
+                    }
+
+                    // Extract network from service description
+                    if (preg_match('/(MTN|GLO|AIRTEL|9MOBILE)/i', $serviceDesc, $matches)) {
+                        $network = strtoupper($matches[1]);
+                    }
+
+                    // Determine status text
+                    $statusText = $transaction->status == 1 ? 'Completed' :
+                                 ($transaction->status == 0 ? 'Pending' : 'Failed');
+
                     return [
                         'id' => $transaction->tId,
                         'reference' => $transaction->transref,
                         'service_type' => $transaction->servicename,
                         'service_name' => $this->formatServiceName($transaction->servicename),
-                        'amount' => number_format($transaction->amount, 2),
-                        'status' => $transaction->status,
-                        'phone' => $transaction->servicedesc ?? '',
-                        'network' => $transaction->servicename,
+                        'amount' => $transaction->amount,
+                        'status' => $statusText,
+                        'status_code' => $transaction->status,
+                        'phone' => $phone,
+                        'network' => $network ?: strtoupper($transaction->servicename),
+                        'description' => $serviceDesc,
                         'created_at' => date('M d, Y H:i', strtotime($transaction->date)),
-                        'created_at_human' => Carbon::parse($transaction->date)->diffForHumans(),
-                        'details' => $this->formatTransactionDetails($transaction)
+                        'created_at_human' => Carbon::parse($transaction->date)->diffForHumans()
                     ];
                 });
 
@@ -86,7 +107,7 @@ class TransactionController extends Controller
             $user = Auth::user();
 
             $transaction = Transaction::where('transref', $reference)
-                ->where('sId', $user->sId)
+                ->where('sId', $user->id)
                 ->first();
 
             if (!$transaction) {
@@ -96,23 +117,58 @@ class TransactionController extends Controller
                 ], 404);
             }
 
-            // Generate HTML receipt instead of PDF for now
+            // Parse service description to extract details
+            $serviceDesc = $transaction->servicedesc ?? '';
+            $phone = '';
+            $network = '';
+            $serviceType = $transaction->servicename ?? 'Transaction';
+
+            // Extract phone number (11 digits)
+            if (preg_match('/(\d{11})/', $serviceDesc, $matches)) {
+                $phone = $matches[1];
+            }
+
+            // Extract network (MTN, GLO, AIRTEL, 9MOBILE, etc.)
+            if (preg_match('/(MTN|GLO|AIRTEL|9MOBILE|DSTV|GOTV|STARTIMES|EKEDC|IKEDC|AEDC)/i', $serviceDesc, $matches)) {
+                $network = strtoupper($matches[1]);
+            }
+
+            // Format transaction data for receipt view
+            $formattedTransaction = (object) [
+                'reference' => $transaction->transref,
+                'service_type' => $serviceType,
+                'servicedesc' => $serviceDesc,
+                'phone' => $phone,
+                'network' => $network,
+                'amount' => $transaction->amount,
+                'status' => $transaction->status == 1 ? 'Completed' : ($transaction->status == 0 ? 'Pending' : 'Failed'),
+                'created_at' => $transaction->date,
+                'oldbal' => $transaction->oldbal,
+                'newbal' => $transaction->newbal,
+            ];
+
+            // Generate HTML receipt
             $receiptData = [
-                'transaction' => $transaction,
+                'transaction' => $formattedTransaction,
                 'user' => $user,
                 'generated_at' => now(),
                 'company' => [
                     'name' => config('app.name', 'VTU Platform'),
-                    'email' => config('mail.from.address'),
-                    'phone' => config('app.support_phone', 'N/A')
+                    'email' => config('mail.from.address', 'support@vtu.com'),
+                    'phone' => config('app.support_phone', '+234 XXX XXX XXXX')
                 ]
             ];
 
             return view('receipts.transaction', $receiptData);
         } catch (\Exception $e) {
+            \Log::error('Receipt generation failed', [
+                'reference' => $reference,
+                'error' => $e->getMessage()
+            ]);
+
             return response()->json([
                 'status' => 'error',
-                'message' => 'Failed to generate receipt'
+                'message' => 'Failed to generate receipt: ' . $e->getMessage()
             ], 500);
         }
     }

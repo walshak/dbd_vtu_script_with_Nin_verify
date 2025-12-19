@@ -123,26 +123,9 @@
                                 <span class="ml-2 text-xs text-gray-500">(Required)</span>
                             </label>
 
-                            @php
-                                $discoLogos = [
-                                    'aedc' => 'https://aedcelectricity.com/wp-content/uploads/2020/10/AEDC-LOGO.png',
-                                    'bedc' => 'https://bedcpower.com/assets/images/logo.png',
-                                    'eedc' => 'https://www.eedcng.com/wp-content/uploads/2019/07/eedc-logo.png',
-                                    'eko' => 'https://www.ekedp.com/wp-content/uploads/2019/06/logo.png',
-                                    'ibadan' => 'https://www.ibedc.com/wp-content/uploads/2019/04/logo.png',
-                                    'ikeja' => 'https://www.ikejaelectric.com/wp-content/uploads/2019/05/logo.png',
-                                    'jos' => 'https://www.jed.ng/wp-content/uploads/2019/06/jed-logo.png',
-                                    'kaduna' => 'https://www.kedco.ng/wp-content/uploads/2019/05/kedco-logo.png',
-                                    'kano' => 'https://www.kedco.ng/wp-content/uploads/2019/05/kedco-logo.png',
-                                    'phed' => 'https://www.phed.ng/wp-content/uploads/2019/06/phed-logo.png',
-                                    'yola' => 'https://www.yedcng.com/wp-content/uploads/2019/06/yedc-logo.png'
-                                ];
-                            @endphp
-
                             <div class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                                 @foreach($providers as $provider)
                                     @php
-                                        $discoKey = strtolower(str_replace(' ', '', $provider->ePlan));
                                         $discoName = strtoupper($provider->ePlan);
                                     @endphp
                                     <label class="relative cursor-pointer disco-option">
@@ -154,13 +137,15 @@
                                             <div class="flex flex-col items-center space-y-3">
                                                 <!-- Logo Section -->
                                                 <div class="relative">
-                                                    <img src="{{ $discoLogos[$discoKey] ?? 'data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 40\"><rect width=\"100\" height=\"40\" fill=\"%23ea580c\"/><text x=\"50\" y=\"25\" text-anchor=\"middle\" fill=\"white\" font-size=\"10\">' . strtoupper(substr($discoName, 0, 5)) . '</text></svg>' }}"
-                                                         alt="{{ $discoName }}"
-                                                         class="h-12 w-auto max-w-20 group-hover:scale-110 transition-transform duration-300"
-                                                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                                                    <div class="hidden flex-col items-center justify-center h-12 w-20 bg-orange-100 rounded text-orange-600">
-                                                        <i class="fas fa-bolt text-xl"></i>
-                                                    </div>
+                                                    @if($provider->logo_path && file_exists(public_path($provider->logo_path)))
+                                                        <img src="{{ asset($provider->logo_path) }}"
+                                                             alt="{{ $discoName }}"
+                                                             class="h-12 w-auto max-w-20 group-hover:scale-110 transition-transform duration-300">
+                                                    @else
+                                                        <div class="flex flex-col items-center justify-center h-12 w-20 bg-orange-100 rounded text-orange-600">
+                                                            <i class="fas fa-bolt text-xl"></i>
+                                                        </div>
+                                                    @endif
                                                 </div>
 
                                                 <!-- DISCO Info -->
@@ -249,21 +234,28 @@
                                 Step 3: Enter Meter Number
                                 <span class="ml-2 text-xs text-gray-500">(Required)</span>
                             </label>
-                            <div class="relative">
-                                <input type="text" id="meter_number" name="meter_number" required
-                                       class="w-full px-4 py-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300 pr-12"
-                                       placeholder="Enter your meter number"
-                                       maxlength="15">
-                                <div class="absolute inset-y-0 right-0 flex items-center pr-3">
-                                    <div id="meterValidationIcon" class="hidden">
-                                        <i class="fas fa-spinner fa-spin text-gray-400"></i>
+                            <div class="flex gap-2">
+                                <div class="flex-1 relative">
+                                    <input type="text" id="meter_number" name="meter_number" required
+                                           class="w-full px-4 py-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300 pr-12"
+                                           placeholder="Enter your meter number"
+                                           maxlength="15">
+                                    <div class="absolute inset-y-0 right-0 flex items-center pr-3">
+                                        <div id="meterValidationIcon" class="hidden">
+                                            <i class="fas fa-spinner fa-spin text-gray-400"></i>
+                                        </div>
                                     </div>
                                 </div>
+                                <button type="button" id="validateMeterBtn"
+                                        class="bg-gradient-to-r from-orange-500 to-red-600 text-white px-6 py-3 rounded-xl font-semibold hover:from-orange-600 hover:to-red-700 transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
+                                        disabled>
+                                    <i class="fas fa-check-circle mr-2"></i>Validate
+                                </button>
                             </div>
                             <div class="text-red-500 text-sm mt-2 hidden" id="meter-error">Please enter a valid meter number.</div>
 
                             <!-- Customer Verification Section -->
-                            <div id="customer-info" class="hidden mt-6">
+                            <div id="customer-info" class="hidden mt-4">
                                 <div class="bg-green-50 border border-green-200 rounded-xl p-6">
                                     <h4 class="text-green-800 font-semibold mb-3 flex items-center">
                                         <i class="fas fa-user-check mr-2"></i>Customer Information Verified
@@ -351,11 +343,6 @@
 
                         <!-- Action Buttons -->
                         <div class="flex flex-col sm:flex-row gap-4">
-                            <button type="button" id="validateMeterBtn"
-                                    class="flex-1 bg-white border-2 border-orange-500 text-orange-600 px-6 py-3 rounded-xl font-semibold hover:bg-orange-50 transition-all duration-300">
-                                <i class="fas fa-check-circle mr-2"></i>Validate Meter
-                            </button>
-
                             <button type="submit" id="purchaseBtn" disabled
                                     class="flex-1 bg-gradient-to-r from-orange-500 to-red-600 text-white px-6 py-3 rounded-xl font-semibold hover:from-orange-600 hover:to-red-700 transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed">
                                 <i class="fas fa-shopping-cart mr-2"></i>Purchase Token
@@ -498,18 +485,170 @@
 @endsection
 
 @push('scripts')
-<script src="{{ asset('js/vtu-services.js') }}"></script>
 <script>
 $(document).ready(function() {
-    // Initialize electricity service
-    if (typeof ElectricityService !== 'undefined') {
-        const electricityService = new ElectricityService({
-            validateMeterUrl: '{{ route("electricity.validate") }}',
-            purchaseUrl: '{{ route("electricity.purchase") }}',
-            serviceCharges: {{ $serviceCharges }},
-            minimumAmount: {{ $minimumAmount }},
-            maximumAmount: {{ $maximumAmount }}
+    let meterValidated = false;
+    let customerData = null;
+    const serviceCharges = {{ $serviceCharges }};
+    const minimumAmount = {{ $minimumAmount }};
+    const maximumAmount = {{ $maximumAmount }};
+
+    // Enable validate button when all required fields are filled
+    function checkValidationEnabled() {
+        const provider = $('input[name="provider"]:checked').val();
+        const meterType = $('input[name="meter_type"]:checked').val();
+        const meterNumber = $('#meter_number').val().trim();
+
+        const canValidate = provider && meterType && meterNumber.length >= 8;
+        $('#validateMeterBtn').prop('disabled', !canValidate);
+    }
+
+    // Watch for changes
+    $('input[name="provider"], input[name="meter_type"], #meter_number').on('change input', function() {
+        meterValidated = false;
+        $('#purchaseBtn').prop('disabled', true);
+        $('#customer-info').addClass('hidden');
+        $('#customer-error').addClass('hidden');
+        checkValidationEnabled();
+    });
+
+    // Validate meter button click
+    $('#validateMeterBtn').on('click', function() {
+        const provider = $('input[name="provider"]:checked').val();
+        const meterType = $('input[name="meter_type"]:checked').val();
+        const meterNumber = $('#meter_number').val().trim();
+
+        if (!provider || !meterType || !meterNumber) {
+            showError('Please fill all required fields');
+            return;
+        }
+
+        // Get provider name from the label
+        const providerName = $('input[name="provider"]:checked').closest('.disco-option').find('.font-semibold').text().trim();
+
+        validateMeter(providerName, meterNumber, meterType);
+    });
+
+    function validateMeter(provider, meterNumber, meterType) {
+        // Show loading state
+        $('#validateMeterBtn').prop('disabled', true).html('<i class="fas fa-spinner fa-spin mr-2"></i>Validating...');
+        $('#customer-info').addClass('hidden');
+        $('#customer-error').addClass('hidden');
+        $('#meterValidationIcon').removeClass('hidden');
+
+        $.ajax({
+            url: '{{ route("electricity.validate-meter") }}',
+            method: 'POST',
+            data: {
+                provider: provider,
+                meter_number: meterNumber,
+                meter_type: meterType,
+                _token: '{{ csrf_token() }}'
+            },
+            success: function(response) {
+                if (response.status === 'success') {
+                    meterValidated = true;
+                    customerData = response.data;
+
+                    // Show customer info
+                    $('#customer-name').text(customerData.customer_name || 'N/A');
+                    $('#customer-address').text(customerData.address || 'N/A');
+                    $('#tariff-class').text(customerData.tariff_class || 'N/A');
+                    $('#outstanding-balance').text('₦' + (customerData.outstanding_balance || '0.00'));
+                    $('#customer-info').removeClass('hidden');
+
+                    // Enable purchase button if amount is valid
+                    checkPurchaseEnabled();
+
+                    showSuccess('Meter validated successfully!');
+                } else {
+                    showValidationError(response.message || 'Invalid meter number');
+                }
+            },
+            error: function(xhr) {
+                const message = xhr.responseJSON?.message || 'Failed to validate meter. Please try again.';
+                showValidationError(message);
+            },
+            complete: function() {
+                $('#validateMeterBtn').prop('disabled', false).html('<i class="fas fa-check-circle mr-2"></i>Validate');
+                $('#meterValidationIcon').addClass('hidden');
+                checkValidationEnabled();
+            }
         });
+    }
+
+    function showValidationError(message) {
+        $('#customer-error-message').text(message);
+        $('#customer-error').removeClass('hidden');
+        meterValidated = false;
+        $('#purchaseBtn').prop('disabled', true);
+    }
+
+    // Check if purchase can be enabled
+    function checkPurchaseEnabled() {
+        const amount = parseFloat($('#amount').val());
+        const isAmountValid = amount >= minimumAmount && amount <= maximumAmount;
+        $('#purchaseBtn').prop('disabled', !(meterValidated && isAmountValid));
+    }
+
+    // Watch amount changes
+    $('#amount').on('input', function() {
+        checkPurchaseEnabled();
+        updateTransactionSummary();
+    });
+
+    function updateTransactionSummary() {
+        const amount = parseFloat($('#amount').val()) || 0;
+        if (amount > 0) {
+            const total = amount + serviceCharges;
+            const provider = $('input[name="provider"]:checked').closest('.disco-option').find('.font-semibold').text().trim();
+            const rate = parseFloat($('input[name="provider"]:checked').closest('.disco-option').find('.text-xs').text().replace('₦', '').replace('/kWh', ''));
+            const estimatedUnits = (amount / rate).toFixed(2);
+
+            $('#summaryAmount').text('₦' + amount.toLocaleString());
+            $('#summaryCharges').text('₦' + serviceCharges.toLocaleString());
+            $('#summaryTotal').text('₦' + total.toLocaleString());
+            $('#summaryUnits').text(estimatedUnits + ' kWh');
+            $('#transactionSummary').removeClass('hidden');
+        } else {
+            $('#transactionSummary').addClass('hidden');
+        }
+    }
+
+    // Form submission
+    $('#electricityForm').on('submit', function(e) {
+        e.preventDefault();
+
+        if (!meterValidated) {
+            showError('Please validate meter number first');
+            return;
+        }
+
+        // TODO: Implement purchase logic
+        showError('Purchase functionality coming soon');
+    });
+
+    // Reset form
+    $('#resetFormBtn').on('click', function() {
+        $('#electricityForm')[0].reset();
+        meterValidated = false;
+        customerData = null;
+        $('#customer-info').addClass('hidden');
+        $('#customer-error').addClass('hidden');
+        $('#transactionSummary').addClass('hidden');
+        $('#purchaseBtn').prop('disabled', true);
+        $('#validateMeterBtn').prop('disabled', true);
+    });
+
+    // Utility functions
+    function showError(message) {
+        // Use existing error modal or alert
+        alert(message);
+    }
+
+    function showSuccess(message) {
+        // Use existing success notification or alert
+        console.log(message);
     }
 
     // Modal functions
@@ -522,7 +661,6 @@ $(document).ready(function() {
     };
 
     window.downloadReceipt = function() {
-        // Implement receipt download functionality
         window.print();
     };
 });

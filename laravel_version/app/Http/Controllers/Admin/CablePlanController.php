@@ -85,13 +85,27 @@ class CablePlanController extends Controller
             ], 422);
         }
 
+        // Get cable provider to set uzobest_cable_id
+        $cableProvider = \App\Models\CableId::find($request->provider);
+        $uzobestCableId = $cableProvider ? $cableProvider->cableid : $request->provider;
+
+        // Calculate initial profit margin
+        $costPrice = floatval($request->price);
+        $sellingPrice = floatval($request->userprice);
+        $profitMargin = $sellingPrice - $costPrice;
+
         $plan = CablePlan::create([
             'name' => $request->planname,
             'price' => $request->price,
+            'cost_price' => $costPrice,
             'userprice' => $request->userprice,
+            'selling_price' => $sellingPrice,
+            'profit_margin' => $profitMargin,
             'agentprice' => $request->agentprice,
             'vendorprice' => $request->vendorprice,
             'planid' => $request->planid,
+            'uzobest_plan_id' => $request->planid,
+            'uzobest_cable_id' => $uzobestCableId,
             'cableprovider' => $request->provider,
             'day' => $request->duration,
             'status' => 'active'
@@ -107,9 +121,9 @@ class CablePlanController extends Controller
     /**
      * Display the specified cable plan
      */
-    public function show($id)
+    public function show(CablePlan $plan)
     {
-        $plan = CablePlan::with('provider')->findOrFail($id);
+        $plan->load('provider');
 
         return response()->json([
             'success' => true,
@@ -121,9 +135,8 @@ class CablePlanController extends Controller
      * Update the specified cable plan
      * Simplified to only update selling_price for unified pricing model
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, CablePlan $plan)
     {
-        $plan = CablePlan::findOrFail($id);
 
         // If simplified update (selling_price only)
         if ($request->has('selling_price') && !$request->has('planname')) {
@@ -139,10 +152,10 @@ class CablePlanController extends Controller
                 ], 422);
             }
 
-            // Calculate profit margin
-            $costPrice = $plan->cost_price ?? $plan->price ?? 0;
-            $sellingPrice = $request->selling_price;
-            $profitMargin = $costPrice > 0 ? (($sellingPrice - $costPrice) / $costPrice) * 100 : 0;
+            // Calculate profit margin (absolute amount, not percentage)
+            $costPrice = floatval($plan->cost_price ?? $plan->price ?? 0);
+            $sellingPrice = floatval($request->selling_price);
+            $profitMargin = $sellingPrice - $costPrice; // Absolute profit amount
 
             $plan->update([
                 'selling_price' => $sellingPrice,

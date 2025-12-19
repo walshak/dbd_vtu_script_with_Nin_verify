@@ -29,28 +29,28 @@ class CableTVController extends Controller
         try {
             // Get active cable providers
             $providers = CableId::active()->get();
-            
+
             // Get site settings
             $siteSettings = SiteSettings::getSiteSettings();
             $serviceCharges = $siteSettings->cabletvcharges ?? 50;
             $minimumAmount = $siteSettings->cabletv_minimum_amount ?? 500;
             $maximumAmount = $siteSettings->cabletv_maximum_amount ?? 50000;
-            
+
             // Check maintenance mode
             $maintenanceMode = $siteSettings->cabletv_maintenance_mode ?? false;
             $maintenanceMessage = $siteSettings->cabletv_maintenance_message ?? 'Cable TV service is temporarily unavailable.';
-            
+
             // Get recent transactions for the user
-            $recentTransactions = Transaction::where('sId', Auth::id())
+            $recentTransactions = Transaction::where('sId', Auth::user()->id)
                 ->where('servicename', 'Cable Subscription')
                 ->orderBy('date', 'desc')
                 ->limit(5)
                 ->get();
 
             return view('cable-tv.index', compact(
-                'providers', 
-                'serviceCharges', 
-                'minimumAmount', 
+                'providers',
+                'serviceCharges',
+                'minimumAmount',
                 'maximumAmount',
                 'maintenanceMode',
                 'maintenanceMessage',
@@ -73,30 +73,41 @@ class CableTVController extends Controller
 
         if ($validator->fails()) {
             return response()->json([
-                'status' => 'error',
-                'message' => 'Invalid decoder selected'
+                'success' => false,
+                'message' => 'Invalid decoder selected',
+                'data' => []
             ], 400);
         }
 
-        // Get available decoders/providers  
-        $decoders = $this->cableTVService->getAvailableDecoders();
-        
-        if (!$request->decoder || !in_array($request->decoder, $decoders)) {
+        try {
+            // Get cable plans using the service
+            $result = $this->cableTVService->getCablePlans(
+                Auth::user()->id,
+                $request->decoder
+            );
+
+            // CableTVService returns array with status, message, data
+            if ($result['status'] === 'success') {
+                return response()->json([
+                    'success' => true,
+                    'message' => $result['message'],
+                    'data' => $result['data']['plans'] ?? []
+                ]);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => $result['message'] ?? 'Failed to load plans',
+                    'data' => []
+                ]);
+            }
+        } catch (\Exception $e) {
+            Log::error('Get Cable Plans Error: ' . $e->getMessage());
             return response()->json([
                 'success' => false,
-                'message' => 'Invalid decoder provider'
+                'message' => 'Failed to load cable plans',
+                'data' => []
             ]);
         }
-
-        $plans = $this->cableTVService->getCablePlans(
-            Auth::id(),
-            $request->decoder
-        );
-
-        return response()->json([
-            'status' => 'success',
-            'data' => $plans
-        ]);
     }
 
     /**
@@ -117,7 +128,7 @@ class CableTVController extends Controller
         }
 
         $decoders = $this->cableTVService->getAvailableDecoders();
-        
+
         if (!$request->decoder || !in_array($request->decoder, $decoders)) {
             return response()->json([
                 'status' => 'error',
@@ -152,7 +163,7 @@ class CableTVController extends Controller
         }
 
         $decoders = $this->cableTVService->getAvailableDecoders();
-        
+
         if (!$request->decoder || !in_array($request->decoder, $decoders)) {
             return response()->json([
                 'status' => 'error',
@@ -161,7 +172,7 @@ class CableTVController extends Controller
         }
 
         $result = $this->cableTVService->purchaseCableSubscription(
-            Auth::id(),
+            Auth::user()->id,
             $request->decoder,
             $request->iuc_number,
             $request->plan_id
@@ -206,7 +217,7 @@ class CableTVController extends Controller
         }
 
         $decoders = $this->cableTVService->getAvailableDecoders();
-        
+
         if (!$request->decoder || !in_array($request->decoder, $decoders)) {
             return response()->json([
                 'status' => 'error',
@@ -215,7 +226,7 @@ class CableTVController extends Controller
         }
 
         $result = $this->cableTVService->purchaseCableSubscription(
-            Auth::id(),
+            Auth::user()->id,
             $request->decoder,
             $request->iuc_number,
             $request->plan_id

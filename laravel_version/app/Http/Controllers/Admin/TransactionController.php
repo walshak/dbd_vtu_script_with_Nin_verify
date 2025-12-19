@@ -292,7 +292,7 @@ class TransactionController extends Controller
                 'old_status' => $oldStatus,
                 'new_status' => $request->status,
                 'admin_note' => $request->admin_note,
-                'admin_user' => Auth::id()
+                'admin_user' => Auth::user()->id
             ]);
 
             return back()->with('success', 'Transaction status updated successfully');

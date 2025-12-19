@@ -121,14 +121,6 @@
                                 <span class="ml-2 text-xs text-gray-500">(Required)</span>
                             </label>
                             <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                                @php
-                                    $networkLogos = [
-                                        'mtn' => 'https://cdn.jsdelivr.net/gh/bemijonathan/nigerian-telco-logos/assets/mtn.png',
-                                        'airtel' => 'https://cdn.jsdelivr.net/gh/bemijonathan/nigerian-telco-logos/assets/airtel.png',
-                                        'glo' => 'https://cdn.jsdelivr.net/gh/bemijonathan/nigerian-telco-logos/assets/glo.png',
-                                        '9mobile' => 'https://cdn.jsdelivr.net/gh/bemijonathan/nigerian-telco-logos/assets/9mobile.png'
-                                    ];
-                                @endphp
                                 @foreach($networks as $network)
                                 <label class="relative cursor-pointer network-option">
                                     <input type="radio" name="network" value="{{ $network->network }}"
@@ -137,13 +129,15 @@
                                         <div class="flex flex-col items-center space-y-3">
                                             <!-- Enhanced Logo Section -->
                                             <div class="relative">
-                                                <img src="{{ $networkLogos[strtolower($network->network)] ?? $network->logoPath }}"
-                                                     alt="{{ $network->network }}"
-                                                     class="h-12 w-auto group-hover:scale-110 transition-transform duration-300"
-                                                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                                                <div class="hidden items-center justify-center w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg">
-                                                    <i class="fas fa-signal text-xl text-white"></i>
-                                                </div>
+                                                @if($network->logo_path && file_exists(public_path($network->logo_path)))
+                                                    <img src="{{ asset($network->logo_path) }}"
+                                                         alt="{{ $network->network }}"
+                                                         class="h-12 w-auto group-hover:scale-110 transition-transform duration-300">
+                                                @else
+                                                    <div class="flex items-center justify-center w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg">
+                                                        <i class="fas fa-signal text-xl text-white"></i>
+                                                    </div>
+                                                @endif
                                             </div>
 
                                             <!-- Network Info -->
@@ -623,6 +617,8 @@ $(document).ready(function() {
         const network = $('input[name="network"]:checked').val();
         const dataGroup = $('input[name="data_group"]:checked').val();
 
+        console.log('Loading data plans for:', { network, dataGroup });
+
         if (!network || !dataGroup) {
             showEmptyPlans();
             return;
@@ -639,15 +635,19 @@ $(document).ready(function() {
                 data_group: dataGroup
             },
             success: function(response) {
+                console.log('Data plans response:', response);
                 hideLoading();
-                if (response.status === 'success' && response.data.length > 0) {
+                if (response.status === 'success' && response.data && response.data.length > 0) {
                     currentPlans = response.data;
                     displayDataPlans(response.data);
                 } else {
+                    console.warn('No plans found or invalid response');
                     showNoPlans();
                 }
             },
-            error: function() {
+            error: function(xhr, status, error) {
+                console.error('Data plans error:', { xhr, status, error });
+                console.error('Response:', xhr.responseText);
                 hideLoading();
                 showNoPlans();
             }
@@ -656,20 +656,29 @@ $(document).ready(function() {
 
     // Display data plans
     function displayDataPlans(plans) {
+        console.log('Displaying plans:', plans);
         let html = '<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-4">';
 
         plans.forEach(function(plan, index) {
+            const price = parseFloat(plan.price || 0);
+            const name = plan.name || plan.plan || 'Unknown Plan';
+            const validity = plan.validity || '30 Days';
+            const group = plan.group || 'SME';
+
             html += `
-                <div class="plan-card bg-white border-2 border-gray-200 rounded-xl p-4 cursor-pointer hover:border-blue-300 transition-all duration-300"
+                <div class="plan-card relative bg-white border-2 border-gray-200 rounded-xl p-4 cursor-pointer hover:border-blue-400 hover:shadow-lg transition-all duration-300"
                      data-plan-id="${plan.id}" data-plan='${JSON.stringify(plan)}'>
+                    <div class="plan-checkmark absolute top-2 right-2 w-6 h-6 bg-blue-500 rounded-full items-center justify-center text-white hidden">
+                        <i class="fas fa-check text-xs"></i>
+                    </div>
                     <div class="text-center">
-                        <h4 class="font-semibold text-gray-900 mb-2">${plan.name}</h4>
-                        <div class="text-2xl font-bold text-blue-600 mb-2">₦${parseFloat(plan.price).toLocaleString()}</div>
+                        <h4 class="font-semibold text-gray-900 mb-2">${name}</h4>
+                        <div class="text-2xl font-bold text-blue-600 mb-2">₦${price.toLocaleString()}</div>
                         <div class="text-sm text-gray-500 mb-2">
-                            <i class="fas fa-clock mr-1"></i>Valid for ${plan.validity}
+                            <i class="fas fa-clock mr-1"></i>Valid for ${validity}
                         </div>
                         <div>
-                            <span class="px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-800">${plan.group}</span>
+                            <span class="px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-800">${group}</span>
                         </div>
                     </div>
                 </div>
@@ -681,8 +690,14 @@ $(document).ready(function() {
 
         // Add click handlers for plan selection
         $('.plan-card').click(function() {
-            $('.plan-card').removeClass('border-blue-500 bg-blue-50');
-            $(this).addClass('border-blue-500 bg-blue-50');
+            // Remove selected state from all plans
+            $('.plan-card').removeClass('border-blue-500 bg-blue-50 shadow-xl ring-2 ring-blue-200');
+            $('.plan-card').addClass('border-gray-200');
+            $('.plan-checkmark').addClass('hidden').removeClass('flex');
+
+            // Add selected state to clicked plan
+            $(this).removeClass('border-gray-200').addClass('border-blue-500 bg-blue-50 shadow-xl ring-2 ring-blue-200');
+            $(this).find('.plan-checkmark').removeClass('hidden').addClass('flex');
 
             selectedPlan = JSON.parse($(this).attr('data-plan'));
             $('#plan_id').val(selectedPlan.id);
@@ -799,16 +814,66 @@ $(document).ready(function() {
             success: function(response) {
                 hideLoading();
                 if (response.status === 'success') {
-                    showSuccess(response.message, response.data);
-                    resetForm();
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Purchase Successful!',
+                        html: `
+                            <div class="text-left">
+                                <p><strong>Reference:</strong> ${response.data.reference}</p>
+                                <p><strong>Network:</strong> ${response.data.network}</p>
+                                <p><strong>Phone:</strong> ${response.data.phone}</p>
+                                <p><strong>Plan:</strong> ${response.data.plan}</p>
+                                <p><strong>Amount:</strong> ₦${parseFloat(response.data.amount).toLocaleString()}</p>
+                                <p><strong>New Balance:</strong> ₦${parseFloat(response.data.balance).toLocaleString()}</p>
+                            </div>
+                        `,
+                        showCancelButton: true,
+                        confirmButtonText: '<i class="fas fa-receipt mr-2"></i>View Receipt',
+                        cancelButtonText: 'Close',
+                        confirmButtonColor: '#10B981',
+                        cancelButtonColor: '#6B7280'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.open(`/receipt/${response.data.transaction_id}`, '_blank');
+                        }
+                        resetForm();
+                    });
                 } else {
-                    showError(response.message || 'Purchase failed. Please try again.');
+                    let errorMessage = response.message || 'Purchase failed. Please try again.';
+
+                    // Make error messages more user-friendly
+                    if (errorMessage.includes('insufficient balance') || errorMessage.includes('Fund your Wallet')) {
+                        errorMessage = 'Unable to complete purchase. Please contact support or try again later.';
+                    } else if (errorMessage.includes('HTTP Error')) {
+                        errorMessage = 'Service temporarily unavailable. Please try again in a few moments.';
+                    }
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Purchase Failed',
+                        text: errorMessage,
+                        confirmButtonColor: '#EF4444'
+                    });
                 }
             },
             error: function(xhr) {
                 hideLoading();
                 const response = xhr.responseJSON;
-                showError(response?.message || 'Purchase failed. Please try again.');
+                let errorMessage = response?.message || 'Network error. Please check your connection and try again.';
+
+                // Make error messages more user-friendly
+                if (errorMessage.includes('insufficient balance') || errorMessage.includes('Fund your Wallet')) {
+                    errorMessage = 'Unable to complete purchase. Please contact support or try again later.';
+                } else if (errorMessage.includes('HTTP Error')) {
+                    errorMessage = 'Service temporarily unavailable. Please try again in a few moments.';
+                }
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Purchase Failed',
+                    text: errorMessage,
+                    confirmButtonColor: '#EF4444'
+                });
             }
         });
     });
@@ -850,12 +915,22 @@ $(document).ready(function() {
 
 // Modal helper functions
 function showLoading(text) {
-    document.getElementById('loadingText').textContent = text;
-    document.getElementById('loadingModal').classList.remove('hidden');
+    const loadingTextEl = document.getElementById('loadingModalText');
+    const loadingModalEl = document.getElementById('loadingModal');
+
+    if (loadingTextEl && text) {
+        loadingTextEl.textContent = text;
+    }
+    if (loadingModalEl) {
+        loadingModalEl.classList.remove('hidden');
+    }
 }
 
 function hideLoading() {
-    document.getElementById('loadingModal').classList.add('hidden');
+    const loadingModalEl = document.getElementById('loadingModal');
+    if (loadingModalEl) {
+        loadingModalEl.classList.add('hidden');
+    }
 }
 
 function showSuccess(message, data) {

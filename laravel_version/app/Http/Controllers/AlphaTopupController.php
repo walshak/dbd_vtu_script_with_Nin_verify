@@ -113,7 +113,7 @@ class AlphaTopupController extends Controller
 
         // Use the AlphaTopupService to handle the purchase
         $result = $this->alphaTopupService->purchaseAlphaTopup(
-            Auth::id(),
+            Auth::user()->id,
             $request->provider,
             $request->phone,
             $request->amount
@@ -127,8 +127,8 @@ class AlphaTopupController extends Controller
      */
     public function history()
     {
-        $history = $this->alphaTopupService->getAlphaTopupHistory(Auth::id());
-        
+        $history = $this->alphaTopupService->getAlphaTopupHistory(Auth::user()->id);
+
         return view('user.alpha-topup-history', [
             'transactions' => $history
         ]);
@@ -140,7 +140,7 @@ class AlphaTopupController extends Controller
     public function getAvailableProviders()
     {
         $providers = AlphaTopup::getActiveProviders();
-        
+
         return response()->json([
             'status' => 'success',
             'data' => $providers->map(function ($provider) {

@@ -73,16 +73,34 @@ class UzobestApiAdapter
     /**
      * Transform cable purchase request to Uzobest format
      *
-     * @param string $cableProvider Cable provider name
-     * @param string $iucNumber IUC/Smartcard number
-     * @param string $planId Cable plan ID
+     * IMPORTANT: Uzobest expects numeric plan IDs, not string identifiers
+     * If planId is a string like "dstv-padi", it should be converted to the
+     * actual numeric Uzobest plan ID. Common patterns:
+     * - DSTV plans: typically IDs 1-10
+     * - GOTV plans: typically IDs 1-10
+     * - STARTIMES plans: typically IDs 1-10
+     *
+     * @param string $cableProvider Cable provider (dstv, gotv, startimes)
+     * @param string $iucNumber IUC/Smart card number
+     * @param string|int $planId Cable plan ID (should be numeric Uzobest ID)
      * @return array Uzobest API request format
      */
-    public function transformCablePurchaseRequest(string $cableProvider, string $iucNumber, string $planId): array
+    public function transformCablePurchaseRequest(string $cableProvider, string $iucNumber, $planId): array
     {
+        // If planId is a string identifier, try to extract numeric portion
+        // Otherwise use it as-is and cast to int
+        if (is_string($planId) && !is_numeric($planId)) {
+            // Log warning that non-numeric plan ID is being used
+            \Log::warning('Cable plan ID is not numeric', [
+                'provider' => $cableProvider,
+                'plan_id' => $planId,
+                'note' => 'Uzobest expects numeric plan IDs. Please update uzobest_plan_id in cable_plans table.'
+            ]);
+        }
+
         return [
             'cablename' => (int) $this->getCableProviderId($cableProvider),
-            'cableplan' => (int) $planId,
+            'cableplan' => is_numeric($planId) ? (int) $planId : $planId,
             'smart_card_number' => $iucNumber,
         ];
     }
@@ -99,7 +117,7 @@ class UzobestApiAdapter
     public function transformElectricityPurchaseRequest(string $discoProvider, string $meterNumber, string $meterType, float $amount): array
     {
         return [
-            'disco_name' => (int) $this->getDiscoProviderId($discoProvider),
+            'disco_name' => strtolower($discoProvider), // Uzobest expects lowercase string (e.g., "ekedc")
             'amount' => $amount,
             'meter_number' => $meterNumber,
             'MeterType' => $this->getMeterTypeId($meterType),
@@ -200,30 +218,37 @@ class UzobestApiAdapter
     }
 
     /**
-     * Get disco provider ID (public for external access)
+     * Get disco provider name for meter validation
+     * Uzobest expects full disco names: "Ikeja Electric", "Jos Electric", etc.
      */
-    public function getDiscoProviderId(string $provider): int
+    public function getDiscoProviderId(string $provider): string
     {
-        // These IDs need to be determined from Uzobest documentation
-        $map = [
-            'IKEDC' => 1,
-            'EKEDC' => 2,
-            'AEDC' => 3,
-            'PHED' => 4,
-            'JED' => 5,
-            'IBEDC' => 6,
-            'KAEDCO' => 7,
-            'KEDCO' => 8,
+        // Map provider codes to Uzobest disco names (official mapping)
+        $mapping = [
+            'IKEDC' => 'Ikeja Electric',
+            'EKEDC' => 'Eko Electric',
+            'AEDC' => 'Abuja Electric',
+            'KEDCO' => 'Kano Electric',
+            'EEDC' => 'Enugu Electric',
+            'PHED' => 'Port Harcourt Electric',
+            'IBEDC' => 'Ibadan Electric',
+            'KAEDCO' => 'Kaduna Electric',
+            'JED' => 'Jos Electric',
+            'BEDC' => 'Benin Electric',
+            'YEDC' => 'Yola Electric',
+            'ABA' => 'Aba Electric',
         ];
 
-        return $map[strtoupper($provider)] ?? 1;
+        $providerUpper = strtoupper($provider);
+        return $mapping[$providerUpper] ?? $provider;
     }
 
     /**
-     * Get meter type ID
+     * Get meter type string for Uzobest API
+     * Uzobest expects: "PREPAID" or "POSTPAID" (strings, not numeric)
      */
-    private function getMeterTypeId(string $type): int
+    public function getMeterTypeString(string $type): string
     {
-        return strtoupper($type) === 'PREPAID' ? 1 : 2;
+        return strtoupper($type) === 'PREPAID' ? 'PREPAID' : 'POSTPAID';
     }
 }

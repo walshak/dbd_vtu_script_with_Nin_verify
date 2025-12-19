@@ -135,17 +135,6 @@
                                 </label>
 
                                 @php
-                                    $providerLogos = [
-                                        'dstv' =>
-                                            'https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/DStv_logo.svg/320px-DStv_logo.svg.png',
-                                        'gotv' =>
-                                            'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/GOtv_logo.svg/320px-GOtv_logo.svg.png',
-                                        'startimes' =>
-                                            'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/StarTimes_logo.svg/320px-StarTimes_logo.svg.png',
-                                        'showmax' =>
-                                            'https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Showmax_logo.svg/320px-Showmax_logo.svg.png',
-                                    ];
-
                                     $defaultProviders = [
                                         'dstv' => 'DStv',
                                         'gotv' => 'GOtv',
@@ -157,30 +146,27 @@
                                 <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
                                     @forelse($providers ?? [] as $provider)
                                         @php
-                                            $providerName = strtolower(
-                                                $provider->network ?? ($provider->name ?? $provider),
-                                            );
-                                            $displayName = ucfirst(
-                                                $provider->name ?? ($provider->network ?? $provider),
-                                            );
+                                            $providerName = strtolower(trim($provider->provider));
+                                            $displayName = ucfirst(trim($provider->provider));
                                         @endphp
                                         <label class="relative cursor-pointer provider-option">
                                             <input type="radio" name="decoder"
-                                                value="{{ $provider->network ?? ($provider->name ?? $provider) }}"
+                                                value="{{ $provider->provider }}"
                                                 class="sr-only peer" required>
                                             <div
                                                 class="provider-card group bg-white border-2 border-gray-200 rounded-xl p-4 text-center hover:border-purple-300 hover:shadow-md peer-checked:border-purple-500 peer-checked:bg-purple-50 peer-checked:shadow-lg transition-all duration-300 transform hover:scale-105">
                                                 <div class="flex flex-col items-center space-y-3">
                                                     <!-- Logo Section -->
                                                     <div class="relative">
-                                                        <img src="{{ $providerLogos[$providerName] ?? 'data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 40\"><rect width=\"100\" height=\"40\" fill=\"%236b46c1\"/><text x=\"50\" y=\"25\" text-anchor=\"middle\" fill=\"white\" font-size=\"12\">' . strtoupper(substr($displayName, 0, 4)) . '</text></svg>' }}"
-                                                            alt="{{ $displayName }}"
-                                                            class="h-12 w-auto max-w-20 group-hover:scale-110 transition-transform duration-300"
-                                                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                                                        <div
-                                                            class="hidden flex-col items-center justify-center h-12 w-20 bg-purple-100 rounded text-purple-600">
-                                                            <i class="fas fa-tv text-xl"></i>
-                                                        </div>
+                                                        @if(isset($provider->logo_path) && file_exists(public_path($provider->logo_path)))
+                                                            <img src="{{ asset($provider->logo_path) }}"
+                                                                alt="{{ $displayName }}"
+                                                                class="h-12 w-auto max-w-20 group-hover:scale-110 transition-transform duration-300">
+                                                        @else
+                                                            <div class="flex flex-col items-center justify-center h-12 w-20 bg-purple-100 rounded text-purple-600">
+                                                                <i class="fas fa-tv text-xl"></i>
+                                                            </div>
+                                                        @endif
                                                     </div>
 
                                                     <!-- Provider Info -->
@@ -595,16 +581,20 @@
                 let html = '<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-4">';
 
                 packages.forEach(function(package, index) {
+                    const planName = package.plan || package.name || 'Unknown Plan';
+                    const planAmount = parseFloat(package.amount || package.price || 0);
+                    const planValidity = package.validity || package.duration || '30 days';
+
                     html += `
                 <div class="package-card bg-white border-2 border-gray-200 rounded-xl p-4 cursor-pointer hover:border-purple-300 hover:shadow-md transition-all duration-300 transform hover:scale-105"
                      data-package='${JSON.stringify(package)}'>
                     <div class="flex flex-col h-full">
                         <div class="flex-1">
-                            <h4 class="font-semibold text-gray-900 mb-2">${package.name}</h4>
-                            <div class="text-2xl font-bold text-purple-600 mb-3">₦${parseFloat(package.amount || package.price).toLocaleString()}</div>
+                            <h4 class="font-semibold text-gray-900 mb-2">${planName}</h4>
+                            <div class="text-2xl font-bold text-purple-600 mb-3">₦${planAmount.toLocaleString()}</div>
                             <div class="text-sm text-gray-600 mb-3">
                                 <i class="fas fa-calendar-alt mr-2"></i>
-                                Valid for ${package.duration || '30 days'}
+                                Valid for ${planValidity}
                             </div>
                         </div>
 
@@ -652,9 +642,13 @@
 
             // Show package details
             function showPackageDetails(package) {
-                $('#selected-plan-name').text(package.name);
-                $('#selected-plan-amount').text(parseFloat(package.amount || package.price).toLocaleString());
-                $('#selected-plan-duration').text(package.duration || '30 days');
+                const planName = package.plan || package.name || 'Unknown Plan';
+                const planAmount = parseFloat(package.amount || package.price || 0);
+                const planValidity = package.validity || package.duration || '30 days';
+
+                $('#selected-plan-name').text(planName);
+                $('#selected-plan-amount').text(planAmount.toLocaleString());
+                $('#selected-plan-duration').text(planValidity);
 
                 // Show features if available
                 if (package.features && package.features.length > 0) {

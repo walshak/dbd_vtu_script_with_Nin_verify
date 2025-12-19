@@ -202,7 +202,7 @@ class LogAuthenticationMiddleware
                 'referrer' => $request->header('referer'),
                 'requires_authentication' => !Auth::check()
             ],
-            Auth::id()
+            Auth::user()->id
         );
     }
 

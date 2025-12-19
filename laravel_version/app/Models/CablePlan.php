@@ -12,6 +12,14 @@ class CablePlan extends Model
     protected $table = 'cable_plans';
     protected $primaryKey = 'cpId';
 
+    /**
+     * Get the route key name for Laravel.
+     */
+    public function getRouteKeyName()
+    {
+        return 'cpId';
+    }
+
     protected $fillable = [
         'name',
         'price',
@@ -55,8 +63,14 @@ class CablePlan extends Model
      */
     public static function getCablePlan($provider, $planId)
     {
+        // If provider is a string (provider name), convert to ID
+        if (!is_numeric($provider)) {
+            $cableProvider = \App\Models\CableId::where('provider', strtolower($provider))->first();
+            $provider = $cableProvider ? $cableProvider->cId : $provider;
+        }
+
         return self::where('cableprovider', $provider)
-                   ->where('planid', $planId)
+                   ->where('cpId', $planId)
                    ->first();
     }
 
@@ -66,6 +80,23 @@ class CablePlan extends Model
     public static function getCablePlansByProvider($provider)
     {
         return self::where('cableprovider', $provider)
+                   ->where('status', 'active')
+                   ->get();
+    }
+
+    /**
+     * Get cable plans by decoder/provider name (for cable TV service)
+     */
+    public static function getByDecoder($decoderName)
+    {
+        // First find the provider ID from cable_ids table by provider name
+        $cableProvider = \App\Models\CableId::where('provider', strtolower($decoderName))->first();
+
+        if (!$cableProvider) {
+            return collect([]);
+        }
+
+        return self::where('cableprovider', $cableProvider->cId)
                    ->where('status', 'active')
                    ->get();
     }
@@ -81,18 +112,23 @@ class CablePlan extends Model
     }
 
     /**
+     * Calculate final amount after any discounts (currently just returns selling price)
+     * Added for consistency with DataPlan model
+     */
+    public function calculateFinalAmount($userType = null)
+    {
+        return $this->getPriceForUserType($userType);
+    }
+
+    /**
      * Calculate profit from transaction
+     * Uses cost_price (from Uzobest/manual entry) vs selling_price
      */
     public function calculateProfit($finalAmount = null)
     {
-        // Use stored profit_margin if available, otherwise calculate
-        if ($this->profit_margin !== null) {
-            return $this->profit_margin;
-        }
-
         // Calculate: selling price - cost price
-        $cost = $this->cost_price ?? $this->price;
-        $selling = $finalAmount ?? $this->selling_price ?? $this->userprice;
+        $cost = floatval($this->cost_price ?? $this->price ?? 0);
+        $selling = floatval($finalAmount ?? $this->selling_price ?? $this->userprice ?? 0);
         return max(0, $selling - $cost);
     }
 

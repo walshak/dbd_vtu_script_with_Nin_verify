@@ -154,28 +154,28 @@
                     <span class="detail-value">{{ ucfirst($transaction->service_type) }}</span>
                 </div>
 
-                @if($transaction->phone)
+                @if(!empty($transaction->phone))
                 <div class="detail-row">
                     <span class="detail-label">Phone Number:</span>
                     <span class="detail-value">{{ $transaction->phone }}</span>
                 </div>
                 @endif
 
-                @if($transaction->network)
+                @if(!empty($transaction->network))
                 <div class="detail-row">
                     <span class="detail-label">Network:</span>
                     <span class="detail-value">{{ strtoupper($transaction->network) }}</span>
                 </div>
                 @endif
 
-                @if($transaction->recipient)
+                @if(!empty($transaction->recipient))
                 <div class="detail-row">
                     <span class="detail-label">Recipient:</span>
                     <span class="detail-value">{{ $transaction->recipient }}</span>
                 </div>
                 @endif
 
-                @if($transaction->service_id)
+                @if(!empty($transaction->service_id))
                 <div class="detail-row">
                     <span class="detail-label">Service Provider:</span>
                     <span class="detail-value">{{ $transaction->service_id }}</span>

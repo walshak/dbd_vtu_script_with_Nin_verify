@@ -93,7 +93,7 @@ class WalletController extends Controller
             ], 400);
         } catch (\Exception $e) {
             Log::error('Virtual account generation error: ' . $e->getMessage(), [
-                'user_id' => Auth::id()
+                'user_id' => Auth::user()->id
             ]);
 
             return response()->json([
@@ -108,7 +108,7 @@ class WalletController extends Controller
      */
     public function transferFunds()
     {
-        $balanceData = $this->walletService->getBalance(Auth::id());
+        $balanceData = $this->walletService->getBalance(Auth::user()->id);
         $balance = $balanceData['balance'] ?? Auth::user()->wallet_balance ?? 0;
         return view('user.transfer-funds', compact('balance'));
     }
@@ -118,7 +118,7 @@ class WalletController extends Controller
      */
     public function withdrawFunds()
     {
-        $balanceData = $this->walletService->getBalance(Auth::id());
+        $balanceData = $this->walletService->getBalance(Auth::user()->id);
         $balance = $balanceData['balance'] ?? Auth::user()->wallet_balance ?? 0;
         return view('user.withdraw-funds', compact('balance'));
     }
@@ -128,8 +128,8 @@ class WalletController extends Controller
      */
     public function transactionHistory()
     {
-        $transactions = $this->walletService->getTransactionHistory(Auth::id());
-        $balanceData = $this->walletService->getBalance(Auth::id());
+        $transactions = $this->walletService->getTransactionHistory(Auth::user()->id);
+        $balanceData = $this->walletService->getBalance(Auth::user()->id);
         $balance = $balanceData['balance'] ?? Auth::user()->wallet_balance ?? 0;
         return view('user.transaction-history', compact('transactions', 'balance'));
     }
@@ -152,7 +152,7 @@ class WalletController extends Controller
         }
 
         $result = $this->walletService->addFunds(
-            Auth::id(),
+            Auth::user()->id,
             $request->amount,
             $request->payment_method
         );
@@ -179,7 +179,7 @@ class WalletController extends Controller
         }
 
         $result = $this->walletService->transferFunds(
-            Auth::id(),
+            Auth::user()->id,
             $request->recipient_email,
             $request->amount,
             $request->description
@@ -218,7 +218,7 @@ class WalletController extends Controller
         ];
 
         $result = $this->walletService->withdrawToBankAccount(
-            Auth::id(),
+            Auth::user()->id,
             $request->amount,
             $bankDetails
         );
@@ -260,7 +260,7 @@ class WalletController extends Controller
      */
     public function getBalance()
     {
-        $balance = $this->walletService->getBalance(Auth::id());
+        $balance = $this->walletService->getBalance(Auth::user()->id);
         return response()->json([
             'status' => 'success',
             'data' => $balance
@@ -275,7 +275,7 @@ class WalletController extends Controller
         $limit = $request->get('limit', 50);
         $type = $request->get('type');
 
-        $transactions = $this->walletService->getTransactionHistory(Auth::id(), $limit, $type);
+        $transactions = $this->walletService->getTransactionHistory(Auth::user()->id, $limit, $type);
 
         return response()->json([
             'status' => 'success',

@@ -80,8 +80,12 @@ class CableTVService
 
             $transaction = Transaction::find($walletResult['data']['transaction_id']);
 
+            // Get Uzobest cable ID for the provider
+            $cableProvider = \App\Models\CableId::where('provider', strtolower($decoder))->first();
+            $uzobestCableId = $cableProvider ? $cableProvider->cableid : null;
+
             // Process cable TV subscription via API
-            $apiResponse = $this->processCableAPI($decoder, $iucNumber, $cablePlan, $transaction->transref, $customerName);
+            $apiResponse = $this->processCableAPI($uzobestCableId, $iucNumber, $cablePlan, $transaction->transref, $customerName);
 
             if ($apiResponse['status'] === 'success') {
                 // Transaction already marked as successful by WalletService
@@ -118,7 +122,11 @@ class CableTVService
     public function validateIUC($decoder, $iucNumber)
     {
         try {
-            $result = $this->externalApiService->verifyCableIUC($iucNumber, $decoder);
+            // Get Uzobest cable ID for the provider
+            $cableProvider = \App\Models\CableId::where('provider', strtolower($decoder))->first();
+            $uzobestCableId = $cableProvider ? $cableProvider->cableid : $decoder;
+
+            $result = $this->externalApiService->verifyCableIUC($iucNumber, $uzobestCableId);
 
             if ($result['success']) {
                 return [
@@ -144,10 +152,13 @@ class CableTVService
     /**
      * Process cable TV subscription via external API service
      */
-    protected function processCableAPI($decoder, $iucNumber, $cablePlan, $reference, $customerName)
+    protected function processCableAPI($uzobestCableId, $iucNumber, $cablePlan, $reference, $customerName)
     {
         try {
-            $result = $this->externalApiService->purchaseCable($decoder, $iucNumber, $cablePlan->planId, $reference);
+            // Use uzobest_plan_id from the plan if available, fallback to planid
+            $planId = $cablePlan->uzobest_plan_id ?? $cablePlan->planid;
+
+            $result = $this->externalApiService->purchaseCable($uzobestCableId, $iucNumber, $planId, $reference);
 
             if ($result['success']) {
                 return [
@@ -186,12 +197,18 @@ class CableTVService
 
             $formattedPlans = $plans->map(function ($plan) use ($user) {
                 return [
-                    'plan_id' => $plan->cId,
-                    'plan' => $plan->sPlan,
-                    'amount' => $plan->getPriceForUserType($user->sType),
-                    'original_amount' => $plan->sPrice,
-                    'discount' => $plan->getDiscountForUserType($user->sType),
-                    'validity' => $plan->validity ?? 'N/A'
+                    'id' => $plan->cpId, // For backward compatibility with JavaScript
+                    'plan_id' => $plan->cpId,
+                    'uzobest_plan_id' => $plan->uzobest_plan_id,
+                    'plan' => $plan->name,
+                    'name' => $plan->name, // Add both plan and name for compatibility
+                    'amount' => $plan->getPriceForUserType($user->sType ?? 'user'),
+                    'price' => $plan->getPriceForUserType($user->sType ?? 'user'),
+                    'original_amount' => $plan->price,
+                    'validity' => $plan->day ? $plan->day . ' days' : 'N/A',
+                    'duration' => $plan->day ? $plan->day . ' days' : '30 days',
+                    'type' => $plan->type ?? 'Standard',
+                    'channels' => 'Multiple'
                 ];
             });
 
@@ -236,6 +253,14 @@ class CableTVService
      * Get available decoders
      */
     public function getAvailableDecoders()
+    {
+        return ['dstv', 'gotv', 'startimes'];
+    }
+
+    /**
+     * Get available decoders with details
+     */
+    public function getAvailableDecodersWithDetails()
     {
         return [
             'status' => 'success',

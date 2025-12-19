@@ -20,7 +20,7 @@ class AuthController extends Controller
         // Clear any potentially corrupted sessions when accessing login
         if (Auth::check()) {
             Log::info('User was already logged in when accessing login form', [
-                'user_id' => Auth::id(),
+                'user_id' => Auth::user()->id,
                 'phone' => Auth::user()->phone
             ]);
             return redirect()->intended('/dashboard');
@@ -174,7 +174,7 @@ class AuthController extends Controller
         // Clear any existing authentication session when accessing registration
         if (Auth::check()) {
             Log::info('User was logged in when accessing registration form, logging out', [
-                'user_id' => Auth::id(),
+                'user_id' => Auth::user()->id,
                 'phone' => Auth::user()->phone
             ]);
             Auth::logout();

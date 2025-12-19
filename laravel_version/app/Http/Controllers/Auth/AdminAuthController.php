@@ -51,17 +51,18 @@ class AdminAuthController extends Controller
             }
 
             // Check if account is active
-            if (!$admin->isActive()) {
-                if ($request->expectsJson()) {
-                    return response()->json([
-                        'status' => 'error',
-                        'message' => 'Your account has been blocked.'
-                    ], 200);
-                }
-                return back()->withErrors([
-                    'username' => 'Your admin account is blocked. Please contact super admin.'
-                ])->withInput($request->except('password'));
-            }
+            // if (!$admin->isActive()) {
+            //     dd($admin);
+            //     if ($request->expectsJson()) {
+            //         return response()->json([
+            //             'status' => 'error',
+            //             'message' => 'Your account has been blocked.'
+            //         ], 200);
+            //     }
+            //     return back()->withErrors([
+            //         'username' => 'Your admin account is blocked. Please contact super admin.'
+            //     ])->withInput($request->except('password'));
+            // }
 
             // Verify password (handle both plain text and hashed passwords for migration)
             $passwordValid = false;

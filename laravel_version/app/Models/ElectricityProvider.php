@@ -16,6 +16,7 @@ class ElectricityProvider extends Model
     protected $fillable = [
         'ePlan',
         'eId',
+        'eProviderId',
         'ePrice',
         'eBuyingPrice',
         'eStatus',
@@ -24,6 +25,14 @@ class ElectricityProvider extends Model
         'profit_margin',
         'uzobest_disco_id',
     ];
+
+    /**
+     * Get the route key name for Laravel route model binding.
+     */
+    public function getRouteKeyName()
+    {
+        return 'eId';
+    }
 
     protected $casts = [
         'ePrice' => 'decimal:2',
@@ -148,16 +157,20 @@ class ElectricityProvider extends Model
     public function getLogoPathAttribute()
     {
         $logos = [
-            'aedc' => '/assets/images/aedc-logo.png',
-            'ekedc' => '/assets/images/ekedc-logo.png',
-            'ikedc' => '/assets/images/ikedc-logo.png',
-            'kedco' => '/assets/images/kedco-logo.png',
-            'phed' => '/assets/images/phed-logo.png',
-            'phcn' => '/assets/images/phcn-logo.png'
+            'aedc' => '/images/providers/aedc.png',
+            'ekedc' => '/images/providers/ekedc.png',
+            'ikedc' => '/images/providers/ikeja.png',
+            'ikeja' => '/images/providers/ikeja.png',
+            'kedco' => '/images/providers/kedco.png',
+            'phed' => '/images/providers/phedc.png',
+            'phedc' => '/images/providers/phedc.png',
+            'ibedc' => '/images/providers/ibedc.png',
+            'jos' => '/images/providers/jos.png',
+            'kaduna' => '/images/providers/kaduna.png'
         ];
 
         $providerKey = strtolower(str_replace(' ', '', $this->ePlan));
-        return $logos[$providerKey] ?? '/assets/images/electricity-default.png';
+        return $logos[$providerKey] ?? '/images/providers/default-electricity.png';
     }
 
     /**
@@ -168,8 +181,8 @@ class ElectricityProvider extends Model
         // Remove spaces and special characters
         $meterNumber = preg_replace('/[^0-9]/', '', $meterNumber);
 
-        // Basic validation - meter numbers are usually 11 digits
-        if (strlen($meterNumber) < 10 || strlen($meterNumber) > 12) {
+        // Basic validation - meter numbers can be 10-15 digits
+        if (strlen($meterNumber) < 10 || strlen($meterNumber) > 15) {
             return false;
         }
 

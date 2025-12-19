@@ -43,8 +43,9 @@ class DataController extends Controller
             ], 400);
         }
 
+        // Auth::user()->id returns phone number, use Auth::user()->id for actual numeric ID
         $plans = $this->dataService->getDataPlansForUser(
-            Auth::id(),
+            Auth::user()->id,
             $request->network,
             $request->data_group
         );
@@ -65,7 +66,7 @@ class DataController extends Controller
             'phone' => 'required|string|regex:/^[0-9]{11}$/',
             'plan_id' => 'required|string',
             'data_group' => 'required|string|in:SME,Gifting,Corporate',
-            'ported_number' => 'boolean'
+            'ported_number' => 'sometimes|in:true,false,0,1'
         ]);
 
         if ($validator->fails()) {
@@ -75,13 +76,17 @@ class DataController extends Controller
             ], 400);
         }
 
+        // Convert ported_number to boolean
+        $portedNumber = filter_var($request->ported_number ?? false, FILTER_VALIDATE_BOOLEAN);
+
+        // Auth::user()->id returns phone number, use Auth::user()->id for actual numeric ID
         $result = $this->dataService->purchaseData(
-            Auth::id(),
+            Auth::user()->id,
             $request->network,
             $request->phone,
             $request->plan_id,
             $request->data_group,
-            $request->ported_number ?? false
+            $portedNumber
         );
 
         if ($result['status'] === 'success') {
@@ -129,7 +134,7 @@ class DataController extends Controller
             'phone' => 'required|string|regex:/^[0-9]{11}$/',
             'plan_id' => 'required|string',
             'data_group' => 'required|string|in:SME,Gifting,Corporate',
-            'ported_number' => 'boolean'
+            'ported_number' => 'sometimes|in:true,false,0,1'
         ]);
 
         if ($validator->fails()) {
@@ -139,13 +144,16 @@ class DataController extends Controller
             ], 400);
         }
 
+        // Convert ported_number to boolean
+        $portedNumber = filter_var($request->ported_number ?? false, FILTER_VALIDATE_BOOLEAN);
+
         $result = $this->dataService->purchaseData(
-            Auth::id(),
+            Auth::user()->id,
             $request->network,
             $request->phone,
             $request->plan_id,
             $request->data_group,
-            $request->ported_number ?? false
+            $portedNumber
         );
 
         return response()->json($result);

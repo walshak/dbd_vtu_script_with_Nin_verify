@@ -122,7 +122,7 @@ class ExamPinController extends Controller
 
         // Use the ExamPinService to handle the purchase
         $result = $this->examPinService->purchaseExamPin(
-            Auth::id(),
+            Auth::user()->id,
             $request->provider,
             $request->phone,
             $request->quantity
@@ -136,7 +136,7 @@ class ExamPinController extends Controller
      */
     public function history()
     {
-        $history = $this->examPinService->getExamPinHistory(Auth::id());
+        $history = $this->examPinService->getExamPinHistory(Auth::user()->id);
 
         return view('user.exam-pin-history', [
             'transactions' => $history
