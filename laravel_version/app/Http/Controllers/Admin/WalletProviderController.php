@@ -253,28 +253,49 @@ class WalletProviderController extends Controller
         try {
             $balances = [];
 
-            // Get wallet one balance
-            $walletOneData = $this->getWalletBalance('walletOne');
-            $balances['walletOne'] = [
-                'provider' => $this->getConfigValue('walletOneProviderName', 'Wallet One'),
-                'balance' => $walletOneData['balance'] ?? 0,
-                'status' => $walletOneData['status'] ?? 'error'
-            ];
+            // Check Monnify balance - Note: Monnify doesn't provide balance checking
+            $monifyStatus = $this->getConfigValue('monifyStatus');
+            if ($monifyStatus === 'On') {
+                $balances['monnify'] = [
+                    'provider' => 'Monnify',
+                    'balance' => 'N/A',
+                    'status' => 'configured',
+                    'message' => 'Balance checking not supported'
+                ];
+            } else {
+                $balances['monnify'] = [
+                    'provider' => 'Monnify',
+                    'balance' => 0,
+                    'status' => 'disabled',
+                    'message' => 'Provider not active'
+                ];
+            }
 
-            // Get wallet two balance
-            $walletTwoData = $this->getWalletBalance('walletTwo');
-            $balances['walletTwo'] = [
-                'provider' => $this->getConfigValue('walletTwoProviderName', 'Wallet Two'),
-                'balance' => $walletTwoData['balance'] ?? 0,
-                'status' => $walletTwoData['status'] ?? 'error'
-            ];
+            // Check Paystack balance - Note: Paystack doesn't provide direct balance API
+            $paystackStatus = $this->getConfigValue('paystackStatus');
+            if ($paystackStatus === 'On') {
+                $balances['paystack'] = [
+                    'provider' => 'Paystack',
+                    'balance' => 'N/A',
+                    'status' => 'configured',
+                    'message' => 'Balance checking not supported'
+                ];
+            } else {
+                $balances['paystack'] = [
+                    'provider' => 'Paystack',
+                    'balance' => 0,
+                    'status' => 'disabled',
+                    'message' => 'Provider not active'
+                ];
+            }
 
-            // Get wallet three balance
-            $walletThreeData = $this->getWalletBalance('walletThree');
-            $balances['walletThree'] = [
-                'provider' => $this->getConfigValue('walletThreeProviderName', 'Wallet Three'),
-                'balance' => $walletThreeData['balance'] ?? 0,
-                'status' => $walletThreeData['status'] ?? 'error'
+            // Check Uzobest balance
+            $uzobestData = $this->getUzobestBalance();
+            $balances['uzobest'] = [
+                'provider' => 'Uzobest',
+                'balance' => $uzobestData['balance'] ?? 0,
+                'status' => $uzobestData['status'] ?? 'error',
+                'message' => $uzobestData['message'] ?? ''
             ];
 
             return response()->json([
@@ -288,6 +309,39 @@ class WalletProviderController extends Controller
                 'success' => false,
                 'message' => 'Failed to retrieve wallet balances'
             ]);
+        }
+    }
+
+    /**
+     * Get Uzobest balance using UzobestSyncService
+     */
+    private function getUzobestBalance()
+    {
+        try {
+            $uzobestService = app(\App\Services\UzobestSyncService::class);
+            $result = $uzobestService->fetchUserDetails();
+
+            if ($result['success']) {
+                return [
+                    'balance' => $result['balance'] ?? 0,
+                    'status' => 'success',
+                    'message' => 'Balance retrieved successfully'
+                ];
+            } else {
+                return [
+                    'balance' => 0,
+                    'status' => 'error',
+                    'message' => $result['message'] ?? 'Failed to fetch balance'
+                ];
+            }
+
+        } catch (\Exception $e) {
+            Log::error('Error getting Uzobest balance: ' . $e->getMessage());
+            return [
+                'balance' => 0,
+                'status' => 'error',
+                'message' => 'API connection error'
+            ];
         }
     }
 
@@ -337,7 +391,7 @@ class WalletProviderController extends Controller
     public function testProviderConnection(Request $request)
     {
         $request->validate([
-            'provider' => 'required|in:monnify,paystack,walletOne,walletTwo,walletThree'
+            'provider' => 'required|in:monnify,paystack,uzobest'
         ]);
 
         try {
@@ -351,10 +405,8 @@ class WalletProviderController extends Controller
                 case 'paystack':
                     $result = $this->testPaystackConnection();
                     break;
-                case 'walletOne':
-                case 'walletTwo':
-                case 'walletThree':
-                    $result = $this->testWalletProviderConnection($provider);
+                case 'uzobest':
+                    $result = $this->testUzobestConnection();
                     break;
             }
 
@@ -380,6 +432,7 @@ class WalletProviderController extends Controller
         try {
             $apiKey = $this->getConfigValue('monifyApi');
             $secretKey = $this->getConfigValue('monifySecrete');
+            $environment = $this->getConfigValue('monifyEnvironment', 'sandbox');
 
             if (!$apiKey || !$secretKey) {
                 return false;
@@ -388,12 +441,17 @@ class WalletProviderController extends Controller
             // Create basic auth token
             $token = base64_encode($apiKey . ':' . $secretKey);
 
+            // Use correct environment URL
+            $baseUrl = $environment === 'live'
+                ? 'https://api.monnify.com'
+                : 'https://sandbox.monnify.com';
+
             $response = Http::timeout(30)
                 ->withHeaders([
                     'Authorization' => 'Basic ' . $token,
                     'Content-Type' => 'application/json',
                 ])
-                ->post('https://sandbox.monnify.com/api/v1/auth/login');
+                ->post($baseUrl . '/api/v1/auth/login');
 
             return $response->successful();
 
@@ -426,6 +484,23 @@ class WalletProviderController extends Controller
 
         } catch (\Exception $e) {
             Log::error('Paystack connection test error: ' . $e->getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * Test Uzobest connection
+     */
+    private function testUzobestConnection()
+    {
+        try {
+            $uzobestService = app(\App\Services\UzobestSyncService::class);
+            $result = $uzobestService->fetchUserDetails();
+
+            return $result['success'] ?? false;
+
+        } catch (\Exception $e) {
+            Log::error('Uzobest connection test error: ' . $e->getMessage());
             return false;
         }
     }

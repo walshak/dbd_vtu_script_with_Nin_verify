@@ -217,10 +217,11 @@ class Transaction extends Model
     const ELECTRICITY_KEDCO = 'KEDCO';
 
     /**
-     * Transaction status constants (matching old system)
+     * Transaction status constants (matching database schema)
      */
-    const STATUS_SUCCESS = 0;
-    const STATUS_FAILED = 1;
+    const STATUS_PENDING = 0;
+    const STATUS_SUCCESS = 1;
+    const STATUS_FAILED = 2;
 
     /**
      * Get sales analytics for admin dashboard (compatible with old system)

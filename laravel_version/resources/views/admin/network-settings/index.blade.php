@@ -1,197 +1,326 @@
 @extends('layouts.admin')
 
 @section('title', 'Network Settings')
-@section('page-title', 'Network Settings')
 
 @section('content')
-<div class="d-flex justify-content-between mb-4">
-    <a class="btn btn-dark me-2" href="{{ route('admin.system.settings') }}">General Setting</a>
-    <a class="btn btn-primary me-2" href="{{ route('admin.system.contacts') }}">Contact Setting</a>
-    <a class="btn btn-info" href="{{ route('admin.network-settings.index') }}">Network Setting</a>
-</div>
-
-<div class="row">
-    <div class="col-12">
-        <div class="box">
-            <div class="box-header">
-                <div class="d-flex justify-content-between align-items-center mt-2 network-logos">
-                    <a class="me-3" href="{{ route('admin.network-settings.index', ['network' => 'MTN']) }}">
-                        <img src="{{ asset('assets/images/mtn.png') }}"
-                             class="img-fluid {{ $network == 'MTN' ? 'border border-primary border-3' : '' }}"
-                             style="width:80px;" alt="MTN" />
-                    </a>
-                    <a class="me-3" href="{{ route('admin.network-settings.index', ['network' => 'AIRTEL']) }}">
-                        <img src="{{ asset('assets/images/airtel.png') }}"
-                             class="img-fluid {{ $network == 'AIRTEL' ? 'border border-primary border-3' : '' }}"
-                             style="width:80px;" alt="Airtel" />
-                    </a>
-                    <a class="me-3" href="{{ route('admin.network-settings.index', ['network' => 'GLO']) }}">
-                        <img src="{{ asset('assets/images/glo.png') }}"
-                             class="img-fluid {{ $network == 'GLO' ? 'border border-primary border-3' : '' }}"
-                             style="width:80px;" alt="Glo" />
-                    </a>
-                    <a class="me-3" href="{{ route('admin.network-settings.index', ['network' => '9MOBILE']) }}">
-                        <img src="{{ asset('assets/images/9mobile.png') }}"
-                             class="img-fluid {{ $network == '9MOBILE' ? 'border border-primary border-3' : '' }}"
-                             style="width:80px;" alt="9Mobile" />
-                    </a>
+<div class="container mx-auto px-6 py-8">
+    <!-- Header Section -->
+    <div class="mb-8">
+        <div class="bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl shadow-lg p-6 text-white">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h1 class="text-3xl font-bold mb-2">Network Settings</h1>
+                    <p class="text-blue-100 text-lg">Configure network services and IDs</p>
                 </div>
-            </div>
-
-            <div class="box-body">
-                <form method="post" action="{{ route('admin.network-settings.update') }}" class="row">
-                    @csrf
-                    @method('PUT')
-
-                    <div class="col-md-12">
-                        <h5><b>{{ $network }} Network Status</b></h5>
-                        <div class="alert alert-info">Use This Section To Enable or Disable A Network Service.</div>
-                        <hr/>
-                    </div>
-
-                    <!-- Service Status Controls -->
-                    <div class="form-group col-md-4">
-                        <label for="general" class="form-label fw-bold">{{ $network }} General (All)</label>
-                        <select name="general" class="form-control" required>
-                            <option value="On" {{ $networkData->networkStatus == 'On' ? 'selected' : '' }}>Enable</option>
-                            <option value="Off" {{ $networkData->networkStatus == 'Off' ? 'selected' : '' }}>Disable</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group col-md-4">
-                        <label for="vtuStatus" class="form-label fw-bold">{{ $network }} Airtime (VTU)</label>
-                        <select name="vtuStatus" class="form-control" required>
-                            <option value="On" {{ $networkData->vtuStatus == 'On' ? 'selected' : '' }}>Enable</option>
-                            <option value="Off" {{ $networkData->vtuStatus == 'Off' ? 'selected' : '' }}>Disable</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group col-md-4">
-                        <label for="sharesellStatus" class="form-label fw-bold">{{ $network }} Airtime (Share & Sell)</label>
-                        <select name="sharesellStatus" class="form-control" required>
-                            <option value="On" {{ $networkData->sharesellStatus == 'On' ? 'selected' : '' }}>Enable</option>
-                            <option value="Off" {{ $networkData->sharesellStatus == 'Off' ? 'selected' : '' }}>Disable</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group col-md-4">
-                        <label for="sme" class="form-label fw-bold">{{ $network }} SME</label>
-                        <select name="sme" class="form-control" required>
-                            <option value="On" {{ $networkData->smeStatus == 'On' ? 'selected' : '' }}>Enable</option>
-                            <option value="Off" {{ $networkData->smeStatus == 'Off' ? 'selected' : '' }}>Disable</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group col-md-4">
-                        <label for="gifting" class="form-label fw-bold">{{ $network }} Gifting</label>
-                        <select name="gifting" class="form-control" required>
-                            <option value="On" {{ $networkData->giftingStatus == 'On' ? 'selected' : '' }}>Enable</option>
-                            <option value="Off" {{ $networkData->giftingStatus == 'Off' ? 'selected' : '' }}>Disable</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group col-md-4">
-                        <label for="corporate" class="form-label fw-bold">{{ $network }} Corporate</label>
-                        <select name="corporate" class="form-control" required>
-                            <option value="On" {{ $networkData->corporateStatus == 'On' ? 'selected' : '' }}>Enable</option>
-                            <option value="Off" {{ $networkData->corporateStatus == 'Off' ? 'selected' : '' }}>Disable</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group col-md-6">
-                        <label for="airtimepin" class="form-label fw-bold">{{ $network }} Recharge Card</label>
-                        <select name="airtimepin" class="form-control" required>
-                            <option value="On" {{ $networkData->airtimepinStatus == 'On' ? 'selected' : '' }}>Enable</option>
-                            <option value="Off" {{ $networkData->airtimepinStatus == 'Off' ? 'selected' : '' }}>Disable</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group col-md-6">
-                        <label for="datapin" class="form-label fw-bold">{{ $network }} Data Pin</label>
-                        <select name="datapin" class="form-control" required>
-                            <option value="On" {{ $networkData->datapinStatus == 'On' ? 'selected' : '' }}>Enable</option>
-                            <option value="Off" {{ $networkData->datapinStatus == 'Off' ? 'selected' : '' }}>Disable</option>
-                        </select>
-                    </div>
-
-                    <!-- Network IDs Section -->
-                    <div class="col-md-12">
-                        <hr/>
-                        <h5><b>{{ $network }} Network ID</b></h5>
-                        <div class="alert alert-danger">Use This Section To Change The Network ID Of A Service.</div>
-                        <hr/>
-                    </div>
-
-                    <div class="form-group col-md-4">
-                        <label for="networkid" class="form-label fw-bold">{{ $network }} General ID</label>
-                        <input type="number" name="networkid" value="{{ $networkData->networkid }}"
-                               class="form-control" placeholder="General ID" required />
-                    </div>
-
-                    <div class="form-group col-md-4">
-                        <label for="smeId" class="form-label fw-bold">{{ $network }} SME ID</label>
-                        <input type="number" name="smeId" value="{{ $networkData->smeId }}"
-                               class="form-control" placeholder="SME ID" required />
-                    </div>
-
-                    <div class="form-group col-md-4">
-                        <label for="giftingId" class="form-label fw-bold">{{ $network }} Gifting ID</label>
-                        <input type="number" name="giftingId" value="{{ $networkData->giftingId }}"
-                               class="form-control" placeholder="Gifting ID" required />
-                    </div>
-
-                    <div class="form-group col-md-4">
-                        <label for="corporateId" class="form-label fw-bold">{{ $network }} Corporate ID</label>
-                        <input type="number" name="corporateId" value="{{ $networkData->corporateId }}"
-                               class="form-control" placeholder="Corporate ID" required />
-                    </div>
-
-                    <div class="form-group col-md-4">
-                        <label for="vtuId" class="form-label fw-bold">{{ $network }} VTU ID</label>
-                        <input type="number" name="vtuId" value="{{ $networkData->vtuId }}"
-                               class="form-control" placeholder="VTU ID" required />
-                    </div>
-
-                    <div class="form-group col-md-4">
-                        <label for="sharesellId" class="form-label fw-bold">{{ $network }} Share & Sell ID</label>
-                        <input type="number" name="sharesellId" value="{{ $networkData->sharesellId }}"
-                               class="form-control" placeholder="Share & Sell ID" required />
-                    </div>
-
-                    <input type="hidden" name="network" value="{{ $networkData->nId }}" />
-
-                    <div class="form-group col-md-12">
-                        <button type="submit" name="update-network-setting" class="btn btn-primary">
-                            <i class="fa fa-save" aria-hidden="true"></i> Update {{ $network }} Settings
-                        </button>
-
-                        <button type="button" class="btn btn-success ms-2" onclick="testNetworkServices('{{ $network }}')">
-                            <i class="fa fa-check-circle" aria-hidden="true"></i> Test Services
-                        </button>
-
-                        <button type="button" class="btn btn-info ms-2" onclick="showServiceAnalytics('{{ $network }}')">
-                            <i class="fa fa-chart-bar" aria-hidden="true"></i> View Analytics
-                        </button>
-                    </div>
-                </form>
+                <div>
+                    <i class="fas fa-network-wired text-5xl opacity-50"></i>
+                </div>
             </div>
         </div>
     </div>
+
+    <!-- Quick Links -->
+    <!-- <div class="flex gap-4 mb-8">
+        <a href="{{ route('admin.system.settings') }}"
+           class="bg-gray-700 hover:bg-gray-800 text-white font-medium py-2 px-6 rounded-lg transition-colors duration-200">
+            <i class="fas fa-cog mr-2"></i>General Settings
+        </a>
+        <a href="{{ route('admin.system.contacts') }}"
+           class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-lg transition-colors duration-200">
+            <i class="fas fa-address-book mr-2"></i>Contact Settings
+        </a>
+        <a href="{{ route('admin.network-settings.index') }}"
+           class="bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 px-6 rounded-lg transition-colors duration-200">
+            <i class="fas fa-network-wired mr-2"></i>Network Settings
+        </a>
+    </div> -->
+
+    <!-- Network Selector -->
+    <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+        <h2 class="text-xl font-semibold text-gray-900 mb-6">Select Network</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <a href="{{ route('admin.network-settings.index', ['network' => 'MTN']) }}"
+               class="group relative overflow-hidden rounded-xl border-2 transition-all duration-300 hover:shadow-xl {{ $network == 'MTN' ? 'border-blue-500 bg-blue-50' : 'border-gray-200 bg-white hover:border-blue-300' }}">
+                <div class="p-6 text-center">
+                    <img src="{{ asset('assets/images/mtn.png') }}"
+                         class="w-20 h-20 mx-auto mb-3 object-contain transition-transform duration-300 group-hover:scale-110"
+                         alt="MTN" />
+                    <h3 class="font-semibold text-gray-900">MTN</h3>
+                    @if($network == 'MTN')
+                        <span class="absolute top-2 right-2 bg-blue-500 text-white text-xs px-2 py-1 rounded-full">
+                            <i class="fas fa-check"></i> Active
+                        </span>
+                    @endif
+                </div>
+            </a>
+
+            <a href="{{ route('admin.network-settings.index', ['network' => 'AIRTEL']) }}"
+               class="group relative overflow-hidden rounded-xl border-2 transition-all duration-300 hover:shadow-xl {{ $network == 'AIRTEL' ? 'border-red-500 bg-red-50' : 'border-gray-200 bg-white hover:border-red-300' }}">
+                <div class="p-6 text-center">
+                    <img src="{{ asset('assets/images/airtel.png') }}"
+                         class="w-20 h-20 mx-auto mb-3 object-contain transition-transform duration-300 group-hover:scale-110"
+                         alt="Airtel" />
+                    <h3 class="font-semibold text-gray-900">AIRTEL</h3>
+                    @if($network == 'AIRTEL')
+                        <span class="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full">
+                            <i class="fas fa-check"></i> Active
+                        </span>
+                    @endif
+                </div>
+            </a>
+
+            <a href="{{ route('admin.network-settings.index', ['network' => 'GLO']) }}"
+               class="group relative overflow-hidden rounded-xl border-2 transition-all duration-300 hover:shadow-xl {{ $network == 'GLO' ? 'border-green-500 bg-green-50' : 'border-gray-200 bg-white hover:border-green-300' }}">
+                <div class="p-6 text-center">
+                    <img src="{{ asset('assets/images/glo.png') }}"
+                         class="w-20 h-20 mx-auto mb-3 object-contain transition-transform duration-300 group-hover:scale-110"
+                         alt="Glo" />
+                    <h3 class="font-semibold text-gray-900">GLO</h3>
+                    @if($network == 'GLO')
+                        <span class="absolute top-2 right-2 bg-green-500 text-white text-xs px-2 py-1 rounded-full">
+                            <i class="fas fa-check"></i> Active
+                        </span>
+                    @endif
+                </div>
+            </a>
+
+            <a href="{{ route('admin.network-settings.index', ['network' => '9MOBILE']) }}"
+               class="group relative overflow-hidden rounded-xl border-2 transition-all duration-300 hover:shadow-xl {{ $network == '9MOBILE' ? 'border-emerald-500 bg-emerald-50' : 'border-gray-200 bg-white hover:border-emerald-300' }}">
+                <div class="p-6 text-center">
+                    <img src="{{ asset('assets/images/9mobile.png') }}"
+                         class="w-20 h-20 mx-auto mb-3 object-contain transition-transform duration-300 group-hover:scale-110"
+                         alt="9Mobile" />
+                    <h3 class="font-semibold text-gray-900">9MOBILE</h3>
+                    @if($network == '9MOBILE')
+                        <span class="absolute top-2 right-2 bg-emerald-500 text-white text-xs px-2 py-1 rounded-full">
+                            <i class="fas fa-check"></i> Active
+                        </span>
+                    @endif
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <!-- Settings Form -->
+    <form method="post" action="{{ route('admin.network-settings.update') }}">
+        @csrf
+        @method('PUT')
+
+        <!-- Service Status Section -->
+        <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <h2 class="text-xl font-semibold text-gray-900">{{ $network }} Network Status</h2>
+                    <p class="text-gray-600 mt-1">Enable or disable network services</p>
+                </div>
+                <div class="flex gap-2">
+                    <button type="button" onclick="testNetworkServices('{{ $network }}')"
+                            class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200">
+                        <i class="fas fa-check-circle mr-2"></i>Test Services
+                    </button>
+                    <button type="button" onclick="showServiceAnalytics('{{ $network }}')"
+                            class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200">
+                        <i class="fas fa-chart-bar mr-2"></i>View Analytics
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- General Status -->
+                <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                    <label class="block text-sm font-semibold text-gray-900 mb-2">
+                        <i class="fas fa-globe text-blue-500 mr-2"></i>{{ $network }} General (All)
+                    </label>
+                    <select name="general" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                        <option value="On" {{ $networkData->networkStatus == 'On' ? 'selected' : '' }}>Enable</option>
+                        <option value="Off" {{ $networkData->networkStatus == 'Off' ? 'selected' : '' }}>Disable</option>
+                    </select>
+                </div>
+
+                <!-- VTU Status -->
+                <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                    <label class="block text-sm font-semibold text-gray-900 mb-2">
+                        <i class="fas fa-mobile-alt text-green-500 mr-2"></i>{{ $network }} Airtime (VTU)
+                    </label>
+                    <select name="vtuStatus" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                        <option value="On" {{ $networkData->vtuStatus == 'On' ? 'selected' : '' }}>Enable</option>
+                        <option value="Off" {{ $networkData->vtuStatus == 'Off' ? 'selected' : '' }}>Disable</option>
+                    </select>
+                </div>
+
+                <!-- Share & Sell Status -->
+                <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                    <label class="block text-sm font-semibold text-gray-900 mb-2">
+                        <i class="fas fa-share-alt text-purple-500 mr-2"></i>{{ $network }} Share & Sell
+                    </label>
+                    <select name="sharesellStatus" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                        <option value="On" {{ $networkData->sharesellStatus == 'On' ? 'selected' : '' }}>Enable</option>
+                        <option value="Off" {{ $networkData->sharesellStatus == 'Off' ? 'selected' : '' }}>Disable</option>
+                    </select>
+                </div>
+
+                <!-- SME Status -->
+                <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                    <label class="block text-sm font-semibold text-gray-900 mb-2">
+                        <i class="fas fa-wifi text-blue-500 mr-2"></i>{{ $network }} SME
+                    </label>
+                    <select name="sme" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                        <option value="On" {{ $networkData->smeStatus == 'On' ? 'selected' : '' }}>Enable</option>
+                        <option value="Off" {{ $networkData->smeStatus == 'Off' ? 'selected' : '' }}>Disable</option>
+                    </select>
+                </div>
+
+                <!-- Gifting Status -->
+                <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                    <label class="block text-sm font-semibold text-gray-900 mb-2">
+                        <i class="fas fa-gift text-pink-500 mr-2"></i>{{ $network }} Gifting
+                    </label>
+                    <select name="gifting" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                        <option value="On" {{ $networkData->giftingStatus == 'On' ? 'selected' : '' }}>Enable</option>
+                        <option value="Off" {{ $networkData->giftingStatus == 'Off' ? 'selected' : '' }}>Disable</option>
+                    </select>
+                </div>
+
+                <!-- Corporate Status -->
+                <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                    <label class="block text-sm font-semibold text-gray-900 mb-2">
+                        <i class="fas fa-building text-indigo-500 mr-2"></i>{{ $network }} Corporate
+                    </label>
+                    <select name="corporate" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                        <option value="On" {{ $networkData->corporateStatus == 'On' ? 'selected' : '' }}>Enable</option>
+                        <option value="Off" {{ $networkData->corporateStatus == 'Off' ? 'selected' : '' }}>Disable</option>
+                    </select>
+                </div>
+
+                <!-- Recharge Card Status -->
+                <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                    <label class="block text-sm font-semibold text-gray-900 mb-2">
+                        <i class="fas fa-receipt text-orange-500 mr-2"></i>{{ $network }} Recharge Card
+                    </label>
+                    <select name="airtimepin" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                        <option value="On" {{ $networkData->airtimepinStatus == 'On' ? 'selected' : '' }}>Enable</option>
+                        <option value="Off" {{ $networkData->airtimepinStatus == 'Off' ? 'selected' : '' }}>Disable</option>
+                    </select>
+                </div>
+
+                <!-- Data Pin Status -->
+                <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                    <label class="block text-sm font-semibold text-gray-900 mb-2">
+                        <i class="fas fa-sim-card text-teal-500 mr-2"></i>{{ $network }} Data Pin
+                    </label>
+                    <select name="datapin" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                        <option value="On" {{ $networkData->datapinStatus == 'On' ? 'selected' : '' }}>Enable</option>
+                        <option value="Off" {{ $networkData->datapinStatus == 'Off' ? 'selected' : '' }}>Disable</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Network IDs Section -->
+        <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold text-gray-900">{{ $network }} Network IDs</h2>
+                <p class="text-red-600 mt-1 text-sm">
+                    <i class="fas fa-exclamation-triangle mr-2"></i>Changing network IDs affects service routing. Use with caution.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- General ID -->
+                <div>
+                    <label class="block text-sm font-semibold text-gray-900 mb-2">
+                        {{ $network }} General ID
+                    </label>
+                    <input type="number" name="networkid" value="{{ $networkData->networkid }}"
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                           placeholder="General ID" required />
+                </div>
+
+                <!-- SME ID -->
+                <div>
+                    <label class="block text-sm font-semibold text-gray-900 mb-2">
+                        {{ $network }} SME ID
+                    </label>
+                    <input type="number" name="smeId" value="{{ $networkData->smeId }}"
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                           placeholder="SME ID" required />
+                </div>
+
+                <!-- Gifting ID -->
+                <div>
+                    <label class="block text-sm font-semibold text-gray-900 mb-2">
+                        {{ $network }} Gifting ID
+                    </label>
+                    <input type="number" name="giftingId" value="{{ $networkData->giftingId }}"
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                           placeholder="Gifting ID" required />
+                </div>
+
+                <!-- Corporate ID -->
+                <div>
+                    <label class="block text-sm font-semibold text-gray-900 mb-2">
+                        {{ $network }} Corporate ID
+                    </label>
+                    <input type="number" name="corporateId" value="{{ $networkData->corporateId }}"
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                           placeholder="Corporate ID" required />
+                </div>
+
+                <!-- VTU ID -->
+                <div>
+                    <label class="block text-sm font-semibold text-gray-900 mb-2">
+                        {{ $network }} VTU ID
+                    </label>
+                    <input type="number" name="vtuId" value="{{ $networkData->vtuId }}"
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                           placeholder="VTU ID" required />
+                </div>
+
+                <!-- Share & Sell ID -->
+                <div>
+                    <label class="block text-sm font-semibold text-gray-900 mb-2">
+                        {{ $network }} Share & Sell ID
+                    </label>
+                    <input type="number" name="sharesellId" value="{{ $networkData->sharesellId }}"
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                           placeholder="Share & Sell ID" required />
+                </div>
+            </div>
+
+            <input type="hidden" name="network" value="{{ $networkData->nId }}" />
+
+            <div class="mt-8 flex gap-4">
+                <button type="submit" name="update-network-setting"
+                        class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-8 rounded-lg transition-colors duration-200 shadow-lg">
+                    <i class="fas fa-save mr-2"></i>Update {{ $network }} Settings
+                </button>
+                <button type="button" onclick="window.location.reload()"
+                        class="bg-gray-500 hover:bg-gray-600 text-white font-medium py-3 px-8 rounded-lg transition-colors duration-200">
+                    <i class="fas fa-undo mr-2"></i>Reset
+                </button>
+            </div>
+        </div>
+    </form>
 </div>
 
 <!-- Service Analytics Modal -->
-<div class="modal fade" id="analyticsModal" tabindex="-1" aria-labelledby="analyticsModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="analyticsModalLabel">Network Service Analytics</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<div id="analyticsModal" class="fixed inset-0 z-50 hidden overflow-y-auto bg-gray-600 bg-opacity-50">
+    <div class="flex items-center justify-center min-h-screen px-4">
+        <div class="relative bg-white rounded-xl shadow-2xl max-w-4xl w-full">
+            <!-- Modal Header -->
+            <div class="flex items-center justify-between p-6 border-b border-gray-200">
+                <h3 id="analyticsModalLabel" class="text-xl font-semibold text-gray-900">Network Service Analytics</h3>
+                <button type="button" onclick="closeAnalyticsModal()"
+                        class="text-gray-400 hover:text-gray-600 transition-colors">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
             </div>
-            <div class="modal-body" id="analyticsContent">
-                <div class="text-center">
-                    <div class="spinner-border" role="status">
-                        <span class="visually-hidden">Loading...</span>
-                    </div>
+
+            <!-- Modal Body -->
+            <div id="analyticsContent" class="p-6">
+                <div class="text-center py-8">
+                    <div class="inline-block animate-spin rounded-full h-12 w-12 border-4 border-blue-500 border-t-transparent"></div>
+                    <p class="mt-4 text-gray-600">Loading analytics...</p>
                 </div>
             </div>
         </div>
@@ -233,8 +362,11 @@ function testNetworkServices(network) {
 }
 
 function showServiceAnalytics(network) {
-    const modal = new bootstrap.Modal(document.getElementById('analyticsModal'));
+    const modal = document.getElementById('analyticsModal');
     document.getElementById('analyticsModalLabel').textContent = `${network} Service Analytics`;
+
+    // Show modal
+    modal.classList.remove('hidden');
 
     fetch(`{{ route('admin.network-settings.analytics') }}?network=${network}`)
         .then(response => response.json())
@@ -242,36 +374,55 @@ function showServiceAnalytics(network) {
             if (data.success) {
                 const analytics = data.analytics;
                 const content = `
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-body text-center">
-                                    <h5>Total Transactions</h5>
-                                    <h3 class="text-primary">${analytics.total_transactions}</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Total Transactions -->
+                        <div class="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl p-6 text-white shadow-lg">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-blue-100 text-sm mb-1">Total Transactions</p>
+                                    <h3 class="text-3xl font-bold">${analytics.total_transactions}</h3>
+                                </div>
+                                <div class="bg-blue-400 bg-opacity-30 rounded-full p-4">
+                                    <i class="fas fa-exchange-alt text-2xl"></i>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-body text-center">
-                                    <h5>Success Rate</h5>
-                                    <h3 class="text-success">${analytics.success_rate}%</h3>
+
+                        <!-- Success Rate -->
+                        <div class="bg-gradient-to-br from-green-500 to-green-600 rounded-xl p-6 text-white shadow-lg">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-green-100 text-sm mb-1">Success Rate</p>
+                                    <h3 class="text-3xl font-bold">${analytics.success_rate}%</h3>
+                                </div>
+                                <div class="bg-green-400 bg-opacity-30 rounded-full p-4">
+                                    <i class="fas fa-check-circle text-2xl"></i>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-body text-center">
-                                    <h5>Revenue</h5>
-                                    <h3 class="text-info">₦${analytics.revenue}</h3>
+
+                        <!-- Revenue -->
+                        <div class="bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl p-6 text-white shadow-lg">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-purple-100 text-sm mb-1">Revenue</p>
+                                    <h3 class="text-3xl font-bold">₦${analytics.revenue}</h3>
+                                </div>
+                                <div class="bg-purple-400 bg-opacity-30 rounded-full p-4">
+                                    <i class="fas fa-money-bill-wave text-2xl"></i>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-body text-center">
-                                    <h5>Failed Transactions</h5>
-                                    <h3 class="text-danger">${analytics.failed_transactions}</h3>
+
+                        <!-- Failed Transactions -->
+                        <div class="bg-gradient-to-br from-red-500 to-red-600 rounded-xl p-6 text-white shadow-lg">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-red-100 text-sm mb-1">Failed Transactions</p>
+                                    <h3 class="text-3xl font-bold">${analytics.failed_transactions}</h3>
+                                </div>
+                                <div class="bg-red-400 bg-opacity-30 rounded-full p-4">
+                                    <i class="fas fa-times-circle text-2xl"></i>
                                 </div>
                             </div>
                         </div>
@@ -279,16 +430,33 @@ function showServiceAnalytics(network) {
                 `;
                 document.getElementById('analyticsContent').innerHTML = content;
             } else {
-                document.getElementById('analyticsContent').innerHTML = '<div class="alert alert-danger">Failed to load analytics</div>';
+                document.getElementById('analyticsContent').innerHTML = `
+                    <div class="bg-red-50 border border-red-200 rounded-lg p-4 text-red-700">
+                        <i class="fas fa-exclamation-circle mr-2"></i>Failed to load analytics
+                    </div>
+                `;
             }
         })
         .catch(error => {
             console.error('Analytics error:', error);
-            document.getElementById('analyticsContent').innerHTML = '<div class="alert alert-danger">Failed to load analytics</div>';
+            document.getElementById('analyticsContent').innerHTML = `
+                <div class="bg-red-50 border border-red-200 rounded-lg p-4 text-red-700">
+                    <i class="fas fa-exclamation-circle mr-2"></i>Failed to load analytics
+                </div>
+            `;
         });
-
-    modal.show();
 }
+
+function closeAnalyticsModal() {
+    document.getElementById('analyticsModal').classList.add('hidden');
+}
+
+// Close modal on background click
+document.getElementById('analyticsModal')?.addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeAnalyticsModal();
+    }
+});
 
 // Auto-save functionality
 document.addEventListener('DOMContentLoaded', function() {

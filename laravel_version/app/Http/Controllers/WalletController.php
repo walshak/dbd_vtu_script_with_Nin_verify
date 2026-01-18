@@ -8,6 +8,7 @@ use App\Services\MonnifyService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use App\Models\User;
+use App\Models\Transaction;
 use App\Services\PaystackService;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
@@ -126,12 +127,83 @@ class WalletController extends Controller
     /**
      * Show transaction history
      */
-    public function transactionHistory()
+    public function transactionHistory(Request $request)
     {
-        $transactions = $this->walletService->getTransactionHistory(Auth::user()->id);
-        $balanceData = $this->walletService->getBalance(Auth::user()->id);
-        $balance = $balanceData['balance'] ?? Auth::user()->wallet_balance ?? 0;
-        return view('user.transaction-history', compact('transactions', 'balance'));
+        $user = Auth::user();
+
+        // Get date filters from request or default to last 30 days
+        $dateFrom = $request->input('date_from', now()->subDays(30)->format('Y-m-d'));
+        $dateTo = $request->input('date_to', now()->format('Y-m-d'));
+
+        // Get service filter
+        $serviceFilter = $request->input('service', 'all');
+
+        // Get status filter
+        $statusFilter = $request->input('status', 'all');
+
+        // Build query
+        $query = Transaction::where('sId', $user->id);
+
+        // Apply date filters
+        if ($dateFrom) {
+            $query->whereDate('date', '>=', $dateFrom);
+        }
+
+        if ($dateTo) {
+            $query->whereDate('date', '<=', $dateTo);
+        }
+
+        // Apply service filter
+        if ($serviceFilter && $serviceFilter !== 'all') {
+            $query->where('servicename', $serviceFilter);
+        }
+
+        // Apply status filter
+        if ($statusFilter && $statusFilter !== 'all') {
+            $query->where('status', $statusFilter == 'success' ? Transaction::STATUS_SUCCESS : Transaction::STATUS_FAILED);
+        }
+
+        // Get transactions with pagination
+        $transactions = $query->orderBy('date', 'desc')->paginate(20);
+
+        // Calculate summary for filtered period
+        $allFilteredTransactions = (clone $query)->get();
+        $summary = [
+            'total_transactions' => $allFilteredTransactions->count(),
+            'successful' => $allFilteredTransactions->where('status', Transaction::STATUS_SUCCESS)->count(),
+            'failed' => $allFilteredTransactions->where('status', Transaction::STATUS_FAILED)->count(),
+            'total_amount' => $allFilteredTransactions->where('status', Transaction::STATUS_SUCCESS)->sum(function($t) {
+                return floatval($t->amount);
+            }),
+            'wallet_topup' => $allFilteredTransactions->where('servicename', Transaction::SERVICE_WALLET_TOPUP)
+                ->where('status', Transaction::STATUS_SUCCESS)->sum(function($t) {
+                    return floatval($t->amount);
+                }),
+            'total_spent' => $allFilteredTransactions->whereNotIn('servicename', [Transaction::SERVICE_WALLET_TOPUP, Transaction::SERVICE_WALLET_CREDIT])
+                ->where('status', Transaction::STATUS_SUCCESS)->sum(function($t) {
+                    return floatval($t->amount);
+                })
+        ];
+
+        // Get available services for filter
+        $availableServices = Transaction::where('sId', $user->id)
+            ->select('servicename')
+            ->distinct()
+            ->orderBy('servicename')
+            ->pluck('servicename');
+
+        $balance = $user->wallet_balance ?? 0;
+
+        return view('user.transaction-history', compact(
+            'transactions',
+            'summary',
+            'balance',
+            'dateFrom',
+            'dateTo',
+            'serviceFilter',
+            'statusFilter',
+            'availableServices'
+        ));
     }
 
     /**

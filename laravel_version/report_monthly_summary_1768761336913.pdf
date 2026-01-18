@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="pHoYlLzbxebuHtXYtvQVe48etSdDXr0jWWygKDy6">
+    <title>Reports &amp; Analytics</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=nunito:200,300,400,600,700,800,900&display=swap" rel="stylesheet" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'nunito': ['Nunito', 'sans-serif'],
+                    },
+                    animation: {
+                        'bounce-slow': 'bounce 3s infinite',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .box {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .box-header {
+            background: #f8f9fa;
+            padding: 15px 20px;
+            border-bottom: 1px solid #e9ecef;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .box-body {
+            padding: 20px;
+        }
+
+        .box-title {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            border-left: 4px solid #007bff;
+        }
+
+        .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        .stat-label {
+            color: #666;
+            margin-top: 5px;
+        }
+    </style>
+
+    </head>
+
+<body class="font-nunito antialiased bg-gray-50">
+    <div class="min-h-screen flex">
+        <!-- Sidebar -->
+        <!-- Admin Sidebar Component -->
+<div id="sidebar"
+    class="bg-white shadow-lg w-64 min-h-screen fixed left-0 top-0 transform transition-transform duration-300 ease-in-out z-30 lg:translate-x-0 lg:static lg:inset-0 lg:flex-shrink-0">
+    <!-- Sidebar Header -->
+    <div class="flex items-center justify-center h-16 border-b border-gray-200">
+        <h1 class="text-xl font-bold bg-gradient-to-r from-red-600 to-orange-600 bg-clip-text text-transparent">
+            VTU ADMIN
+        </h1>
+    </div>
+
+    <!-- Sidebar Menu -->
+    <nav class="mt-8">
+        <div class="px-4 space-y-2">
+            <!-- Dashboard -->
+            <a href="http://localhost:8000/admin/dashboard"
+                class="group flex items-center px-4 py-3 text-sm font-medium rounded-lg text-gray-700 hover:bg-gray-50 hover:text-gray-900">
+                <i class="fas fa-tachometer-alt mr-3 text-blue-600"></i>
+                Dashboard
+            </a>
+
+            <!-- System Monitoring -->
+            <a href="http://localhost:8000/admin/monitoring"
+                class="group flex items-center px-4 py-3 text-sm font-medium rounded-lg text-gray-700 hover:bg-gray-50 hover:text-gray-900">
+                <i class="fas fa-heartbeat mr-3 text-red-500"></i>
+                System Monitoring
+            </a>
+
+            <!-- User Management -->
+            <a href="http://localhost:8000/admin/users"
+                class="group flex items-center px-4 py-3 text-sm font-medium rounded-lg text-gray-700 hover:bg-gray-50 hover:text-gray-900">
+                <i class="fas fa-users mr-3 text-green-500"></i>
+                User Management
+            </a>
+
+            <!-- Transaction Management -->
+            <a href="http://localhost:8000/admin/transactions"
+                class="group flex items-center px-4 py-3 text-sm font-medium rounded-lg text-gray-700 hover:bg-gray-50 hover:text-gray-900">
+                <i class="fas fa-exchange-alt mr-3 text-purple-500"></i>
+                Transactions
+            </a>
+
+            <!-- Service Management Section -->
+            <div class="pt-4">
+                <h3 class="px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Service Management</h3>
+                <div class="mt-2 space-y-1">
+                    <a href="http://localhost:8000/admin/data-plans"
+                        class="group flex items-center px-4 py-3 text-sm font-medium rounded-lg text-gray-700 hover:bg-gray-50 hover:text-gray-900">
+                        <i class="fas fa-wifi mr-3 text-blue-500"></i>
+                        Data Plans
+                    </a>
+                    <a href="http://localhost:8000/admin/airtime"
+                        class="group flex items-center px-4 py-3 text-sm font-medium rounded-lg text-gray-700 hover:bg-gray-50 hover:text-gray-900">
+                        <i class="fas fa-phone-alt mr-3 text-green-500"></i>
+                        Airtime Pricing
+                    </a>
+                    <a href="http://localhost:8000/admin/cable-plans"
+                        class="group flex items-center px-4 py-3 text-sm font-medium rounded-lg text-gray-700 hover:bg-gray-50 hover:text-gray-900">
+                        <i class="fas fa-tv mr-3 text-purple-500"></i>
+                        Cable TV Plans
+                    </a>
+                    
+                    <a href="http://localhost:8000/admin/electricity"
+                        class="group flex items-center px-4 py-3 text-sm font-medium rounded-lg text-gray-700 hover:bg-gray-50 hover:text-gray-900">
+                        <i class="fas fa-bolt mr-3 text-yellow-500"></i>
+                        Electricity
+                    </a>
+                    
+                </div>
+            </div>
+
+            <!-- System Configuration Section -->
+            <div class="pt-4">
+                <h3 class="px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Configuration</h3>
+                <div class="mt-2 space-y-1">
+                    <a href="http://localhost:8000/admin/api-configuration/uzobest"
+                        class="group flex items-center px-4 py-3 text-sm font-medium rounded-lg text-gray-700 hover:bg-gray-50 hover:text-gray-900">
+                        <i class="fas fa-cogs mr-3 text-green-500"></i>
+                        API Configuration
+                        <span class="ml-auto text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded">Uzobest</span>
+                    </a>
+                    <a href="http://localhost:8000/admin/network-settings"
+                        class="group flex items-center px-4 py-3 text-sm font-medium rounded-lg text-gray-700 hover:bg-gray-50 hover:text-gray-900">
+                        <i class="fas fa-network-wired mr-3 text-blue-500"></i>
+                        Network Settings
+                    </a>
+                    <a href="http://localhost:8000/admin/wallet/providers"
+                        class="group flex items-center px-4 py-3 text-sm font-medium rounded-lg text-gray-700 hover:bg-gray-50 hover:text-gray-900">
+                        <i class="fas fa-wallet mr-3 text-purple-500"></i>
+                        Payment Settings
+                    </a>
+                    <a href="http://localhost:8000/admin/system-configuration"
+                        class="group flex items-center px-4 py-3 text-sm font-medium rounded-lg text-gray-700 hover:bg-gray-50 hover:text-gray-900">
+                        <i class="fas fa-sliders-h mr-3 text-gray-500"></i>
+                        System Settings
+                    </a>
+                </div>
+            </div>
+
+            <!-- Analytics & Reports Section -->
+            <div class="pt-4">
+                <h3 class="px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Analytics & Reports</h3>
+                <div class="mt-2 space-y-1">
+                    <a href="http://localhost:8000/admin/analytics"
+                        class="group flex items-center px-4 py-3 text-sm font-medium rounded-lg text-gray-700 hover:bg-gray-50 hover:text-gray-900">
+                        <i class="fas fa-chart-line mr-3 text-red-500"></i>
+                        Analytics
+                    </a>
+                    <a href="http://localhost:8000/admin/reports"
+                        class="group flex items-center px-4 py-3 text-sm font-medium rounded-lg bg-blue-50 text-blue-700 border-r-2 border-blue-700">
+                        <i class="fas fa-file-alt mr-3 text-blue-500"></i>
+                        Reports
+                    </a>
+                    <a href="http://localhost:8000/admin/kyc"
+                        class="group flex items-center px-4 py-3 text-sm font-medium rounded-lg text-gray-700 hover:bg-gray-50 hover:text-gray-900">
+                        <i class="fas fa-id-card mr-3 text-yellow-500"></i>
+                        KYC Management
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+</div>
+
+        <!-- Mobile sidebar overlay -->
+        <div id="sidebar-overlay" class="fixed inset-0 bg-gray-600 bg-opacity-75 z-20 lg:hidden hidden"></div>
+
+        <!-- Main Content -->
+        <div class="flex-1 min-w-0">
+            <!-- Top Navigation Bar -->
+            <!-- Admin Top Navigation Bar -->
+<nav class="bg-white shadow-sm border-b border-gray-200">
+    <div class="px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16">
+            <div class="flex items-center">
+                <!-- Mobile menu button -->
+                <button id="mobile-menu-button" class="lg:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500">
+                    <span class="sr-only">Open main menu</span>
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+
+                <!-- Breadcrumb -->
+                <div class="hidden lg:flex lg:items-center lg:space-x-4">
+                    <a href="http://localhost:8000/admin/dashboard" class="text-gray-500 hover:text-gray-700">Admin Dashboard</a>
+                    <i class="fas fa-chevron-right text-gray-400 text-sm"></i>
+                    <h1 class="text-2xl font-semibold text-gray-900">Dashboard</h1>
+                </div>
+            </div>
+
+            <!-- Right side -->
+            <div class="flex items-center space-x-4">
+                <!-- System Status -->
+                <div class="hidden sm:flex items-center space-x-2 bg-green-50 px-4 py-2 rounded-full">
+                    <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                    <span class="text-sm font-medium text-gray-700">System Online</span>
+                </div>
+
+                <!-- Notifications -->
+                <button class="p-2 text-gray-400 hover:text-gray-500 relative">
+                    <i class="fas fa-bell text-xl"></i>
+                    <!-- Notification badge -->
+                    <span class="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-400 transform translate-x-1/2 -translate-y-1/2"></span>
+                </button>
+
+                <!-- Profile dropdown -->
+                <div class="relative">
+                    <button id="profile-menu-button" class="flex items-center space-x-3 text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 p-2">
+                        <div class="h-8 w-8 rounded-full bg-gradient-to-r from-red-500 to-orange-600 flex items-center justify-center">
+                            <span class="text-sm font-medium text-white">S</span>
+                        </div>
+                        <div class="hidden md:block text-left">
+                            <p class="text-sm font-medium text-gray-700">Super Admin</p>
+                            <p class="text-xs text-gray-500">Super Admin</p>
+                        </div>
+                        <i class="fas fa-chevron-down text-gray-400 text-xs"></i>
+                    </button>
+
+                    <!-- Profile dropdown menu -->
+                    <div id="profile-menu" class="hidden origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
+                        <div class="py-1">
+                            <div class="px-4 py-2 border-b border-gray-100">
+                                <p class="text-sm font-medium text-gray-900">Super Admin</p>
+                                <p class="text-sm text-gray-500">walshak1999@gmail.com</p>
+                            </div>
+                            <a href="http://localhost:8000/admin/profile" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                <i class="fas fa-user mr-2"></i>Profile Settings
+                            </a>
+                            <a href="http://localhost:8000/admin/system/settings" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                <i class="fas fa-cog mr-2"></i>System Settings
+                            </a>
+                            <a href="http://localhost:8000/admin/system/api-monitoring" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                <i class="fas fa-chart-line mr-2"></i>System Health
+                            </a>
+                            <div class="border-t border-gray-100">
+                                <form method="POST" action="http://localhost:8000/admin/logout" class="block">
+                                    <input type="hidden" name="_token" value="pHoYlLzbxebuHtXYtvQVe48etSdDXr0jWWygKDy6" autocomplete="off">                                    <button type="submit" class="w-full text-left px-4 py-2 text-sm text-red-700 hover:bg-red-50">
+                                        <i class="fas fa-sign-out-alt mr-2"></i>Sign Out
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+            <!-- Main Content -->
+            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50">
+                <div class="px-4 sm:px-6 lg:px-8 py-6">
+                    <!-- Flash Messages -->
+                    
+                                            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                            Failed to generate report: SQLSTATE[42S22]: Column not found: 1054 Unknown column &#039;commission&#039; in &#039;field list&#039; (Connection: mysql, SQL: select 
+            YEAR(date) as year,
+            MONTH(date) as month,
+            COUNT(*) as total_transactions,
+            SUM(CASE WHEN status = 0 THEN amount ELSE 0 END) as revenue,
+            SUM(CASE WHEN status = 0 THEN commission ELSE 0 END) as commission,
+            COUNT(DISTINCT sId) as unique_users
+         from `transactions` where `date` between 2025-12-31 and 2026-01-18 group by `year`, `month` order by `year` asc, `month` asc)
+                        </div>
+                    
+                    
+                    <div class="container mx-auto px-6 py-8">
+    <!-- Header Section -->
+    <div class="mb-8">
+        <div class="bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl shadow-lg p-6 text-white">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h1 class="text-3xl font-bold mb-2">Reports & Analytics</h1>
+                    <p class="text-indigo-100 text-lg">Generate comprehensive business reports</p>
+                </div>
+                <div>
+                    <i class="fas fa-chart-pie text-5xl opacity-50"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        <button onclick="openReportModal('transaction_reports')"
+                class="bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white rounded-xl p-6 shadow-lg transition-all duration-300 transform hover:scale-105">
+            <div class="flex items-center justify-between mb-3">
+                <i class="fas fa-chart-line text-3xl"></i>
+                <span class="bg-blue-400 bg-opacity-30 text-white text-xs px-3 py-1 rounded-full">Popular</span>
+            </div>
+            <h3 class="text-lg font-semibold">Transaction Reports</h3>
+            <p class="text-blue-100 text-sm mt-2">Sales & transaction analysis</p>
+        </button>
+
+        <button onclick="openReportModal('user_reports')"
+                class="bg-gradient-to-br from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white rounded-xl p-6 shadow-lg transition-all duration-300 transform hover:scale-105">
+            <div class="flex items-center justify-between mb-3">
+                <i class="fas fa-users text-3xl"></i>
+            </div>
+            <h3 class="text-lg font-semibold">User Reports</h3>
+            <p class="text-green-100 text-sm mt-2">User analytics & KYC status</p>
+        </button>
+
+        <button onclick="openReportModal('financial_reports')"
+                class="bg-gradient-to-br from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white rounded-xl p-6 shadow-lg transition-all duration-300 transform hover:scale-105">
+            <div class="flex items-center justify-between mb-3">
+                <i class="fas fa-dollar-sign text-3xl"></i>
+            </div>
+            <h3 class="text-lg font-semibold">Financial Reports</h3>
+            <p class="text-purple-100 text-sm mt-2">Revenue & profit analysis</p>
+        </button>
+
+        <button onclick="openReportModal('operational_reports')"
+                class="bg-gradient-to-br from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white rounded-xl p-6 shadow-lg transition-all duration-300 transform hover:scale-105">
+            <div class="flex items-center justify-between mb-3">
+                <i class="fas fa-cogs text-3xl"></i>
+            </div>
+            <h3 class="text-lg font-semibold">Operational Reports</h3>
+            <p class="text-orange-100 text-sm mt-2">System health & performance</p>
+        </button>
+    </div>
+
+    <!-- Available Reports Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+            <div class="bg-gradient-to-r from-gray-50 to-gray-100 p-6 border-b border-gray-200">
+                <div class="flex items-center">
+                    <div class="bg-white rounded-lg p-3 shadow-md">
+                        <i class="fas fa-chart-line text-2xl text-indigo-600"></i>
+                    </div>
+                    <div class="ml-4">
+                        <h3 class="text-xl font-semibold text-gray-900">Transaction Reports</h3>
+                        <p class="text-gray-600 text-sm">Detailed transaction analysis and reports</p>
+                    </div>
+                </div>
+            </div>
+            <div class="p-6">
+                <ul class="space-y-3">
+                                        <li>
+                        <button onclick="generateReport('transaction_reports', 'daily_sales')"
+                                class="w-full flex items-center justify-between p-3 rounded-lg hover:bg-indigo-50 transition-colors duration-200 group">
+                            <div class="flex items-center">
+                                <i class="fas fa-file-alt text-indigo-400 mr-3 group-hover:text-indigo-600"></i>
+                                <span class="text-gray-700 group-hover:text-gray-900 font-medium">Daily Sales Report</span>
+                            </div>
+                            <i class="fas fa-chevron-right text-gray-400 group-hover:text-indigo-600"></i>
+                        </button>
+                    </li>
+                                        <li>
+                        <button onclick="generateReport('transaction_reports', 'monthly_summary')"
+                                class="w-full flex items-center justify-between p-3 rounded-lg hover:bg-indigo-50 transition-colors duration-200 group">
+                            <div class="flex items-center">
+                                <i class="fas fa-file-alt text-indigo-400 mr-3 group-hover:text-indigo-600"></i>
+                                <span class="text-gray-700 group-hover:text-gray-900 font-medium">Monthly Summary Report</span>
+                            </div>
+                            <i class="fas fa-chevron-right text-gray-400 group-hover:text-indigo-600"></i>
+                        </button>
+                    </li>
+                                        <li>
+                        <button onclick="generateReport('transaction_reports', 'service_performance')"
+                                class="w-full flex items-center justify-between p-3 rounded-lg hover:bg-indigo-50 transition-colors duration-200 group">
+                            <div class="flex items-center">
+                                <i class="fas fa-file-alt text-indigo-400 mr-3 group-hover:text-indigo-600"></i>
+                                <span class="text-gray-700 group-hover:text-gray-900 font-medium">Service Performance Report</span>
+                            </div>
+                            <i class="fas fa-chevron-right text-gray-400 group-hover:text-indigo-600"></i>
+                        </button>
+                    </li>
+                                        <li>
+                        <button onclick="generateReport('transaction_reports', 'failed_transactions')"
+                                class="w-full flex items-center justify-between p-3 rounded-lg hover:bg-indigo-50 transition-colors duration-200 group">
+                            <div class="flex items-center">
+                                <i class="fas fa-file-alt text-indigo-400 mr-3 group-hover:text-indigo-600"></i>
+                                <span class="text-gray-700 group-hover:text-gray-900 font-medium">Failed Transactions Report</span>
+                            </div>
+                            <i class="fas fa-chevron-right text-gray-400 group-hover:text-indigo-600"></i>
+                        </button>
+                    </li>
+                                    </ul>
+            </div>
+        </div>
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+            <div class="bg-gradient-to-r from-gray-50 to-gray-100 p-6 border-b border-gray-200">
+                <div class="flex items-center">
+                    <div class="bg-white rounded-lg p-3 shadow-md">
+                        <i class="fas fa-users text-2xl text-indigo-600"></i>
+                    </div>
+                    <div class="ml-4">
+                        <h3 class="text-xl font-semibold text-gray-900">User Reports</h3>
+                        <p class="text-gray-600 text-sm">User analytics and behavior reports</p>
+                    </div>
+                </div>
+            </div>
+            <div class="p-6">
+                <ul class="space-y-3">
+                                        <li>
+                        <button onclick="generateReport('user_reports', 'user_activity')"
+                                class="w-full flex items-center justify-between p-3 rounded-lg hover:bg-indigo-50 transition-colors duration-200 group">
+                            <div class="flex items-center">
+                                <i class="fas fa-file-alt text-indigo-400 mr-3 group-hover:text-indigo-600"></i>
+                                <span class="text-gray-700 group-hover:text-gray-900 font-medium">User Activity Report</span>
+                            </div>
+                            <i class="fas fa-chevron-right text-gray-400 group-hover:text-indigo-600"></i>
+                        </button>
+                    </li>
+                                        <li>
+                        <button onclick="generateReport('user_reports', 'registration_trends')"
+                                class="w-full flex items-center justify-between p-3 rounded-lg hover:bg-indigo-50 transition-colors duration-200 group">
+                            <div class="flex items-center">
+                                <i class="fas fa-file-alt text-indigo-400 mr-3 group-hover:text-indigo-600"></i>
+                                <span class="text-gray-700 group-hover:text-gray-900 font-medium">Registration Trends</span>
+                            </div>
+                            <i class="fas fa-chevron-right text-gray-400 group-hover:text-indigo-600"></i>
+                        </button>
+                    </li>
+                                        <li>
+                        <button onclick="generateReport('user_reports', 'kyc_status')"
+                                class="w-full flex items-center justify-between p-3 rounded-lg hover:bg-indigo-50 transition-colors duration-200 group">
+                            <div class="flex items-center">
+                                <i class="fas fa-file-alt text-indigo-400 mr-3 group-hover:text-indigo-600"></i>
+                                <span class="text-gray-700 group-hover:text-gray-900 font-medium">KYC Status Report</span>
+                            </div>
+                            <i class="fas fa-chevron-right text-gray-400 group-hover:text-indigo-600"></i>
+                        </button>
+                    </li>
+                                        <li>
+                        <button onclick="generateReport('user_reports', 'wallet_balances')"
+                                class="w-full flex items-center justify-between p-3 rounded-lg hover:bg-indigo-50 transition-colors duration-200 group">
+                            <div class="flex items-center">
+                                <i class="fas fa-file-alt text-indigo-400 mr-3 group-hover:text-indigo-600"></i>
+                                <span class="text-gray-700 group-hover:text-gray-900 font-medium">Wallet Balances Report</span>
+                            </div>
+                            <i class="fas fa-chevron-right text-gray-400 group-hover:text-indigo-600"></i>
+                        </button>
+                    </li>
+                                    </ul>
+            </div>
+        </div>
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+            <div class="bg-gradient-to-r from-gray-50 to-gray-100 p-6 border-b border-gray-200">
+                <div class="flex items-center">
+                    <div class="bg-white rounded-lg p-3 shadow-md">
+                        <i class="fas fa-dollar-sign text-2xl text-indigo-600"></i>
+                    </div>
+                    <div class="ml-4">
+                        <h3 class="text-xl font-semibold text-gray-900">Financial Reports</h3>
+                        <p class="text-gray-600 text-sm">Revenue and financial analysis reports</p>
+                    </div>
+                </div>
+            </div>
+            <div class="p-6">
+                <ul class="space-y-3">
+                                        <li>
+                        <button onclick="generateReport('financial_reports', 'revenue_analysis')"
+                                class="w-full flex items-center justify-between p-3 rounded-lg hover:bg-indigo-50 transition-colors duration-200 group">
+                            <div class="flex items-center">
+                                <i class="fas fa-file-alt text-indigo-400 mr-3 group-hover:text-indigo-600"></i>
+                                <span class="text-gray-700 group-hover:text-gray-900 font-medium">Revenue Analysis Report</span>
+                            </div>
+                            <i class="fas fa-chevron-right text-gray-400 group-hover:text-indigo-600"></i>
+                        </button>
+                    </li>
+                                        <li>
+                        <button onclick="generateReport('financial_reports', 'commission_breakdown')"
+                                class="w-full flex items-center justify-between p-3 rounded-lg hover:bg-indigo-50 transition-colors duration-200 group">
+                            <div class="flex items-center">
+                                <i class="fas fa-file-alt text-indigo-400 mr-3 group-hover:text-indigo-600"></i>
+                                <span class="text-gray-700 group-hover:text-gray-900 font-medium">Commission Breakdown</span>
+                            </div>
+                            <i class="fas fa-chevron-right text-gray-400 group-hover:text-indigo-600"></i>
+                        </button>
+                    </li>
+                                        <li>
+                        <button onclick="generateReport('financial_reports', 'profit_loss')"
+                                class="w-full flex items-center justify-between p-3 rounded-lg hover:bg-indigo-50 transition-colors duration-200 group">
+                            <div class="flex items-center">
+                                <i class="fas fa-file-alt text-indigo-400 mr-3 group-hover:text-indigo-600"></i>
+                                <span class="text-gray-700 group-hover:text-gray-900 font-medium">Profit &amp; Loss Statement</span>
+                            </div>
+                            <i class="fas fa-chevron-right text-gray-400 group-hover:text-indigo-600"></i>
+                        </button>
+                    </li>
+                                        <li>
+                        <button onclick="generateReport('financial_reports', 'payment_methods')"
+                                class="w-full flex items-center justify-between p-3 rounded-lg hover:bg-indigo-50 transition-colors duration-200 group">
+                            <div class="flex items-center">
+                                <i class="fas fa-file-alt text-indigo-400 mr-3 group-hover:text-indigo-600"></i>
+                                <span class="text-gray-700 group-hover:text-gray-900 font-medium">Payment Methods Analysis</span>
+                            </div>
+                            <i class="fas fa-chevron-right text-gray-400 group-hover:text-indigo-600"></i>
+                        </button>
+                    </li>
+                                    </ul>
+            </div>
+        </div>
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+            <div class="bg-gradient-to-r from-gray-50 to-gray-100 p-6 border-b border-gray-200">
+                <div class="flex items-center">
+                    <div class="bg-white rounded-lg p-3 shadow-md">
+                        <i class="fas fa-cogs text-2xl text-indigo-600"></i>
+                    </div>
+                    <div class="ml-4">
+                        <h3 class="text-xl font-semibold text-gray-900">Operational Reports</h3>
+                        <p class="text-gray-600 text-sm">System and operational performance reports</p>
+                    </div>
+                </div>
+            </div>
+            <div class="p-6">
+                <ul class="space-y-3">
+                                        <li>
+                        <button onclick="generateReport('operational_reports', 'system_health')"
+                                class="w-full flex items-center justify-between p-3 rounded-lg hover:bg-indigo-50 transition-colors duration-200 group">
+                            <div class="flex items-center">
+                                <i class="fas fa-file-alt text-indigo-400 mr-3 group-hover:text-indigo-600"></i>
+                                <span class="text-gray-700 group-hover:text-gray-900 font-medium">System Health Report</span>
+                            </div>
+                            <i class="fas fa-chevron-right text-gray-400 group-hover:text-indigo-600"></i>
+                        </button>
+                    </li>
+                                        <li>
+                        <button onclick="generateReport('operational_reports', 'api_performance')"
+                                class="w-full flex items-center justify-between p-3 rounded-lg hover:bg-indigo-50 transition-colors duration-200 group">
+                            <div class="flex items-center">
+                                <i class="fas fa-file-alt text-indigo-400 mr-3 group-hover:text-indigo-600"></i>
+                                <span class="text-gray-700 group-hover:text-gray-900 font-medium">API Performance Report</span>
+                            </div>
+                            <i class="fas fa-chevron-right text-gray-400 group-hover:text-indigo-600"></i>
+                        </button>
+                    </li>
+                                        <li>
+                        <button onclick="generateReport('operational_reports', 'error_analysis')"
+                                class="w-full flex items-center justify-between p-3 rounded-lg hover:bg-indigo-50 transition-colors duration-200 group">
+                            <div class="flex items-center">
+                                <i class="fas fa-file-alt text-indigo-400 mr-3 group-hover:text-indigo-600"></i>
+                                <span class="text-gray-700 group-hover:text-gray-900 font-medium">Error Analysis Report</span>
+                            </div>
+                            <i class="fas fa-chevron-right text-gray-400 group-hover:text-indigo-600"></i>
+                        </button>
+                    </li>
+                                        <li>
+                        <button onclick="generateReport('operational_reports', 'service_uptime')"
+                                class="w-full flex items-center justify-between p-3 rounded-lg hover:bg-indigo-50 transition-colors duration-200 group">
+                            <div class="flex items-center">
+                                <i class="fas fa-file-alt text-indigo-400 mr-3 group-hover:text-indigo-600"></i>
+                                <span class="text-gray-700 group-hover:text-gray-900 font-medium">Service Uptime Report</span>
+                            </div>
+                            <i class="fas fa-chevron-right text-gray-400 group-hover:text-indigo-600"></i>
+                        </button>
+                    </li>
+                                    </ul>
+            </div>
+        </div>
+            </div>
+
+    <!-- Recent Reports Section -->
+        <div class="bg-gray-50 rounded-xl border-2 border-dashed border-gray-300 p-12 text-center">
+        <i class="fas fa-file-invoice text-gray-400 text-5xl mb-4"></i>
+        <h3 class="text-lg font-semibold text-gray-700 mb-2">No Recent Reports</h3>
+        <p class="text-gray-500">Generate your first report using the categories above</p>
+    </div>
+    </div>
+
+<!-- Report Generation Modal -->
+<div id="reportModal" class="fixed inset-0 z-50 hidden overflow-y-auto bg-gray-900 bg-opacity-50">
+    <div class="flex items-center justify-center min-h-screen px-4">
+        <div class="relative bg-white rounded-xl shadow-2xl max-w-2xl w-full">
+            <!-- Modal Header -->
+            <div class="flex items-center justify-between p-6 border-b border-gray-200">
+                <h3 id="reportModalTitle" class="text-xl font-semibold text-gray-900">Generate Report</h3>
+                <button type="button" onclick="closeReportModal()"
+                        class="text-gray-400 hover:text-gray-600 transition-colors">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+
+            <!-- Modal Body -->
+            <form id="reportForm" onsubmit="submitReport(event)">
+                <input type="hidden" name="_token" value="pHoYlLzbxebuHtXYtvQVe48etSdDXr0jWWygKDy6" autocomplete="off">                <div class="p-6 space-y-6">
+                    <!-- Report Type -->
+                    <input type="hidden" id="report_category" name="report_category">
+                    <input type="hidden" id="report_type" name="report_type">
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-900 mb-2">
+                            <i class="fas fa-file-alt text-indigo-600 mr-2"></i>Report Type
+                        </label>
+                        <select id="report_select" name="report_select"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" required>
+                            <option value="">Select a report type...</option>
+                        </select>
+                    </div>
+
+                    <!-- Date Range -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-900 mb-2">
+                                <i class="fas fa-calendar-alt text-indigo-600 mr-2"></i>From Date
+                            </label>
+                            <input type="date" name="date_from" id="date_from"
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-900 mb-2">
+                                <i class="fas fa-calendar-check text-indigo-600 mr-2"></i>To Date
+                            </label>
+                            <input type="date" name="date_to" id="date_to"
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" required>
+                        </div>
+                    </div>
+
+                    <!-- Quick Date Ranges -->
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <p class="text-sm font-semibold text-gray-700 mb-3">Quick Date Ranges:</p>
+                        <div class="flex flex-wrap gap-2">
+                            <button type="button" onclick="setDateRange('today')"
+                                    class="px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
+                                Today
+                            </button>
+                            <button type="button" onclick="setDateRange('yesterday')"
+                                    class="px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
+                                Yesterday
+                            </button>
+                            <button type="button" onclick="setDateRange('this_week')"
+                                    class="px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
+                                This Week
+                            </button>
+                            <button type="button" onclick="setDateRange('last_week')"
+                                    class="px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
+                                Last Week
+                            </button>
+                            <button type="button" onclick="setDateRange('this_month')"
+                                    class="px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
+                                This Month
+                            </button>
+                            <button type="button" onclick="setDateRange('last_month')"
+                                    class="px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
+                                Last Month
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Export Format -->
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-900 mb-2">
+                            <i class="fas fa-file-export text-indigo-600 mr-2"></i>Export Format
+                        </label>
+                        <div class="grid grid-cols-3 gap-4">
+                            <label class="relative flex items-center justify-center p-4 border-2 border-gray-300 rounded-lg cursor-pointer hover:border-indigo-500 transition-colors">
+                                <input type="radio" name="format" value="pdf" class="sr-only peer" checked>
+                                <div class="text-center peer-checked:text-indigo-600">
+                                    <i class="fas fa-file-pdf text-2xl mb-2"></i>
+                                    <p class="text-sm font-medium">PDF</p>
+                                </div>
+                                <div class="absolute inset-0 border-2 border-indigo-600 rounded-lg opacity-0 peer-checked:opacity-100"></div>
+                            </label>
+                            <label class="relative flex items-center justify-center p-4 border-2 border-gray-300 rounded-lg cursor-pointer hover:border-indigo-500 transition-colors">
+                                <input type="radio" name="format" value="excel" class="sr-only peer">
+                                <div class="text-center peer-checked:text-indigo-600">
+                                    <i class="fas fa-file-excel text-2xl mb-2"></i>
+                                    <p class="text-sm font-medium">Excel</p>
+                                </div>
+                                <div class="absolute inset-0 border-2 border-indigo-600 rounded-lg opacity-0 peer-checked:opacity-100"></div>
+                            </label>
+                            <label class="relative flex items-center justify-center p-4 border-2 border-gray-300 rounded-lg cursor-pointer hover:border-indigo-500 transition-colors">
+                                <input type="radio" name="format" value="csv" class="sr-only peer">
+                                <div class="text-center peer-checked:text-indigo-600">
+                                    <i class="fas fa-file-csv text-2xl mb-2"></i>
+                                    <p class="text-sm font-medium">CSV</p>
+                                </div>
+                                <div class="absolute inset-0 border-2 border-indigo-600 rounded-lg opacity-0 peer-checked:opacity-100"></div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="flex items-center justify-end gap-3 p-6 border-t border-gray-200">
+                    <button type="button" onclick="closeReportModal()"
+                            class="px-6 py-2 bg-gray-500 hover:bg-gray-600 text-white font-medium rounded-lg transition-colors">
+                        Cancel
+                    </button>
+                    <button type="submit"
+                            class="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg transition-colors">
+                        <i class="fas fa-download mr-2"></i>Generate Report
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    
+    <!-- Additional Scripts -->
+    <script>
+const availableReports = {"transaction_reports":{"title":"Transaction Reports","description":"Detailed transaction analysis and reports","icon":"fas fa-chart-line","reports":{"daily_sales":"Daily Sales Report","monthly_summary":"Monthly Summary Report","service_performance":"Service Performance Report","failed_transactions":"Failed Transactions Report"}},"user_reports":{"title":"User Reports","description":"User analytics and behavior reports","icon":"fas fa-users","reports":{"user_activity":"User Activity Report","registration_trends":"Registration Trends","kyc_status":"KYC Status Report","wallet_balances":"Wallet Balances Report"}},"financial_reports":{"title":"Financial Reports","description":"Revenue and financial analysis reports","icon":"fas fa-dollar-sign","reports":{"revenue_analysis":"Revenue Analysis Report","commission_breakdown":"Commission Breakdown","profit_loss":"Profit \u0026 Loss Statement","payment_methods":"Payment Methods Analysis"}},"operational_reports":{"title":"Operational Reports","description":"System and operational performance reports","icon":"fas fa-cogs","reports":{"system_health":"System Health Report","api_performance":"API Performance Report","error_analysis":"Error Analysis Report","service_uptime":"Service Uptime Report"}}};
+
+function openReportModal(category) {
+    document.getElementById('report_category').value = category;
+    document.getElementById('reportModalTitle').textContent = availableReports[category].title;
+
+    // Populate report select
+    const select = document.getElementById('report_select');
+    select.innerHTML = '<option value="">Select a report type...</option>';
+
+    Object.entries(availableReports[category].reports).forEach(([key, name]) => {
+        const option = document.createElement('option');
+        option.value = key;
+        option.textContent = name;
+        select.appendChild(option);
+    });
+
+    // Set default dates (last 30 days)
+    setDateRange('this_month');
+
+    document.getElementById('reportModal').classList.remove('hidden');
+}
+
+function generateReport(category, reportKey) {
+    openReportModal(category);
+    document.getElementById('report_select').value = reportKey;
+}
+
+function closeReportModal() {
+    document.getElementById('reportModal').classList.add('hidden');
+    document.getElementById('reportForm').reset();
+}
+
+function setDateRange(range) {
+    const today = new Date();
+    const dateFrom = document.getElementById('date_from');
+    const dateTo = document.getElementById('date_to');
+
+    const formatDate = (date) => date.toISOString().split('T')[0];
+
+    switch(range) {
+        case 'today':
+            dateFrom.value = formatDate(today);
+            dateTo.value = formatDate(today);
+            break;
+        case 'yesterday':
+            const yesterday = new Date(today);
+            yesterday.setDate(yesterday.getDate() - 1);
+            dateFrom.value = formatDate(yesterday);
+            dateTo.value = formatDate(yesterday);
+            break;
+        case 'this_week':
+            const weekStart = new Date(today);
+            weekStart.setDate(today.getDate() - today.getDay());
+            dateFrom.value = formatDate(weekStart);
+            dateTo.value = formatDate(today);
+            break;
+        case 'last_week':
+            const lastWeekEnd = new Date(today);
+            lastWeekEnd.setDate(today.getDate() - today.getDay() - 1);
+            const lastWeekStart = new Date(lastWeekEnd);
+            lastWeekStart.setDate(lastWeekEnd.getDate() - 6);
+            dateFrom.value = formatDate(lastWeekStart);
+            dateTo.value = formatDate(lastWeekEnd);
+            break;
+        case 'this_month':
+            const monthStart = new Date(today.getFullYear(), today.getMonth(), 1);
+            dateFrom.value = formatDate(monthStart);
+            dateTo.value = formatDate(today);
+            break;
+        case 'last_month':
+            const lastMonthStart = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+            const lastMonthEnd = new Date(today.getFullYear(), today.getMonth(), 0);
+            dateFrom.value = formatDate(lastMonthStart);
+            dateTo.value = formatDate(lastMonthEnd);
+            break;
+    }
+}
+
+function submitReport(event) {
+    event.preventDefault();
+
+    const form = event.target;
+    const formData = new FormData(form);
+    const category = document.getElementById('report_category').value;
+    const reportType = document.getElementById('report_select').value;
+
+    if (!reportType) {
+        alert('Please select a report type');
+        return;
+    }
+
+    // Show loading state
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Generating...';
+    submitBtn.disabled = true;
+
+    // Determine route based on category
+    let route = '';
+    switch(category) {
+        case 'transaction_reports':
+            route = 'http://localhost:8000/admin/reports/transaction';
+            break;
+        case 'user_reports':
+            route = 'http://localhost:8000/admin/reports/user';
+            break;
+        case 'financial_reports':
+            route = 'http://localhost:8000/admin/reports/financial';
+            break;
+        case 'operational_reports':
+            route = 'http://localhost:8000/admin/reports/operational';
+            break;
+    }
+
+    formData.append('report_type', reportType);
+
+    fetch(route, {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+        },
+        body: formData
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.blob();
+        }
+        throw new Error('Report generation failed');
+    })
+    .then(blob => {
+        // Download file
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `report_${reportType}_${Date.now()}.${formData.get('format')}`;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        a.remove();
+
+        closeReportModal();
+
+        // Show success message
+        alert('Report generated successfully!');
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Failed to generate report. Please try again.');
+    })
+    .finally(() => {
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+    });
+}
+
+function clearReportHistory() {
+    if (confirm('Are you sure you want to clear report history?')) {
+        fetch('http://localhost:8000/admin/reports/clear-history', {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                location.reload();
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Failed to clear history');
+        });
+    }
+}
+
+function downloadReport(reportId) {
+    window.location.href = `/admin/reports/download/${reportId}`;
+}
+
+// Close modal on background click
+document.getElementById('reportModal')?.addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeReportModal();
+    }
+});
+</script>
+        <script>
+            $(document).ready(function() {
+                // Mobile sidebar toggle
+                $('#mobile-menu-button').click(function() {
+                    $('#sidebar').removeClass('-translate-x-full').addClass('translate-x-0');
+                    $('#sidebar-overlay').removeClass('hidden');
+                    $('body').addClass('overflow-hidden');
+                });
+
+                // Close sidebar when clicking overlay
+                $('#sidebar-overlay').click(function() {
+                    $('#sidebar').removeClass('translate-x-0').addClass('-translate-x-full');
+                    $('#sidebar-overlay').addClass('hidden');
+                    $('body').removeClass('overflow-hidden');
+                });
+
+                // Profile menu toggle
+                $('#profile-menu-button').click(function(e) {
+                    e.stopPropagation();
+                    $('#profile-menu').toggleClass('hidden');
+                });
+
+                // Close profile menu when clicking outside
+                $(document).click(function(event) {
+                    if (!$(event.target).closest('#profile-menu-button, #profile-menu').length) {
+                        $('#profile-menu').addClass('hidden');
+                    }
+                });
+
+                // Initialize sidebar state on mobile
+                if ($(window).width() < 1024) {
+                    $('#sidebar').addClass('-translate-x-full');
+                }
+
+                // Auto-close mobile sidebar on resize
+                $(window).resize(function() {
+                    if ($(window).width() >= 1024) {
+                        $('#sidebar').removeClass('-translate-x-full').addClass('translate-x-0');
+                        $('#sidebar-overlay').addClass('hidden');
+                        $('body').removeClass('overflow-hidden');
+                    } else {
+                        $('#sidebar').removeClass('translate-x-0').addClass('-translate-x-full');
+                    }
+                });
+            });
+        </script>
+    </body>
+
+</html>

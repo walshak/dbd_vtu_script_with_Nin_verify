@@ -343,7 +343,7 @@ Route::prefix('admin')->group(function () {
             Route::post('/notifications/update-status', [App\Http\Controllers\Admin\SystemAdminController::class, 'updateNotificationStatus'])->name('notifications.update-status');
             Route::get('/notifications', [App\Http\Controllers\Admin\SystemAdminController::class, 'getNotifications'])->name('notifications');
             Route::post('/notifications/add', [App\Http\Controllers\Admin\SystemAdminController::class, 'addNotification'])->name('notifications.add');
-            Route::post('/notifications/delete', [App\Http\Controllers\Admin\SystemAdminController::class, 'deleteNotification'])->name('notifications.delete');
+            // Removed duplicate route - use admin.system.notifications.delete from NotificationController instead
 
             // Network Management
             Route::get('/networks', [App\Http\Controllers\Admin\SystemAdminController::class, 'getNetworks'])->name('networks');
@@ -413,6 +413,8 @@ Route::prefix('admin')->group(function () {
             Route::get('/custom', [ReportsController::class, 'customReport'])->name('custom');
             Route::post('/custom', [ReportsController::class, 'customReport'])->name('custom.generate');
             Route::post('/schedule', [ReportsController::class, 'scheduleReport'])->name('schedule');
+            Route::post('/clear-history', [ReportsController::class, 'clearHistory'])->name('clear-history');
+            Route::get('/download/{reportId}', [ReportsController::class, 'downloadReport'])->name('download');
         });
 
         // System Configuration Routes
@@ -498,6 +500,12 @@ Route::middleware('auth')->group(function () {
 
     // Paystack Routes
     Route::post('/wallet/paystack/initialize', [WalletController::class, 'initializePaystackPayment'])->name('wallet.paystack.initialize');
+
+    // KYC Verification Routes
+    Route::get('/kyc/verification', [App\Http\Controllers\KycController::class, 'showVerificationForm'])->name('kyc.verification');
+    Route::post('/api/kyc/verify-nin', [App\Http\Controllers\KycController::class, 'verifyNin'])->name('api.kyc.verify-nin');
+    Route::post('/api/kyc/verify-bvn', [App\Http\Controllers\KycController::class, 'verifyBvn'])->name('api.kyc.verify-bvn');
+    Route::get('/api/kyc/status', [App\Http\Controllers\KycController::class, 'getStatus'])->name('api.kyc.status');
     Route::get('/wallet/paystack/callback', [WalletController::class, 'handlePaystackCallback'])->name('wallet.paystack.callback');
 
     // Service Routes
@@ -607,22 +615,20 @@ Route::middleware('auth')->group(function () {
     Route::get('/external-services/system-config', [ExternalServiceIntegrationController::class, 'getSystemConfiguration'])->name('external-services.system-config');
 
     // Other user routes
-    Route::get('/pricing', function () {
-        return view('pricing');
-    })->name('pricing');
+    Route::get('/pricing', [App\Http\Controllers\User\PricingController::class, 'index'])->name('pricing');
 
     // KYC Verification Routes
-    Route::prefix('kyc')->group(function () {
-        Route::get('/', [KycVerificationController::class, 'index'])->name('kyc.index');
-        Route::get('/verify/{type}', [KycVerificationController::class, 'showVerificationForm'])->name('kyc.verify');
-        Route::post('/verify/{type}', [KycVerificationController::class, 'submitVerification'])->name('kyc.submit');
-        Route::post('/email/send', [KycVerificationController::class, 'sendEmailVerification'])->name('kyc.email.send');
-        Route::post('/email/verify', [KycVerificationController::class, 'verifyEmail'])->name('kyc.email.verify');
-        Route::post('/phone/send', [KycVerificationController::class, 'sendPhoneVerification'])->name('kyc.phone.send');
-        Route::post('/phone/verify', [KycVerificationController::class, 'verifyPhone'])->name('kyc.phone.verify');
-        Route::delete('/cancel/{verification}', [KycVerificationController::class, 'cancelVerification'])->name('kyc.cancel');
-        Route::get('/progress', [KycVerificationController::class, 'getVerificationProgress'])->name('kyc.progress');
-        Route::get('/download/{verification}/{type}', [KycVerificationController::class, 'downloadDocument'])->name('kyc.download');
+    Route::prefix('kyc')->name('kyc.')->group(function () {
+        Route::get('/', [KycVerificationController::class, 'index'])->name('index');
+        Route::get('/verify/{type}', [KycVerificationController::class, 'showVerificationForm'])->name('verify');
+        Route::post('/verify/{type}', [KycVerificationController::class, 'submitVerification'])->name('submit');
+        Route::post('/email/send', [KycVerificationController::class, 'sendEmailVerification'])->name('email.send');
+        Route::post('/email/verify', [KycVerificationController::class, 'verifyEmail'])->name('email.verify');
+        Route::post('/phone/send', [KycVerificationController::class, 'sendPhoneVerification'])->name('phone.send');
+        Route::post('/phone/verify', [KycVerificationController::class, 'verifyPhone'])->name('phone.verify');
+        Route::delete('/cancel/{verification}', [KycVerificationController::class, 'cancelVerification'])->name('cancel');
+        Route::get('/progress', [KycVerificationController::class, 'getVerificationProgress'])->name('progress');
+        Route::get('/download/{verification}/{type}', [KycVerificationController::class, 'downloadDocument'])->name('download');
     });
 });
 

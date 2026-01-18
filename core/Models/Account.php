@@ -350,29 +350,45 @@ class Account extends Model
 		}
 		$ref = uniqid() . rand(1000, 9000);
 
-		//Request Account Creation
-		$curl = curl_init();
+	// Fetch BVN/NIN from database
+	$dbh = self::connect();
+	$kycQuery = "SELECT bvn, nin FROM subscribers WHERE sId = :userId";
+	$stmt = $dbh->prepare($kycQuery);
+	$stmt->bindParam(':userId', $id, PDO::PARAM_INT);
+	$stmt->execute();
+	$kycData = $stmt->fetch(PDO::FETCH_ASSOC);
+	
+	// Check if user has BVN or NIN
+	if (empty($kycData['bvn']) && empty($kycData['nin'])) {
+		return [
+			'status' => 'error',
+			'message' => 'KYC verification required. Please verify your BVN or NIN before creating virtual account.'
+		];
+	}
+	
+	// Prepare KYC field (BVN takes priority)
+	$kycField = !empty($kycData['bvn']) ? '"bvn": "' . $kycData['bvn'] . '"' : '"nin": "' . $kycData['nin'] . '"';
 
-		curl_setopt_array($curl, array(
-			CURLOPT_URL =>  $url2,
-			CURLOPT_RETURNTRANSFER => true,
-			CURLOPT_ENCODING => "",
-			CURLOPT_MAXREDIRS => 10,
-			CURLOPT_TIMEOUT => 0,
-			CURLOPT_FOLLOWLOCATION => true,
-			CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-			CURLOPT_CUSTOMREQUEST => "POST",
-			CURLOPT_POSTFIELDS =>
-			'{
-											"accountReference": "' . $ref . '",
-											"accountName": "' . $fullname . '",
-											"currencyCode": "NGN",
-											"contractCode": "' . $monnifyContract . '",
-											"customerEmail": "' . $email . '",
-											"bvn": "22433145825",
-											"customerName": "' . $fullname . '",
-											"getAllAvailableBanks": false,
-											"preferredBanks": ["035"]
+	//Request Account Creation
+	$curl = curl_init();
+
+	curl_setopt_array($curl, array(
+		CURLOPT_URL =>  $url2,
+		CURLOPT_RETURNTRANSFER => true,
+		CURLOPT_ENCODING => "",
+		CURLOPT_MAXREDIRS => 10,
+		CURLOPT_TIMEOUT => 0,
+		CURLOPT_FOLLOWLOCATION => true,
+		CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		CURLOPT_CUSTOMREQUEST => "POST",
+		CURLOPT_POSTFIELDS =>
+		'{
+										"accountReference": "' . $ref . '",
+										"accountName": "' . $fullname . '",
+										"currencyCode": "NGN",
+										"contractCode": "' . $monnifyContract . '",
+										"customerEmail": "' . $email . '",
+										' . $kycField . ',
 										
 									}',
 			CURLOPT_HTTPHEADER => array(

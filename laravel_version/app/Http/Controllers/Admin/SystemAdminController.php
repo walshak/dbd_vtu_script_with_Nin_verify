@@ -1119,7 +1119,7 @@ class SystemAdminController extends Controller
      */
     public function getContact()
     {
-        return ContactMessage::orderBy('created_at', 'desc')->get();
+        return ContactMessage::orderBy('dPosted', 'desc')->get();
     }
 
     /**

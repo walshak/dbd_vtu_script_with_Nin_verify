@@ -29,34 +29,32 @@ class UserController extends Controller
         $user = Auth::user();
 
         $request->validate([
-            'fname' => 'required|string|max:255',
-            'lname' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
             'email' => [
                 'required',
                 'email',
-                Rule::unique('subscribers', 'sEmail')->ignore($user->sId, 'sId'),
+                Rule::unique('users', 'email')->ignore($user->id, 'id'),
             ],
             'phone' => [
                 'required',
                 'string',
                 'regex:/^[0-9]{11}$/',
-                Rule::unique('subscribers', 'sPhone')->ignore($user->sId, 'sId'),
+                Rule::unique('users', 'phone')->ignore($user->id, 'id'),
             ],
-            'state' => 'required|string|max:100',
+            'state' => 'nullable|string|max:100',
         ]);
 
         try {
             $user->update([
-                'sFname' => $request->fname,
-                'sLname' => $request->lname,
-                'sEmail' => $request->email,
-                'sPhone' => $request->phone,
-                'sState' => $request->state,
+                'name' => $request->name,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'state' => $request->state,
             ]);
 
             Log::info('User profile updated', [
-                'user_id' => $user->sId,
-                'phone' => $user->sPhone,
+                'user_id' => $user->id,
+                'phone' => $user->phone,
                 'ip' => $request->ip()
             ]);
 
@@ -65,11 +63,11 @@ class UserController extends Controller
                     'status' => 'success',
                     'message' => 'Profile updated successfully!',
                     'user' => [
-                        'id' => $user->sId,
-                        'name' => $user->sFname . ' ' . $user->sLname,
-                        'phone' => $user->sPhone,
-                        'email' => $user->sEmail,
-                        'state' => $user->sState
+                        'id' => $user->id,
+                        'name' => $user->name,
+                        'phone' => $user->phone,
+                        'email' => $user->email,
+                        'state' => $user->state
                     ]
                 ]);
             }
@@ -79,7 +77,7 @@ class UserController extends Controller
         } catch (\Exception $e) {
             Log::error('Profile update error', [
                 'error' => $e->getMessage(),
-                'user_id' => $user->sId,
+                'user_id' => $user->id,
                 'ip' => $request->ip()
             ]);
 
@@ -103,15 +101,12 @@ class UserController extends Controller
 
         $request->validate([
             'current_password' => 'required',
-            'password' => 'required|string|min:8|max:15|confirmed',
+            'password' => 'required|string|min:8|confirmed',
         ]);
 
         try {
-            // Check current password (supporting both plain text and hashed for compatibility)
-            $currentPasswordMatch = ($user->sPass === $request->current_password) ||
-                                  Hash::check($request->current_password, $user->sPass);
-
-            if (!$currentPasswordMatch) {
+            // Check current password
+            if (!Hash::check($request->current_password, $user->password)) {
                 if ($request->wantsJson()) {
                     return response()->json([
                         'status' => 'error',
@@ -122,12 +117,12 @@ class UserController extends Controller
                 return back()->withErrors(['current_password' => 'Current password is incorrect.']);
             }
 
-            // Update password (store as plain text for existing system compatibility)
-            $user->update(['sPass' => $request->password]);
+            // Update password with hashing
+            $user->update(['password' => Hash::make($request->password)]);
 
             Log::info('User password changed', [
-                'user_id' => $user->sId,
-                'phone' => $user->sPhone,
+                'user_id' => $user->id,
+                'phone' => $user->phone,
                 'ip' => $request->ip()
             ]);
 
@@ -143,7 +138,7 @@ class UserController extends Controller
         } catch (\Exception $e) {
             Log::error('Password change error', [
                 'error' => $e->getMessage(),
-                'user_id' => $user->sId,
+                'user_id' => $user->id,
                 'ip' => $request->ip()
             ]);
 
@@ -171,7 +166,7 @@ class UserController extends Controller
         ]);
 
         try {
-            if ($user->sPin !== $request->current_pin) {
+            if ($user->transaction_pin !== $request->current_pin) {
                 if ($request->wantsJson()) {
                     return response()->json([
                         'status' => 'error',
@@ -182,11 +177,11 @@ class UserController extends Controller
                 return back()->withErrors(['current_pin' => 'Current PIN is incorrect.']);
             }
 
-            $user->update(['sPin' => $request->pin]);
+            $user->update(['transaction_pin' => $request->pin]);
 
             Log::info('User PIN changed', [
-                'user_id' => $user->sId,
-                'phone' => $user->sPhone,
+                'user_id' => $user->id,
+                'phone' => $user->phone,
                 'ip' => $request->ip()
             ]);
 
@@ -226,27 +221,27 @@ class UserController extends Controller
 
         // Get transaction summary for the user
         $transactionSummary = \App\Models\Transaction::getUserTransactionSummary($user->id);
-        
+
         // Get recent transactions
         $recentTransactions = \App\Models\Transaction::where('sId', $user->id)
             ->orderBy('date', 'desc')
             ->limit(5)
             ->get();
-        
+
         // Get monthly statistics
         $thisMonth = now()->startOfMonth();
         $monthlyTransactions = \App\Models\Transaction::where('sId', $user->id)
             ->where('date', '>=', $thisMonth)
             ->successful()
             ->get();
-        
+
         $monthlyStats = [
             'count' => $monthlyTransactions->count(),
             'amount' => $monthlyTransactions->sum(function($t) {
                 return floatval($t->amount);
             })
         ];
-        
+
         // User statistics using correct field names
         $stats = [
             'wallet_balance' => $user->wallet_balance ?? 0,

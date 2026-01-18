@@ -39,7 +39,7 @@ class Admin extends Authenticatable
      */
     public function getAuthIdentifierName()
     {
-        return 'sysUsername';
+        return 'sysId'; // Use primary key for session storage
     }
 
     /**
@@ -47,7 +47,7 @@ class Admin extends Authenticatable
      */
     public function getAuthIdentifier()
     {
-        return $this->sysUsername;
+        return $this->sysId; // Return integer ID for session storage
     }
 
     /**

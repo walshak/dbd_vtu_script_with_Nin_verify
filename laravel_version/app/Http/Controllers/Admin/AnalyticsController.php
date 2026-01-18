@@ -191,23 +191,35 @@ class AnalyticsController extends Controller
         $cacheKey = 'analytics_overview_' . $dateRange[0]->format('Y-m-d') . '_' . $dateRange[1]->format('Y-m-d');
 
         return Cache::remember($cacheKey, 300, function () use ($dateRange) {
-            $transactions = Transaction::whereBetween('date', $dateRange);
-            $users = User::whereBetween('created_at', $dateRange);
+            // Get all transactions as collection for filtering
+            // Status: 0=pending, 1=successful, 2=failed
+            $transactions = Transaction::whereBetween('date', $dateRange)->get();
+            $users = User::whereBetween('created_at', $dateRange)->count();
+
+            $successful = $transactions->where('status', 1);
+            $failed = $transactions->where('status', 2);
+            $pending = $transactions->where('status', 0);
+
+            // Calculate revenue and profit only from successful transactions
+            // Exclude Monnify/Paystack funding (servicename='Monnify Funding', 'Paystack Funding')
+            $serviceTransactions = $successful->whereNotIn('servicename', ['Monnify Funding', 'Paystack Funding']);
 
             return [
                 'total_transactions' => $transactions->count(),
-                'successful_transactions' => $transactions->where('status', 0)->count(),
-                'failed_transactions' => $transactions->where('status', 1)->count(),
-                'pending_transactions' => $transactions->where('status', 2)->count(),
-                'total_revenue' => $transactions->where('status', 0)->sum('amount'),
-                'total_commission' => $transactions->where('status', 0)->sum('commission'),
-                'new_users' => $users->count(),
+                'successful_transactions' => $successful->count(),
+                'failed_transactions' => $failed->count(),
+                'pending_transactions' => $pending->count(),
+                'total_revenue' => $serviceTransactions->sum('amount'),
+                'total_profit' => $serviceTransactions->sum('profit'),
+                'new_users' => $users,
                 'active_users' => User::whereHas('transactions', function($q) use ($dateRange) {
-                    $q->whereBetween('date', $dateRange);
+                    $q->whereBetween('date', $dateRange)
+                      ->where('status', 1); // Only count active users with successful transactions
                 })->count(),
-                'average_transaction_value' => $transactions->where('status', 0)->avg('amount'),
+                'average_transaction_value' => $serviceTransactions->count() > 0 ?
+                    round($serviceTransactions->avg('amount'), 2) : 0,
                 'success_rate' => $transactions->count() > 0 ?
-                    round(($transactions->where('status', 0)->count() / $transactions->count()) * 100, 2) : 0
+                    round(($successful->count() / $transactions->count()) * 100, 2) : 0
             ];
         });
     }
@@ -245,12 +257,13 @@ class AnalyticsController extends Controller
         return [
             'new_registrations' => User::whereBetween('created_at', $dateRange)->count(),
             'active_users' => User::whereHas('transactions', function($q) use ($dateRange) {
-                $q->whereBetween('date', $dateRange);
+                $q->whereBetween('date', $dateRange)
+                  ->where('status', 1); // Only successful transactions
             })->count(),
-            'verified_users' => User::where('sVerified', 1)->count(),
-            'kyc_completed' => \Illuminate\Support\Facades\DB::table('kyc_verification')
-                                             ->where('verification_status', 'verified')
-                                             ->whereBetween('verified_at', $dateRange)->count()
+            'verified_users' => User::where('kyc_status', 'verified')->count(),
+            'kyc_completed' => User::where('kyc_status', 'verified')
+                                   ->whereBetween('kyc_verified_at', $dateRange)
+                                   ->count()
         ];
     }
 
@@ -260,7 +273,8 @@ class AnalyticsController extends Controller
     private function getServicePerformance($dateRange)
     {
         return Transaction::whereBetween('date', $dateRange)
-                         ->where('status', 0)
+                         ->where('status', 1) // 1 = successful
+                         ->whereNotIn('servicename', ['Monnify Funding', 'Paystack Funding']) // Exclude funding transactions
                          ->select('servicename',
                                  DB::raw('COUNT(*) as count'),
                                  DB::raw('SUM(amount) as revenue'),

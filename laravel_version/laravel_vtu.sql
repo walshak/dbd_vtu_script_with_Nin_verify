@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.2
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Dec 16, 2025 at 08:07 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Host: localhost:3306
+-- Generation Time: Jan 18, 2026 at 03:40 PM
+-- Server version: 10.11.15-MariaDB
+-- PHP Version: 8.4.16
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `laravel_vtu`
+-- Database: `vastlead_main`
 --
 
 -- --------------------------------------------------------
@@ -185,13 +185,14 @@ INSERT INTO `apilinks` (`aId`, `name`, `value`, `type`, `is_active`, `priority`,
 (62, 'N3TDATA', 'https://n3tdata.com/api/validate-customer', 'ElectricityVer', 1, 1, 'token', NULL, 100.00, 0, NULL, '2025-12-05 05:07:04', '2025-12-05 05:07:04'),
 (63, 'N3TDATA', 'https://n3tdata.com/api/exam', 'Exam', 1, 1, 'token', NULL, 100.00, 0, NULL, '2025-12-05 05:07:04', '2025-12-05 05:07:04'),
 (64, 'N3TDATA', 'https://n3tdata.com/api/datapin', 'Data Pin', 1, 1, 'token', NULL, 100.00, 0, NULL, '2025-12-05 05:07:04', '2025-12-05 05:07:04'),
-(65, 'Uzobest', 'https://uzobestgsm.com/api', 'Airtime', 1, 1, 'header', '{\"header_name\":\"Authorization\",\"header_prefix\":\"Token \"}', 100.00, 0, NULL, '2025-12-05 05:07:05', '2025-12-05 05:07:05'),
-(66, 'Uzobest', 'https://uzobestgsm.com/api/data/', 'Data', 1, 1, 'header', '{\"header_name\":\"Authorization\",\"header_prefix\":\"Token \"}', 100.00, 0, NULL, '2025-12-05 05:07:05', '2025-12-05 05:07:05'),
-(67, 'Uzobest', 'https://uzobestgsm.com/api/cabletv/', 'Cable', 1, 1, 'header', '{\"header_name\":\"Authorization\",\"header_prefix\":\"Token \"}', 100.00, 0, NULL, '2025-12-05 05:07:05', '2025-12-05 05:07:05'),
-(68, 'Uzobest', 'https://uzobestgsm.com/api/electricity/', 'Electricity', 1, 1, 'header', '{\"header_name\":\"Authorization\",\"header_prefix\":\"Token \"}', 100.00, 0, NULL, '2025-12-05 05:07:05', '2025-12-05 05:07:05'),
+(65, 'Uzobest', 'https://uzobestgsm.com/api/topup/', 'Airtime', 1, 1, 'header', '{\"token\":\"57adc15fd67d8fec5bcf7b268ca01bde460bedcd\",\"header_name\":\"Authorization\",\"header_prefix\":\"Token \"}', 100.00, 0, NULL, '2025-12-05 05:07:05', '2025-12-19 11:49:55'),
+(66, 'Uzobest', 'https://uzobestgsm.com/api/data/', 'Data', 1, 1, 'header', '{\"token\":\"57adc15fd67d8fec5bcf7b268ca01bde460bedcd\",\"header_name\":\"Authorization\",\"header_prefix\":\"Token \"}', 100.00, 0, NULL, '2025-12-05 05:07:05', '2025-12-19 11:49:55'),
+(67, 'Uzobest', 'https://uzobestgsm.com/api/cabletv/', 'Cable', 1, 1, 'header', '{\"token\":\"57adc15fd67d8fec5bcf7b268ca01bde460bedcd\",\"header_name\":\"Authorization\",\"header_prefix\":\"Token \"}', 100.00, 0, NULL, '2025-12-05 05:07:05', '2025-12-19 11:49:55'),
+(68, 'Uzobest', 'https://uzobestgsm.com/api/billpayment/', 'Electricity', 1, 1, 'header', '{\"token\":\"57adc15fd67d8fec5bcf7b268ca01bde460bedcd\",\"header_name\":\"Authorization\",\"header_prefix\":\"Token \"}', 100.00, 0, NULL, '2025-12-05 05:07:05', '2025-12-19 11:49:55'),
 (69, 'Uzobest', 'https://uzobestgsm.com/api/exam/', 'Exam', 1, 1, 'header', '{\"header_name\":\"Authorization\",\"header_prefix\":\"Token \"}', 100.00, 0, NULL, '2025-12-05 05:07:05', '2025-12-05 05:07:05'),
 (70, 'Uzobest', 'https://uzobestgsm.com/api/validate-customer/', 'CableVer', 1, 1, 'header', '{\"header_name\":\"Authorization\",\"header_prefix\":\"Token \"}', 100.00, 0, NULL, '2025-12-05 05:07:05', '2025-12-05 05:07:05'),
-(71, 'Uzobest', 'https://uzobestgsm.com/api/validate-customer/', 'ElectricityVer', 1, 1, 'header', '{\"header_name\":\"Authorization\",\"header_prefix\":\"Token \"}', 100.00, 0, NULL, '2025-12-05 05:07:05', '2025-12-05 05:07:05');
+(71, 'Uzobest', 'https://uzobestgsm.com/api/validate-customer/', 'ElectricityVer', 1, 1, 'header', '{\"header_name\":\"Authorization\",\"header_prefix\":\"Token \"}', 100.00, 0, NULL, '2025-12-05 05:07:05', '2025-12-05 05:07:05'),
+(72, 'Uzobest', 'https://uzobestgsm.com/api', 'primary', 1, 1, 'header', '{\"token\":\"57adc15fd67d8fec5bcf7b268ca01bde460bedcd\",\"header_name\":\"Authorization\",\"header_prefix\":\"Token \"}', 100.00, 0, NULL, '2025-12-19 11:49:55', '2025-12-19 11:49:55');
 
 -- --------------------------------------------------------
 
@@ -455,7 +456,57 @@ INSERT INTO `cache` (`key`, `value`, `expiration`) VALUES
 ('laravel-cache-service.data_pin', 'a:3:{s:7:\"api_key\";s:0:\"\";s:8:\"provider\";s:0:\"\";s:9:\"auth_type\";s:5:\"Basic\";}', 1765903884),
 ('laravel-cache-service.electricity', 'a:7:{s:16:\"verification_api\";s:40:\"245141f6de9c0aa211b3a6baf1d1533c642caf24\";s:21:\"verification_provider\";s:45:\"https://uzobestgsm.com/api/validate-customer/\";s:7:\"api_key\";s:40:\"245141f6de9c0aa211b3a6baf1d1533c642caf24\";s:8:\"provider\";s:39:\"https://uzobestgsm.com/api/electricity/\";s:13:\"provider_name\";s:7:\"Uzobest\";s:9:\"auth_type\";s:6:\"header\";s:11:\"auth_params\";a:2:{s:11:\"header_name\";s:13:\"Authorization\";s:13:\"header_prefix\";s:6:\"Token \";}}', 1765903884),
 ('laravel-cache-service.exam', 'a:6:{s:7:\"api_key\";s:40:\"245141f6de9c0aa211b3a6baf1d1533c642caf24\";s:8:\"provider\";s:31:\"https://topupmate.com/api/exam/\";s:9:\"auth_type\";s:5:\"token\";s:8:\"user_url\";N;s:13:\"provider_name\";s:9:\"Topupmate\";s:11:\"auth_params\";N;}', 1765903884),
-('laravel-cache-service.recharge_pin', 'a:3:{s:7:\"api_key\";s:0:\"\";s:8:\"provider\";s:0:\"\";s:9:\"auth_type\";s:5:\"Basic\";}', 1765903884);
+('laravel-cache-service.recharge_pin', 'a:3:{s:7:\"api_key\";s:0:\"\";s:8:\"provider\";s:0:\"\";s:9:\"auth_type\";s:5:\"Basic\";}', 1765903884),
+('vastlead-cache-api_performance_metrics', 'a:6:{s:19:\"service_performance\";a:0:{}s:13:\"recent_errors\";a:0:{}s:13:\"hourly_trends\";a:0:{}s:20:\"overall_health_score\";i:95;s:16:\"slowest_services\";a:0:{}s:16:\"fastest_services\";a:0:{}}', 1768591540),
+('vastlead-cache-config.alphaApi', 's:0:\"\";', 1768594840),
+('vastlead-cache-config.alphaProvider', 's:0:\"\";', 1768594840),
+('vastlead-cache-config.cableApi', 's:40:\"245141f6de9c0aa211b3a6baf1d1533c642caf24\";', 1768594840),
+('vastlead-cache-config.cableProvider', 's:35:\"https://uzobestgsm.com/api/cabletv/\";', 1768594840),
+('vastlead-cache-config.cableVerificationApi', 's:40:\"245141f6de9c0aa211b3a6baf1d1533c642caf24\";', 1768594840),
+('vastlead-cache-config.cableVerificationProvider', 's:45:\"https://uzobestgsm.com/api/validate-customer/\";', 1768594840),
+('vastlead-cache-config.dataPinApi', 's:0:\"\";', 1768594840),
+('vastlead-cache-config.dataPinProvider', 's:0:\"\";', 1768594840),
+('vastlead-cache-config.examApi', 's:40:\"245141f6de9c0aa211b3a6baf1d1533c642caf24\";', 1768594840),
+('vastlead-cache-config.logging', 'N;', 1768659910),
+('vastlead-cache-config.meterApi', 's:40:\"245141f6de9c0aa211b3a6baf1d1533c642caf24\";', 1768594840),
+('vastlead-cache-config.meterProvider', 's:39:\"https://uzobestgsm.com/api/electricity/\";', 1768594840),
+('vastlead-cache-config.meterVerificationApi', 's:40:\"245141f6de9c0aa211b3a6baf1d1533c642caf24\";', 1768594840),
+('vastlead-cache-config.meterVerificationProvider', 's:45:\"https://uzobestgsm.com/api/validate-customer/\";', 1768594840),
+('vastlead-cache-config.rechargePinApi', 's:0:\"\";', 1768594840),
+('vastlead-cache-config.rechargePinProvider', 's:0:\"\";', 1768594840),
+('vastlead-cache-dashboard_realtime_metrics', 'a:8:{s:12:\"transactions\";a:8:{s:11:\"today_total\";i:0;s:16:\"today_successful\";i:0;s:12:\"today_failed\";i:0;s:13:\"today_pending\";i:0;s:9:\"this_hour\";i:0;s:8:\"last_24h\";i:0;s:18:\"success_rate_today\";i:100;s:27:\"pending_requiring_attention\";i:3;}s:5:\"users\";a:8:{s:11:\"total_users\";i:6;s:12:\"active_users\";i:6;s:19:\"today_registrations\";i:0;s:18:\"week_registrations\";i:0;s:19:\"month_registrations\";i:2;s:14:\"verified_users\";i:0;s:11:\"kyc_pending\";i:0;s:15:\"active_sessions\";i:0;}s:7:\"revenue\";a:8:{s:13:\"today_revenue\";i:0;s:17:\"yesterday_revenue\";i:0;s:13:\"month_revenue\";i:0;s:18:\"last_month_revenue\";s:5:\"29550\";s:12:\"daily_growth\";i:0;s:14:\"monthly_growth\";d:-100;s:16:\"today_commission\";i:0;s:25:\"average_transaction_value\";i:0;}s:8:\"services\";a:4:{s:18:\"top_services_today\";O:39:\"Illuminate\\Database\\Eloquent\\Collection\":2:{s:8:\"\0*\0items\";a:0:{}s:28:\"\0*\0escapeWhenCastingToString\";b:0;}s:20:\"service_availability\";a:5:{s:7:\"airtime\";s:6:\"online\";s:4:\"data\";s:6:\"online\";s:8:\"cable_tv\";s:6:\"online\";s:11:\"electricity\";s:6:\"online\";s:9:\"exam_pins\";s:6:\"online\";}s:18:\"api_response_times\";a:0:{}s:14:\"service_errors\";O:29:\"Illuminate\\Support\\Collection\":2:{s:8:\"\0*\0items\";a:0:{}s:28:\"\0*\0escapeWhenCastingToString\";b:0;}}s:6:\"system\";a:9:{s:13:\"server_status\";s:6:\"online\";s:20:\"database_connections\";s:1:\"3\";s:12:\"memory_usage\";a:3:{s:7:\"current\";s:5:\"24 MB\";s:4:\"peak\";s:5:\"24 MB\";s:5:\"limit\";s:4:\"128M\";}s:10:\"disk_usage\";a:2:{s:15:\"used_percentage\";d:13.62;s:10:\"free_space\";s:10:\"9455.25 GB\";}s:10:\"api_health\";a:3:{s:14:\"overall_status\";s:7:\"healthy\";s:15:\"services_online\";i:5;s:14:\"services_total\";i:5;}s:13:\"recent_errors\";i:0;s:6:\"uptime\";s:5:\"99.9%\";s:16:\"monitoring_stats\";a:5:{s:12:\"generated_at\";s:27:\"2026-01-16T19:20:40.005318Z\";s:14:\"overall_status\";s:8:\"degraded\";s:15:\"services_status\";a:8:{s:7:\"airtime\";a:8:{s:7:\"service\";s:7:\"airtime\";s:7:\"healthy\";b:0;s:6:\"status\";s:4:\"down\";s:7:\"message\";s:22:\"Service not configured\";s:13:\"response_time\";N;s:10:\"error_code\";s:12:\"CONFIG_ERROR\";s:7:\"details\";N;s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.006948Z\";}s:4:\"data\";a:8:{s:7:\"service\";s:4:\"data\";s:7:\"healthy\";b:0;s:6:\"status\";s:4:\"down\";s:7:\"message\";s:22:\"Service not configured\";s:13:\"response_time\";N;s:10:\"error_code\";s:12:\"CONFIG_ERROR\";s:7:\"details\";N;s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.008729Z\";}s:5:\"cable\";a:8:{s:7:\"service\";s:5:\"cable\";s:7:\"healthy\";b:1;s:6:\"status\";s:11:\"operational\";s:7:\"message\";s:35:\"Service operational (cached status)\";s:13:\"response_time\";d:0.06;s:10:\"error_code\";N;s:7:\"details\";a:3:{s:6:\"status\";s:11:\"operational\";s:8:\"provider\";s:7:\"Uzobest\";s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.017915Z\";}s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.017976Z\";}s:11:\"electricity\";a:8:{s:7:\"service\";s:11:\"electricity\";s:7:\"healthy\";b:1;s:6:\"status\";s:11:\"operational\";s:7:\"message\";s:35:\"Service operational (cached status)\";s:13:\"response_time\";d:0.06;s:10:\"error_code\";N;s:7:\"details\";a:3:{s:6:\"status\";s:11:\"operational\";s:8:\"provider\";s:7:\"uzobest\";s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.024303Z\";}s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.024361Z\";}s:4:\"exam\";a:8:{s:7:\"service\";s:4:\"exam\";s:7:\"healthy\";b:1;s:6:\"status\";s:11:\"operational\";s:7:\"message\";s:35:\"Service operational (cached status)\";s:13:\"response_time\";d:0.06;s:10:\"error_code\";N;s:7:\"details\";a:3:{s:6:\"status\";s:11:\"operational\";s:8:\"provider\";s:9:\"Topupmate\";s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.028827Z\";}s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.028887Z\";}s:12:\"recharge_pin\";a:8:{s:7:\"service\";s:12:\"recharge_pin\";s:7:\"healthy\";b:1;s:6:\"status\";s:11:\"operational\";s:7:\"message\";s:35:\"Service operational (cached status)\";s:13:\"response_time\";d:0.06;s:10:\"error_code\";N;s:7:\"details\";a:3:{s:6:\"status\";s:11:\"operational\";s:8:\"provider\";s:7:\"uzobest\";s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.033160Z\";}s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.033218Z\";}s:8:\"data_pin\";a:8:{s:7:\"service\";s:8:\"data_pin\";s:7:\"healthy\";b:1;s:6:\"status\";s:11:\"operational\";s:7:\"message\";s:35:\"Service operational (cached status)\";s:13:\"response_time\";d:0.06;s:10:\"error_code\";N;s:7:\"details\";a:3:{s:6:\"status\";s:11:\"operational\";s:8:\"provider\";s:7:\"uzobest\";s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.037843Z\";}s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.037901Z\";}s:11:\"alpha_topup\";a:8:{s:7:\"service\";s:11:\"alpha_topup\";s:7:\"healthy\";b:1;s:6:\"status\";s:11:\"operational\";s:7:\"message\";s:35:\"Service operational (cached status)\";s:13:\"response_time\";d:0.06;s:10:\"error_code\";N;s:7:\"details\";a:3:{s:6:\"status\";s:11:\"operational\";s:8:\"provider\";s:7:\"uzobest\";s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.042037Z\";}s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.042096Z\";}}s:14:\"system_metrics\";a:0:{}s:6:\"alerts\";a:0:{}}s:20:\"service_availability\";a:8:{s:7:\"airtime\";a:8:{s:7:\"service\";s:7:\"airtime\";s:7:\"healthy\";b:0;s:6:\"status\";s:4:\"down\";s:7:\"message\";s:22:\"Service not configured\";s:13:\"response_time\";N;s:10:\"error_code\";s:12:\"CONFIG_ERROR\";s:7:\"details\";N;s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.006948Z\";}s:4:\"data\";a:8:{s:7:\"service\";s:4:\"data\";s:7:\"healthy\";b:0;s:6:\"status\";s:4:\"down\";s:7:\"message\";s:22:\"Service not configured\";s:13:\"response_time\";N;s:10:\"error_code\";s:12:\"CONFIG_ERROR\";s:7:\"details\";N;s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.008729Z\";}s:5:\"cable\";a:8:{s:7:\"service\";s:5:\"cable\";s:7:\"healthy\";b:1;s:6:\"status\";s:11:\"operational\";s:7:\"message\";s:35:\"Service operational (cached status)\";s:13:\"response_time\";d:0.06;s:10:\"error_code\";N;s:7:\"details\";a:3:{s:6:\"status\";s:11:\"operational\";s:8:\"provider\";s:7:\"Uzobest\";s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.017915Z\";}s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.017976Z\";}s:11:\"electricity\";a:8:{s:7:\"service\";s:11:\"electricity\";s:7:\"healthy\";b:1;s:6:\"status\";s:11:\"operational\";s:7:\"message\";s:35:\"Service operational (cached status)\";s:13:\"response_time\";d:0.06;s:10:\"error_code\";N;s:7:\"details\";a:3:{s:6:\"status\";s:11:\"operational\";s:8:\"provider\";s:7:\"uzobest\";s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.024303Z\";}s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.024361Z\";}s:4:\"exam\";a:8:{s:7:\"service\";s:4:\"exam\";s:7:\"healthy\";b:1;s:6:\"status\";s:11:\"operational\";s:7:\"message\";s:35:\"Service operational (cached status)\";s:13:\"response_time\";d:0.06;s:10:\"error_code\";N;s:7:\"details\";a:3:{s:6:\"status\";s:11:\"operational\";s:8:\"provider\";s:9:\"Topupmate\";s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.028827Z\";}s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.028887Z\";}s:12:\"recharge_pin\";a:8:{s:7:\"service\";s:12:\"recharge_pin\";s:7:\"healthy\";b:1;s:6:\"status\";s:11:\"operational\";s:7:\"message\";s:35:\"Service operational (cached status)\";s:13:\"response_time\";d:0.06;s:10:\"error_code\";N;s:7:\"details\";a:3:{s:6:\"status\";s:11:\"operational\";s:8:\"provider\";s:7:\"uzobest\";s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.033160Z\";}s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.033218Z\";}s:8:\"data_pin\";a:8:{s:7:\"service\";s:8:\"data_pin\";s:7:\"healthy\";b:1;s:6:\"status\";s:11:\"operational\";s:7:\"message\";s:35:\"Service operational (cached status)\";s:13:\"response_time\";d:0.06;s:10:\"error_code\";N;s:7:\"details\";a:3:{s:6:\"status\";s:11:\"operational\";s:8:\"provider\";s:7:\"uzobest\";s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.037843Z\";}s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.037901Z\";}s:11:\"alpha_topup\";a:8:{s:7:\"service\";s:11:\"alpha_topup\";s:7:\"healthy\";b:1;s:6:\"status\";s:11:\"operational\";s:7:\"message\";s:35:\"Service operational (cached status)\";s:13:\"response_time\";d:0.06;s:10:\"error_code\";N;s:7:\"details\";a:3:{s:6:\"status\";s:11:\"operational\";s:8:\"provider\";s:7:\"uzobest\";s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.042037Z\";}s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.042096Z\";}}}s:9:\"providers\";a:4:{s:9:\"providers\";a:1:{s:7:\"uzobest\";a:6:{s:6:\"status\";s:11:\"operational\";s:13:\"response_time\";i:200;s:12:\"success_rate\";d:99.5;s:10:\"last_check\";O:25:\"Illuminate\\Support\\Carbon\":3:{s:4:\"date\";s:26:\"2026-01-16 19:20:42.228361\";s:13:\"timezone_type\";i:3;s:8:\"timezone\";s:3:\"UTC\";}s:15:\"is_circuit_open\";b:0;s:18:\"available_services\";a:4:{i:0;s:7:\"airtime\";i:1;s:4:\"data\";i:2;s:5:\"cable\";i:3;s:11:\"electricity\";}}}s:14:\"overall_health\";s:4:\"good\";s:16:\"active_failovers\";a:0:{}s:22:\"circuit_breaker_status\";s:10:\"all_closed\";}s:15:\"api_performance\";a:6:{s:19:\"service_performance\";a:0:{}s:13:\"recent_errors\";a:0:{}s:13:\"hourly_trends\";a:0:{}s:20:\"overall_health_score\";i:95;s:16:\"slowest_services\";a:0:{}s:16:\"fastest_services\";a:0:{}}s:8:\"security\";a:6:{s:15:\"security_events\";a:0:{}s:19:\"suspicious_activity\";a:0:{}s:20:\"authentication_stats\";a:0:{}s:17:\"failed_logins_24h\";i:0;s:22:\"unique_login_users_24h\";i:0;s:14:\"security_score\";i:95;}}', 1768591302);
+INSERT INTO `cache` (`key`, `value`, `expiration`) VALUES
+('vastlead-cache-dashboard_realtime_metrics_no_providers', 'a:7:{s:12:\"transactions\";a:8:{s:11:\"today_total\";i:0;s:16:\"today_successful\";i:0;s:12:\"today_failed\";i:0;s:13:\"today_pending\";i:0;s:9:\"this_hour\";i:0;s:8:\"last_24h\";i:0;s:18:\"success_rate_today\";i:100;s:27:\"pending_requiring_attention\";i:3;}s:5:\"users\";a:8:{s:11:\"total_users\";i:6;s:12:\"active_users\";i:6;s:19:\"today_registrations\";i:0;s:18:\"week_registrations\";i:0;s:19:\"month_registrations\";i:2;s:14:\"verified_users\";i:0;s:11:\"kyc_pending\";i:0;s:15:\"active_sessions\";i:0;}s:7:\"revenue\";a:8:{s:13:\"today_revenue\";i:0;s:17:\"yesterday_revenue\";i:0;s:13:\"month_revenue\";i:0;s:18:\"last_month_revenue\";s:5:\"29550\";s:12:\"daily_growth\";i:0;s:14:\"monthly_growth\";d:-100;s:16:\"today_commission\";i:0;s:25:\"average_transaction_value\";i:0;}s:8:\"services\";a:4:{s:18:\"top_services_today\";O:39:\"Illuminate\\Database\\Eloquent\\Collection\":2:{s:8:\"\0*\0items\";a:0:{}s:28:\"\0*\0escapeWhenCastingToString\";b:0;}s:20:\"service_availability\";a:5:{s:7:\"airtime\";s:6:\"online\";s:4:\"data\";s:6:\"online\";s:8:\"cable_tv\";s:6:\"online\";s:11:\"electricity\";s:6:\"online\";s:9:\"exam_pins\";s:6:\"online\";}s:18:\"api_response_times\";a:0:{}s:14:\"service_errors\";O:29:\"Illuminate\\Support\\Collection\":2:{s:8:\"\0*\0items\";a:0:{}s:28:\"\0*\0escapeWhenCastingToString\";b:0;}}s:6:\"system\";a:9:{s:13:\"server_status\";s:6:\"online\";s:20:\"database_connections\";s:1:\"1\";s:12:\"memory_usage\";a:3:{s:7:\"current\";s:5:\"22 MB\";s:4:\"peak\";s:5:\"24 MB\";s:5:\"limit\";s:4:\"128M\";}s:10:\"disk_usage\";a:2:{s:15:\"used_percentage\";d:13.62;s:10:\"free_space\";s:10:\"9455.25 GB\";}s:10:\"api_health\";a:3:{s:14:\"overall_status\";s:7:\"healthy\";s:15:\"services_online\";i:5;s:14:\"services_total\";i:5;}s:13:\"recent_errors\";i:0;s:6:\"uptime\";s:5:\"99.9%\";s:16:\"monitoring_stats\";a:5:{s:12:\"generated_at\";s:27:\"2026-01-16T19:20:40.005318Z\";s:14:\"overall_status\";s:8:\"degraded\";s:15:\"services_status\";a:8:{s:7:\"airtime\";a:8:{s:7:\"service\";s:7:\"airtime\";s:7:\"healthy\";b:0;s:6:\"status\";s:4:\"down\";s:7:\"message\";s:22:\"Service not configured\";s:13:\"response_time\";N;s:10:\"error_code\";s:12:\"CONFIG_ERROR\";s:7:\"details\";N;s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.006948Z\";}s:4:\"data\";a:8:{s:7:\"service\";s:4:\"data\";s:7:\"healthy\";b:0;s:6:\"status\";s:4:\"down\";s:7:\"message\";s:22:\"Service not configured\";s:13:\"response_time\";N;s:10:\"error_code\";s:12:\"CONFIG_ERROR\";s:7:\"details\";N;s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.008729Z\";}s:5:\"cable\";a:8:{s:7:\"service\";s:5:\"cable\";s:7:\"healthy\";b:1;s:6:\"status\";s:11:\"operational\";s:7:\"message\";s:35:\"Service operational (cached status)\";s:13:\"response_time\";d:0.06;s:10:\"error_code\";N;s:7:\"details\";a:3:{s:6:\"status\";s:11:\"operational\";s:8:\"provider\";s:7:\"Uzobest\";s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.017915Z\";}s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.017976Z\";}s:11:\"electricity\";a:8:{s:7:\"service\";s:11:\"electricity\";s:7:\"healthy\";b:1;s:6:\"status\";s:11:\"operational\";s:7:\"message\";s:35:\"Service operational (cached status)\";s:13:\"response_time\";d:0.06;s:10:\"error_code\";N;s:7:\"details\";a:3:{s:6:\"status\";s:11:\"operational\";s:8:\"provider\";s:7:\"uzobest\";s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.024303Z\";}s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.024361Z\";}s:4:\"exam\";a:8:{s:7:\"service\";s:4:\"exam\";s:7:\"healthy\";b:1;s:6:\"status\";s:11:\"operational\";s:7:\"message\";s:35:\"Service operational (cached status)\";s:13:\"response_time\";d:0.06;s:10:\"error_code\";N;s:7:\"details\";a:3:{s:6:\"status\";s:11:\"operational\";s:8:\"provider\";s:9:\"Topupmate\";s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.028827Z\";}s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.028887Z\";}s:12:\"recharge_pin\";a:8:{s:7:\"service\";s:12:\"recharge_pin\";s:7:\"healthy\";b:1;s:6:\"status\";s:11:\"operational\";s:7:\"message\";s:35:\"Service operational (cached status)\";s:13:\"response_time\";d:0.06;s:10:\"error_code\";N;s:7:\"details\";a:3:{s:6:\"status\";s:11:\"operational\";s:8:\"provider\";s:7:\"uzobest\";s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.033160Z\";}s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.033218Z\";}s:8:\"data_pin\";a:8:{s:7:\"service\";s:8:\"data_pin\";s:7:\"healthy\";b:1;s:6:\"status\";s:11:\"operational\";s:7:\"message\";s:35:\"Service operational (cached status)\";s:13:\"response_time\";d:0.06;s:10:\"error_code\";N;s:7:\"details\";a:3:{s:6:\"status\";s:11:\"operational\";s:8:\"provider\";s:7:\"uzobest\";s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.037843Z\";}s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.037901Z\";}s:11:\"alpha_topup\";a:8:{s:7:\"service\";s:11:\"alpha_topup\";s:7:\"healthy\";b:1;s:6:\"status\";s:11:\"operational\";s:7:\"message\";s:35:\"Service operational (cached status)\";s:13:\"response_time\";d:0.06;s:10:\"error_code\";N;s:7:\"details\";a:3:{s:6:\"status\";s:11:\"operational\";s:8:\"provider\";s:7:\"uzobest\";s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.042037Z\";}s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.042096Z\";}}s:14:\"system_metrics\";a:0:{}s:6:\"alerts\";a:0:{}}s:20:\"service_availability\";a:8:{s:7:\"airtime\";a:8:{s:7:\"service\";s:7:\"airtime\";s:7:\"healthy\";b:0;s:6:\"status\";s:4:\"down\";s:7:\"message\";s:22:\"Service not configured\";s:13:\"response_time\";N;s:10:\"error_code\";s:12:\"CONFIG_ERROR\";s:7:\"details\";N;s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.006948Z\";}s:4:\"data\";a:8:{s:7:\"service\";s:4:\"data\";s:7:\"healthy\";b:0;s:6:\"status\";s:4:\"down\";s:7:\"message\";s:22:\"Service not configured\";s:13:\"response_time\";N;s:10:\"error_code\";s:12:\"CONFIG_ERROR\";s:7:\"details\";N;s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.008729Z\";}s:5:\"cable\";a:8:{s:7:\"service\";s:5:\"cable\";s:7:\"healthy\";b:1;s:6:\"status\";s:11:\"operational\";s:7:\"message\";s:35:\"Service operational (cached status)\";s:13:\"response_time\";d:0.06;s:10:\"error_code\";N;s:7:\"details\";a:3:{s:6:\"status\";s:11:\"operational\";s:8:\"provider\";s:7:\"Uzobest\";s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.017915Z\";}s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.017976Z\";}s:11:\"electricity\";a:8:{s:7:\"service\";s:11:\"electricity\";s:7:\"healthy\";b:1;s:6:\"status\";s:11:\"operational\";s:7:\"message\";s:35:\"Service operational (cached status)\";s:13:\"response_time\";d:0.06;s:10:\"error_code\";N;s:7:\"details\";a:3:{s:6:\"status\";s:11:\"operational\";s:8:\"provider\";s:7:\"uzobest\";s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.024303Z\";}s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.024361Z\";}s:4:\"exam\";a:8:{s:7:\"service\";s:4:\"exam\";s:7:\"healthy\";b:1;s:6:\"status\";s:11:\"operational\";s:7:\"message\";s:35:\"Service operational (cached status)\";s:13:\"response_time\";d:0.06;s:10:\"error_code\";N;s:7:\"details\";a:3:{s:6:\"status\";s:11:\"operational\";s:8:\"provider\";s:9:\"Topupmate\";s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.028827Z\";}s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.028887Z\";}s:12:\"recharge_pin\";a:8:{s:7:\"service\";s:12:\"recharge_pin\";s:7:\"healthy\";b:1;s:6:\"status\";s:11:\"operational\";s:7:\"message\";s:35:\"Service operational (cached status)\";s:13:\"response_time\";d:0.06;s:10:\"error_code\";N;s:7:\"details\";a:3:{s:6:\"status\";s:11:\"operational\";s:8:\"provider\";s:7:\"uzobest\";s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.033160Z\";}s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.033218Z\";}s:8:\"data_pin\";a:8:{s:7:\"service\";s:8:\"data_pin\";s:7:\"healthy\";b:1;s:6:\"status\";s:11:\"operational\";s:7:\"message\";s:35:\"Service operational (cached status)\";s:13:\"response_time\";d:0.06;s:10:\"error_code\";N;s:7:\"details\";a:3:{s:6:\"status\";s:11:\"operational\";s:8:\"provider\";s:7:\"uzobest\";s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.037843Z\";}s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.037901Z\";}s:11:\"alpha_topup\";a:8:{s:7:\"service\";s:11:\"alpha_topup\";s:7:\"healthy\";b:1;s:6:\"status\";s:11:\"operational\";s:7:\"message\";s:35:\"Service operational (cached status)\";s:13:\"response_time\";d:0.06;s:10:\"error_code\";N;s:7:\"details\";a:3:{s:6:\"status\";s:11:\"operational\";s:8:\"provider\";s:7:\"uzobest\";s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.042037Z\";}s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.042096Z\";}}}s:15:\"api_performance\";a:6:{s:19:\"service_performance\";a:0:{}s:13:\"recent_errors\";a:0:{}s:13:\"hourly_trends\";a:0:{}s:20:\"overall_health_score\";i:95;s:16:\"slowest_services\";a:0:{}s:16:\"fastest_services\";a:0:{}}s:8:\"security\";a:6:{s:15:\"security_events\";a:0:{}s:19:\"suspicious_activity\";a:0:{}s:20:\"authentication_stats\";a:0:{}s:17:\"failed_logins_24h\";i:0;s:22:\"unique_login_users_24h\";i:0;s:14:\"security_score\";i:95;}}', 1768591300),
+('vastlead-cache-error_pattern_ErrorException:0', 'i:1;', 1766067493),
+('vastlead-cache-feature_toggle_maintenance_mode', 'b:0;', 1768591545),
+('vastlead-cache-health_check_airtime', 'a:8:{s:7:\"service\";s:7:\"airtime\";s:7:\"healthy\";b:0;s:6:\"status\";s:4:\"down\";s:7:\"message\";s:22:\"Service not configured\";s:13:\"response_time\";N;s:10:\"error_code\";s:12:\"CONFIG_ERROR\";s:7:\"details\";N;s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.006948Z\";}', 1768591245),
+('vastlead-cache-health_check_alpha_topup', 'a:8:{s:7:\"service\";s:11:\"alpha_topup\";s:7:\"healthy\";b:1;s:6:\"status\";s:11:\"operational\";s:7:\"message\";s:35:\"Service operational (cached status)\";s:13:\"response_time\";d:0.06;s:10:\"error_code\";N;s:7:\"details\";a:3:{s:6:\"status\";s:11:\"operational\";s:8:\"provider\";s:7:\"uzobest\";s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.042037Z\";}s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.042096Z\";}', 1768591245),
+('vastlead-cache-health_check_cable', 'a:8:{s:7:\"service\";s:5:\"cable\";s:7:\"healthy\";b:1;s:6:\"status\";s:11:\"operational\";s:7:\"message\";s:35:\"Service operational (cached status)\";s:13:\"response_time\";d:0.06;s:10:\"error_code\";N;s:7:\"details\";a:3:{s:6:\"status\";s:11:\"operational\";s:8:\"provider\";s:7:\"Uzobest\";s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.017915Z\";}s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.017976Z\";}', 1768591245),
+('vastlead-cache-health_check_data', 'a:8:{s:7:\"service\";s:4:\"data\";s:7:\"healthy\";b:0;s:6:\"status\";s:4:\"down\";s:7:\"message\";s:22:\"Service not configured\";s:13:\"response_time\";N;s:10:\"error_code\";s:12:\"CONFIG_ERROR\";s:7:\"details\";N;s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.008729Z\";}', 1768591245),
+('vastlead-cache-health_check_data_pin', 'a:8:{s:7:\"service\";s:8:\"data_pin\";s:7:\"healthy\";b:1;s:6:\"status\";s:11:\"operational\";s:7:\"message\";s:35:\"Service operational (cached status)\";s:13:\"response_time\";d:0.06;s:10:\"error_code\";N;s:7:\"details\";a:3:{s:6:\"status\";s:11:\"operational\";s:8:\"provider\";s:7:\"uzobest\";s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.037843Z\";}s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.037901Z\";}', 1768591245),
+('vastlead-cache-health_check_electricity', 'a:8:{s:7:\"service\";s:11:\"electricity\";s:7:\"healthy\";b:1;s:6:\"status\";s:11:\"operational\";s:7:\"message\";s:35:\"Service operational (cached status)\";s:13:\"response_time\";d:0.06;s:10:\"error_code\";N;s:7:\"details\";a:3:{s:6:\"status\";s:11:\"operational\";s:8:\"provider\";s:7:\"uzobest\";s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.024303Z\";}s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.024361Z\";}', 1768591245),
+('vastlead-cache-health_check_exam', 'a:8:{s:7:\"service\";s:4:\"exam\";s:7:\"healthy\";b:1;s:6:\"status\";s:11:\"operational\";s:7:\"message\";s:35:\"Service operational (cached status)\";s:13:\"response_time\";d:0.06;s:10:\"error_code\";N;s:7:\"details\";a:3:{s:6:\"status\";s:11:\"operational\";s:8:\"provider\";s:9:\"Topupmate\";s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.028827Z\";}s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.028887Z\";}', 1768591245),
+('vastlead-cache-health_check_monnify', 'a:8:{s:7:\"service\";s:7:\"monnify\";s:7:\"healthy\";b:0;s:6:\"status\";s:4:\"down\";s:7:\"message\";s:26:\"Credentials not configured\";s:13:\"response_time\";N;s:10:\"error_code\";s:12:\"CONFIG_ERROR\";s:7:\"details\";N;s:10:\"checked_at\";s:27:\"2026-01-16T19:20:42.370109Z\";}', 1768591247),
+('vastlead-cache-health_check_paystack', 'a:8:{s:7:\"service\";s:8:\"paystack\";s:7:\"healthy\";b:0;s:6:\"status\";s:4:\"down\";s:7:\"message\";s:25:\"Secret key not configured\";s:13:\"response_time\";N;s:10:\"error_code\";s:12:\"CONFIG_ERROR\";s:7:\"details\";N;s:10:\"checked_at\";s:27:\"2026-01-16T19:20:42.367736Z\";}', 1768591247),
+('vastlead-cache-health_check_recharge_pin', 'a:8:{s:7:\"service\";s:12:\"recharge_pin\";s:7:\"healthy\";b:1;s:6:\"status\";s:11:\"operational\";s:7:\"message\";s:35:\"Service operational (cached status)\";s:13:\"response_time\";d:0.06;s:10:\"error_code\";N;s:7:\"details\";a:3:{s:6:\"status\";s:11:\"operational\";s:8:\"provider\";s:7:\"uzobest\";s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.033160Z\";}s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.033218Z\";}', 1768591245),
+('vastlead-cache-health_check_uzobest_vtu', 'a:8:{s:7:\"service\";s:7:\"uzobest\";s:7:\"healthy\";b:0;s:6:\"status\";s:4:\"down\";s:7:\"message\";s:31:\"Uzobest API returned error: 404\";s:13:\"response_time\";d:117.2;s:10:\"error_code\";s:9:\"API_ERROR\";s:7:\"details\";N;s:10:\"checked_at\";s:27:\"2026-01-16T19:20:42.363413Z\";}', 1768591247),
+('vastlead-cache-hourly_trends_2025-12-16', 'a:24:{i:0;a:5:{s:4:\"hour\";i:0;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:1;a:5:{s:4:\"hour\";i:1;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:2;a:5:{s:4:\"hour\";i:2;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:3;a:5:{s:4:\"hour\";i:3;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:4;a:5:{s:4:\"hour\";i:4;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:5;a:5:{s:4:\"hour\";i:5;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:6;a:5:{s:4:\"hour\";i:6;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:7;a:5:{s:4:\"hour\";i:7;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:8;a:5:{s:4:\"hour\";i:8;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:9;a:5:{s:4:\"hour\";i:9;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:10;a:5:{s:4:\"hour\";i:10;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:11;a:5:{s:4:\"hour\";i:11;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:12;a:5:{s:4:\"hour\";i:12;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:13;a:5:{s:4:\"hour\";i:13;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:14;a:5:{s:4:\"hour\";i:14;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:15;a:5:{s:4:\"hour\";i:15;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:16;a:5:{s:4:\"hour\";i:16;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:17;a:5:{s:4:\"hour\";i:17;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:18;a:5:{s:4:\"hour\";i:18;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:19;a:5:{s:4:\"hour\";i:19;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:20;a:5:{s:4:\"hour\";i:20;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:21;a:5:{s:4:\"hour\";i:21;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:22;a:5:{s:4:\"hour\";i:22;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:23;a:5:{s:4:\"hour\";i:23;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}}', 1765914364),
+('vastlead-cache-hourly_trends_2025-12-18', 'a:24:{i:0;a:5:{s:4:\"hour\";i:0;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:1;a:5:{s:4:\"hour\";i:1;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:2;a:5:{s:4:\"hour\";i:2;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:3;a:5:{s:4:\"hour\";i:3;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:4;a:5:{s:4:\"hour\";i:4;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:5;a:5:{s:4:\"hour\";i:5;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:6;a:5:{s:4:\"hour\";i:6;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:7;a:5:{s:4:\"hour\";i:7;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:8;a:5:{s:4:\"hour\";i:8;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:9;a:5:{s:4:\"hour\";i:9;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:10;a:5:{s:4:\"hour\";i:10;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:11;a:5:{s:4:\"hour\";i:11;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:12;a:5:{s:4:\"hour\";i:12;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:13;a:5:{s:4:\"hour\";i:13;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:14;a:5:{s:4:\"hour\";i:14;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:15;a:5:{s:4:\"hour\";i:15;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:16;a:5:{s:4:\"hour\";i:16;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:17;a:5:{s:4:\"hour\";i:17;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:18;a:5:{s:4:\"hour\";i:18;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:19;a:5:{s:4:\"hour\";i:19;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:20;a:5:{s:4:\"hour\";i:20;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:21;a:5:{s:4:\"hour\";i:21;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:22;a:5:{s:4:\"hour\";i:22;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:23;a:5:{s:4:\"hour\";i:23;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}}', 1766090242),
+('vastlead-cache-hourly_trends_2025-12-19', 'a:24:{i:0;a:5:{s:4:\"hour\";i:0;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:1;a:5:{s:4:\"hour\";i:1;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:2;a:5:{s:4:\"hour\";i:2;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:3;a:5:{s:4:\"hour\";i:3;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:4;a:5:{s:4:\"hour\";i:4;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:5;a:5:{s:4:\"hour\";i:5;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:6;a:5:{s:4:\"hour\";i:6;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:7;a:5:{s:4:\"hour\";i:7;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:8;a:5:{s:4:\"hour\";i:8;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:9;a:5:{s:4:\"hour\";i:9;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:10;a:5:{s:4:\"hour\";i:10;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:11;a:5:{s:4:\"hour\";i:11;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:12;a:5:{s:4:\"hour\";i:12;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:13;a:5:{s:4:\"hour\";i:13;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:14;a:5:{s:4:\"hour\";i:14;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:15;a:5:{s:4:\"hour\";i:15;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:16;a:5:{s:4:\"hour\";i:16;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:17;a:5:{s:4:\"hour\";i:17;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:18;a:5:{s:4:\"hour\";i:18;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:19;a:5:{s:4:\"hour\";i:19;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:20;a:5:{s:4:\"hour\";i:20;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:21;a:5:{s:4:\"hour\";i:21;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:22;a:5:{s:4:\"hour\";i:22;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:23;a:5:{s:4:\"hour\";i:23;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}}', 1766138073),
+('vastlead-cache-hourly_trends_2026-01-16', 'a:24:{i:0;a:5:{s:4:\"hour\";i:0;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:1;a:5:{s:4:\"hour\";i:1;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:2;a:5:{s:4:\"hour\";i:2;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:3;a:5:{s:4:\"hour\";i:3;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:4;a:5:{s:4:\"hour\";i:4;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:5;a:5:{s:4:\"hour\";i:5;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:6;a:5:{s:4:\"hour\";i:6;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:7;a:5:{s:4:\"hour\";i:7;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:8;a:5:{s:4:\"hour\";i:8;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:9;a:5:{s:4:\"hour\";i:9;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:10;a:5:{s:4:\"hour\";i:10;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:11;a:5:{s:4:\"hour\";i:11;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:12;a:5:{s:4:\"hour\";i:12;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:13;a:5:{s:4:\"hour\";i:13;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:14;a:5:{s:4:\"hour\";i:14;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:15;a:5:{s:4:\"hour\";i:15;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:16;a:5:{s:4:\"hour\";i:16;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:17;a:5:{s:4:\"hour\";i:17;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:18;a:5:{s:4:\"hour\";i:18;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:19;a:5:{s:4:\"hour\";i:19;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:20;a:5:{s:4:\"hour\";i:20;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:21;a:5:{s:4:\"hour\";i:21;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:22;a:5:{s:4:\"hour\";i:22;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}i:23;a:5:{s:4:\"hour\";i:23;s:5:\"total\";i:0;s:10:\"successful\";i:0;s:6:\"failed\";i:0;s:7:\"revenue\";i:0;}}', 1768591540),
+('vastlead-cache-monitoring_dashboard', 'a:5:{s:12:\"generated_at\";s:27:\"2026-01-16T19:20:40.005318Z\";s:14:\"overall_status\";s:8:\"degraded\";s:15:\"services_status\";a:8:{s:7:\"airtime\";a:8:{s:7:\"service\";s:7:\"airtime\";s:7:\"healthy\";b:0;s:6:\"status\";s:4:\"down\";s:7:\"message\";s:22:\"Service not configured\";s:13:\"response_time\";N;s:10:\"error_code\";s:12:\"CONFIG_ERROR\";s:7:\"details\";N;s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.006948Z\";}s:4:\"data\";a:8:{s:7:\"service\";s:4:\"data\";s:7:\"healthy\";b:0;s:6:\"status\";s:4:\"down\";s:7:\"message\";s:22:\"Service not configured\";s:13:\"response_time\";N;s:10:\"error_code\";s:12:\"CONFIG_ERROR\";s:7:\"details\";N;s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.008729Z\";}s:5:\"cable\";a:8:{s:7:\"service\";s:5:\"cable\";s:7:\"healthy\";b:1;s:6:\"status\";s:11:\"operational\";s:7:\"message\";s:35:\"Service operational (cached status)\";s:13:\"response_time\";d:0.06;s:10:\"error_code\";N;s:7:\"details\";a:3:{s:6:\"status\";s:11:\"operational\";s:8:\"provider\";s:7:\"Uzobest\";s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.017915Z\";}s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.017976Z\";}s:11:\"electricity\";a:8:{s:7:\"service\";s:11:\"electricity\";s:7:\"healthy\";b:1;s:6:\"status\";s:11:\"operational\";s:7:\"message\";s:35:\"Service operational (cached status)\";s:13:\"response_time\";d:0.06;s:10:\"error_code\";N;s:7:\"details\";a:3:{s:6:\"status\";s:11:\"operational\";s:8:\"provider\";s:7:\"uzobest\";s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.024303Z\";}s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.024361Z\";}s:4:\"exam\";a:8:{s:7:\"service\";s:4:\"exam\";s:7:\"healthy\";b:1;s:6:\"status\";s:11:\"operational\";s:7:\"message\";s:35:\"Service operational (cached status)\";s:13:\"response_time\";d:0.06;s:10:\"error_code\";N;s:7:\"details\";a:3:{s:6:\"status\";s:11:\"operational\";s:8:\"provider\";s:9:\"Topupmate\";s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.028827Z\";}s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.028887Z\";}s:12:\"recharge_pin\";a:8:{s:7:\"service\";s:12:\"recharge_pin\";s:7:\"healthy\";b:1;s:6:\"status\";s:11:\"operational\";s:7:\"message\";s:35:\"Service operational (cached status)\";s:13:\"response_time\";d:0.06;s:10:\"error_code\";N;s:7:\"details\";a:3:{s:6:\"status\";s:11:\"operational\";s:8:\"provider\";s:7:\"uzobest\";s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.033160Z\";}s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.033218Z\";}s:8:\"data_pin\";a:8:{s:7:\"service\";s:8:\"data_pin\";s:7:\"healthy\";b:1;s:6:\"status\";s:11:\"operational\";s:7:\"message\";s:35:\"Service operational (cached status)\";s:13:\"response_time\";d:0.06;s:10:\"error_code\";N;s:7:\"details\";a:3:{s:6:\"status\";s:11:\"operational\";s:8:\"provider\";s:7:\"uzobest\";s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.037843Z\";}s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.037901Z\";}s:11:\"alpha_topup\";a:8:{s:7:\"service\";s:11:\"alpha_topup\";s:7:\"healthy\";b:1;s:6:\"status\";s:11:\"operational\";s:7:\"message\";s:35:\"Service operational (cached status)\";s:13:\"response_time\";d:0.06;s:10:\"error_code\";N;s:7:\"details\";a:3:{s:6:\"status\";s:11:\"operational\";s:8:\"provider\";s:7:\"uzobest\";s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.042037Z\";}s:10:\"checked_at\";s:27:\"2026-01-16T19:20:40.042096Z\";}}s:14:\"system_metrics\";a:0:{}s:6:\"alerts\";a:0:{}}', 1768591250),
+('vastlead-cache-monnify_access_token_66538f9a1fc5ac2a2d347d1ab9abc79b', 's:1050:\"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsibW9ubmlmeS12YWx1ZS1hZGRlZC1zZXJ2aWNlIiwibW9ubmlmeS1wYXltZW50LWVuZ2luZSIsIm1vbm5pZnktZGlzYnVyc2VtZW50LXNlcnZpY2UiLCJtb25uaWZ5LW9mZmxpbmUtcGF5bWVudC1zZXJ2aWNlIl0sInNjb3BlIjpbInByb2ZpbGUiXSwiZXhwIjoxNzY4NzQ4Mjk2LCJhdXRob3JpdGllcyI6WyJNUEVfTUFOQUdFX0xJTUlUX1BST0ZJTEUiLCJNUEVfVVBEQVRFX1JFU0VSVkVEX0FDQ09VTlQiLCJNUEVfSU5JVElBTElaRV9QQVlNRU5UIiwiTVBFX1JFU0VSVkVfQUNDT1VOVCIsIk1QRV9DQU5fUkVUUklFVkVfVFJBTlNBQ1RJT04iLCJNUEVfUkVUUklFVkVfUkVTRVJWRURfQUNDT1VOVCIsIk1QRV9ERUxFVEVfUkVTRVJWRURfQUNDT1VOVCIsIk1QRV9SRVRSSUVWRV9SRVNFUlZFRF9BQ0NPVU5UX1RSQU5TQUNUSU9OUyJdLCJqdGkiOiI1MjhkMjhjOC05NDY3LTQyZTItYTcxYy1iNDQwNGVmYTUxY2YiLCJjbGllbnRfaWQiOiJNS19QUk9EX1YzRkE2VkxFTFAifQ.M5aq8f0-KBeK4s-3KVTrIjNcweWpIASzuEwJVp8ACT9l4TIDMjlLiN_srSp7G0Vfp-m6n52_skLj77-mZD4rIQrPpCE3agN8-6gwCSkV3eemspEVakRJtruXIaaNR_m_7Mm8rGWfVrhMnh1iVZheMev-yoJpsJWIXlDyxbUp6Ezriawnb_ckqz6u1boNWSffR3wEMH4SRhPti8hUlF9hQZZm5R1YBsMqR2lUcoaPivcGPiSF_VUNYoG2fStiWSsGJiELDv2gMYRPJmE_8osNPvLXbN01rvg6oJ6Ex3e47YPwXl4FTUxlydhsAP0bfINcsLAud46xcbQdidp9vS_Rgg\";', 1768747999),
+('vastlead-cache-monnify_access_token_f6f34779b40634697c31e14238f4e910', 'N;', 1768050467),
+('vastlead-cache-provider_health_metrics', 'a:4:{s:9:\"providers\";a:1:{s:7:\"uzobest\";a:6:{s:6:\"status\";s:11:\"operational\";s:13:\"response_time\";i:200;s:12:\"success_rate\";d:99.5;s:10:\"last_check\";O:25:\"Illuminate\\Support\\Carbon\":3:{s:4:\"date\";s:26:\"2026-01-16 19:20:42.228361\";s:13:\"timezone_type\";i:3;s:8:\"timezone\";s:3:\"UTC\";}s:15:\"is_circuit_open\";b:0;s:18:\"available_services\";a:4:{i:0;s:7:\"airtime\";i:1;s:4:\"data\";i:2;s:5:\"cable\";i:3;s:11:\"electricity\";}}}s:14:\"overall_health\";s:4:\"good\";s:16:\"active_failovers\";a:0:{}s:22:\"circuit_breaker_status\";s:10:\"all_closed\";}', 1768591542),
+('vastlead-cache-security_metrics', 'a:6:{s:15:\"security_events\";a:0:{}s:19:\"suspicious_activity\";a:0:{}s:20:\"authentication_stats\";a:0:{}s:17:\"failed_logins_24h\";i:0;s:22:\"unique_login_users_24h\";i:0;s:14:\"security_score\";i:95;}', 1768591540),
+('vastlead-cache-service.airtime', 'a:0:{}', 1768594840),
+('vastlead-cache-service.alpha_topup', 'a:2:{s:7:\"api_key\";s:0:\"\";s:8:\"provider\";s:0:\"\";}', 1768594840),
+('vastlead-cache-service.cable', 'a:7:{s:16:\"verification_api\";s:40:\"245141f6de9c0aa211b3a6baf1d1533c642caf24\";s:21:\"verification_provider\";s:45:\"https://uzobestgsm.com/api/validate-customer/\";s:7:\"api_key\";s:40:\"245141f6de9c0aa211b3a6baf1d1533c642caf24\";s:8:\"provider\";s:35:\"https://uzobestgsm.com/api/cabletv/\";s:13:\"provider_name\";s:7:\"Uzobest\";s:9:\"auth_type\";s:6:\"header\";s:11:\"auth_params\";a:3:{s:5:\"token\";s:40:\"57adc15fd67d8fec5bcf7b268ca01bde460bedcd\";s:11:\"header_name\";s:13:\"Authorization\";s:13:\"header_prefix\";s:6:\"Token \";}}', 1768594840),
+('vastlead-cache-service.data', 'a:0:{}', 1768594840),
+('vastlead-cache-service.data_pin', 'a:3:{s:7:\"api_key\";s:0:\"\";s:8:\"provider\";s:0:\"\";s:9:\"auth_type\";s:5:\"Basic\";}', 1768594840),
+('vastlead-cache-service.electricity', 'a:4:{s:16:\"verification_api\";s:40:\"245141f6de9c0aa211b3a6baf1d1533c642caf24\";s:21:\"verification_provider\";s:45:\"https://uzobestgsm.com/api/validate-customer/\";s:7:\"api_key\";s:40:\"245141f6de9c0aa211b3a6baf1d1533c642caf24\";s:8:\"provider\";s:39:\"https://uzobestgsm.com/api/electricity/\";}', 1768594840),
+('vastlead-cache-service.exam', 'a:6:{s:7:\"api_key\";s:40:\"245141f6de9c0aa211b3a6baf1d1533c642caf24\";s:8:\"provider\";s:31:\"https://topupmate.com/api/exam/\";s:9:\"auth_type\";s:5:\"token\";s:8:\"user_url\";N;s:13:\"provider_name\";s:9:\"Topupmate\";s:11:\"auth_params\";N;}', 1768594840),
+('vastlead-cache-service.recharge_pin', 'a:3:{s:7:\"api_key\";s:0:\"\";s:8:\"provider\";s:0:\"\";s:9:\"auth_type\";s:5:\"Basic\";}', 1768594840);
 
 -- --------------------------------------------------------
 
@@ -486,9 +537,9 @@ CREATE TABLE `configurations` (
 --
 
 INSERT INTO `configurations` (`cId`, `config_key`, `config_value`) VALUES
-(1, 'monifyCharges', '1.075'),
-(2, 'monifyApi', 'MK_PROD_JAJ'),
-(3, 'monifySecrete', '4YBNAZ8XY1'),
+(1, 'monifyCharges', '1.7'),
+(2, 'monifyApi', 'MK_PROD_V3FA6VLELP'),
+(3, 'monifySecrete', '8ZPSJMRSBT291RKW74AJNG9JQL6M84YU'),
 (4, 'monifyContract', '5812563'),
 (5, 'monifyWeStatus', 'On'),
 (6, 'monifyMoStatus', 'On'),
@@ -496,8 +547,8 @@ INSERT INTO `configurations` (`cId`, `config_key`, `config_value`) VALUES
 (8, 'monifySaStatus', 'On'),
 (9, 'monifyStatus', 'On'),
 (10, 'paystackCharges', '1.5'),
-(11, 'paystackApi', ''),
-(12, 'paystackStatus', 'Off'),
+(11, 'paystackApi', 'sk_test_4cd65c1fe9a4c551fc0635c313f88f1180232c54'),
+(12, 'paystackStatus', 'On'),
 (13, 'walletOneProviderName', 'Maskawasub'),
 (14, 'walletOneApi', 'e5199989c9df406e8f78f9b255ab5620e131e2b4'),
 (15, 'walletOneProvider', 'https://maskawasub.com/api/user/'),
@@ -506,7 +557,8 @@ INSERT INTO `configurations` (`cId`, `config_key`, `config_value`) VALUES
 (18, 'walletTwoProvider', 'https://topupmate.com/api/user/'),
 (19, 'walletThreeProviderName', 'Aabaxztech'),
 (20, 'walletThreeApi', ''),
-(21, 'walletThreeProvider', 'https://aabaxztech.com/api/user/');
+(21, 'walletThreeProvider', 'https://aabaxztech.com/api/user/'),
+(22, 'monifyEnvironment', 'sandbox');
 
 -- --------------------------------------------------------
 
@@ -597,198 +649,179 @@ CREATE TABLE `data_plans` (
 --
 
 INSERT INTO `data_plans` (`dId`, `dPlanId`, `nId`, `uzobest_plan_id`, `dPlan`, `dAmount`, `dValidity`, `userPrice`, `cost_price`, `selling_price`, `agentPrice`, `apiPrice`, `dGroup`, `profit_margin`, `agent_price`, `vendor_price`) VALUES
-(1, 'mtn-sme-500mb', 1, NULL, 'MTN 500MB', '500MB', '30 Days', 550, NULL, 550.00, 125, 120, 'SME', 50.00, NULL, NULL),
-(2, 'mtn-sme-1gb', 1, NULL, 'MTN 1GB', '1GB', '30 Days', 270, NULL, NULL, 250, 240, 'SME', NULL, NULL, NULL),
-(3, 'mtn-sme-2gb', 1, NULL, 'MTN 2GB', '2GB', '30 Days', 540, NULL, NULL, 500, 480, 'SME', NULL, NULL, NULL),
-(4, 'mtn-sme-5gb', 1, NULL, 'MTN 5GB', '5GB', '30 Days', 1350, NULL, NULL, 1250, 1200, 'SME', NULL, NULL, NULL),
-(5, 'mtn-sme-10gb', 1, NULL, 'MTN 10GB', '10GB', '30 Days', 2700, NULL, NULL, 2500, 2400, 'SME', NULL, NULL, NULL),
-(6, 'mtn-gift-500mb', 1, NULL, 'MTN 500MB Gifting', '500MB', '30 Days', 145, NULL, NULL, 135, 130, 'Gifting', NULL, NULL, NULL),
-(7, 'mtn-gift-1gb', 1, NULL, 'MTN 1GB Gifting', '1GB', '30 Days', 290, NULL, NULL, 270, 260, 'Gifting', NULL, NULL, NULL),
-(8, 'mtn-gift-2gb', 1, NULL, 'MTN 2GB Gifting', '2GB', '30 Days', 580, NULL, NULL, 540, 520, 'Gifting', NULL, NULL, NULL),
-(9, 'airtel-sme-500mb', 2, NULL, 'Airtel 500MB', '500MB', '30 Days', 140, NULL, NULL, 130, 125, 'SME', NULL, NULL, NULL),
-(10, 'airtel-sme-1gb', 2, NULL, 'Airtel 1GB', '1GB', '30 Days', 280, NULL, NULL, 260, 250, 'SME', NULL, NULL, NULL),
-(11, 'airtel-sme-2gb', 2, NULL, 'Airtel 2GB', '2GB', '30 Days', 560, NULL, NULL, 520, 500, 'SME', NULL, NULL, NULL),
-(12, 'airtel-sme-5gb', 2, NULL, 'Airtel 5GB', '5GB', '30 Days', 1400, NULL, NULL, 1300, 1250, 'SME', NULL, NULL, NULL),
-(13, 'glo-sme-500mb', 3, NULL, 'Glo 500MB', '500MB', '30 Days', 130, NULL, NULL, 120, 115, 'SME', NULL, NULL, NULL),
-(14, 'glo-sme-1gb', 3, NULL, 'Glo 1GB', '1GB', '30 Days', 260, NULL, NULL, 240, 230, 'SME', NULL, NULL, NULL),
-(15, 'glo-sme-2gb', 3, NULL, 'Glo 2GB', '2GB', '30 Days', 520, NULL, NULL, 480, 460, 'SME', NULL, NULL, NULL),
-(16, 'glo-sme-5gb', 3, NULL, 'Glo 5GB', '5GB', '30 Days', 1300, NULL, NULL, 1200, 1150, 'SME', NULL, NULL, NULL),
-(17, '9mobile-sme-500mb', 4, NULL, '9mobile 500MB', '500MB', '30 Days', 135, NULL, NULL, 125, 120, 'SME', NULL, NULL, NULL),
-(18, '9mobile-sme-1gb', 4, NULL, '9mobile 1GB', '1GB', '30 Days', 270, NULL, NULL, 250, 240, 'SME', NULL, NULL, NULL),
-(19, '9mobile-sme-2gb', 4, NULL, '9mobile 2GB', '2GB', '30 Days', 540, NULL, NULL, 500, 480, 'SME', NULL, NULL, NULL),
-(20, '385', 1, 385, '75.0MB', '75.0MB', '1 Day', 79, 75.00, 78.75, 79, 79, 'GIFTING', 5.00, NULL, NULL),
-(21, '463', 1, 463, '110.0MB', '110.0MB', '1 Day', 105, 100.00, 105.00, 105, 105, 'GIFTING', 5.00, NULL, NULL),
-(22, '464', 1, 464, '230.0MB', '230.0MB', '1 Day', 210, 200.00, 210.00, 210, 210, 'GIFTING', 5.00, NULL, NULL),
-(23, '592', 1, 592, '1.0GB', '1.0GB', 'Hot Deal - 1 Day', 257, 245.00, 257.25, 257, 257, 'AWOOF DATA', 5.00, NULL, NULL),
-(24, '495', 1, 495, '500.0MB', '500.0MB', '1 Day', 360, 343.00, 360.15, 360, 360, 'GIFTING', 5.00, NULL, NULL),
-(25, '558', 1, 558, '500.0MB', '500.0MB', '1 Week (DT)', 394, 375.00, 393.75, 394, 394, 'SME', 5.00, NULL, NULL),
-(26, '579', 1, 579, '500.0MB', '500.0MB', '30 DAYS  (*461*4#)', 404, 385.00, 404.25, 404, 404, 'DATA SHARE', 5.00, NULL, NULL),
-(27, '390', 1, 390, '750.0MB', '750.0MB', '3 Days', 462, 440.00, 462.00, 462, 462, 'GIFTING', 5.00, NULL, NULL),
-(28, '458', 1, 458, '750.0MB', '750.0MB', '3 Days', 462, 440.00, 462.00, 462, 462, 'AWOOF DATA', 5.00, NULL, NULL),
-(29, '486', 1, 486, '1.2GB', '1.2GB', '30 Days - Social Apps Only', 462, 440.00, 462.00, 462, 462, 'GIFTING', 5.00, NULL, NULL),
-(30, '583', 1, 583, '1.0GB', '1.0GB', '1 Week (DT)', 499, 475.00, 498.75, 499, 499, 'SME', 5.00, NULL, NULL),
-(31, '387', 1, 387, '1.0GB', '1.0GB', '1 Day', 509, 485.00, 509.25, 509, 509, 'GIFTING', 5.00, NULL, NULL),
-(32, '461', 1, 461, '500.0MB', '500.0MB', '7 Days', 509, 485.00, 509.25, 509, 509, 'GIFTING', 5.00, NULL, NULL),
-(33, '462', 1, 462, '500.0MB', '500.0MB', '1 Week', 509, 485.00, 509.25, 509, 509, 'AWOOF DATA', 5.00, NULL, NULL),
-(34, '216', 1, 216, '500.0MB', '500.0MB', '1 Week', 509, 485.00, 509.25, 509, 509, 'SME', 5.00, NULL, NULL),
-(35, '593', 1, 593, '2.5GB', '2.5GB', 'Hot Deal - 1 Day', 572, 545.00, 572.25, 572, 572, 'AWOOF DATA', 5.00, NULL, NULL),
-(36, '491', 1, 491, '1.0GB', '1.0GB', '30 Days (DT)', 604, 575.00, 603.75, 604, 604, 'SME', 5.00, NULL, NULL),
-(37, '451', 1, 451, '1.5GB', '1.5GB', '2 Days', 614, 585.00, 614.25, 614, 614, 'GIFTING', 5.00, NULL, NULL),
-(38, '475', 1, 475, '1.5GB', '1.5GB', '2 Days', 614, 585.00, 614.25, 614, 614, 'AWOOF DATA', 5.00, NULL, NULL),
-(39, '580', 1, 580, '1.0GB', '1.0GB', '30 DAYS  (*461*4#)', 735, 700.00, 735.00, 735, 735, 'DATA SHARE', 5.00, NULL, NULL),
-(40, '442', 1, 442, '2.0GB', '2.0GB', '2 Days', 767, 730.00, 766.50, 767, 767, 'AWOOF DATA', 5.00, NULL, NULL),
-(41, '595', 1, 595, '1.2GB', '1.2GB', '1 Week', 772, 735.00, 771.75, 772, 772, 'DATA SHARE', 5.00, NULL, NULL),
-(42, '598', 1, 598, '1.2GB', '1.2GB', '7 Days', 772, 735.00, 771.75, 772, 772, 'DATA SHARE', 5.00, NULL, NULL),
-(43, '388', 1, 388, '2.0GB', '2.0GB', '2 Days', 772, 735.00, 771.75, 772, 772, 'GIFTING', 5.00, NULL, NULL),
-(44, '467', 1, 467, '2.5GB', '2.5GB', '1 Day', 772, 735.00, 771.75, 772, 772, 'GIFTING', 5.00, NULL, NULL),
-(45, '456', 1, 456, '1.0GB', '1.0GB', '7 Days', 819, 780.00, 819.00, 819, 819, 'GIFTING', 5.00, NULL, NULL),
-(46, '217', 1, 217, '1.0GB', '1.0GB', '1 Week', 819, 780.00, 819.00, 819, 819, 'SME', 5.00, NULL, NULL),
-(47, '594', 1, 594, '2.0GB', '2.0GB', '1 Week (DT)', 893, 850.00, 892.50, 893, 893, 'SME', 5.00, NULL, NULL),
-(48, '389', 1, 389, '2.5GB', '2.5GB', '2 Days', 924, 880.00, 924.00, 924, 924, 'GIFTING', 5.00, NULL, NULL),
-(49, '395', 1, 395, '1.5GB', '1.5GB', '7 Days', 1024, 975.00, 1023.75, 1024, 1024, 'GIFTING', 5.00, NULL, NULL),
-(50, '443', 1, 443, '3.2GB', '3.2GB', '2 Days', 1024, 975.00, 1023.75, 1024, 1024, 'AWOOF DATA', 5.00, NULL, NULL),
-(51, '450', 1, 450, '1.5GB', '1.5GB', '1 Week', 1024, 975.00, 1023.75, 1024, 1024, 'AWOOF DATA', 5.00, NULL, NULL),
-(52, '452', 1, 452, '3.2GB', '3.2GB', '2 Days', 1024, 975.00, 1023.75, 1024, 1024, 'GIFTING', 5.00, NULL, NULL),
-(53, '492', 1, 492, '2.0GB', '2.0GB', '30 Days (DT)', 1049, 999.00, 1048.95, 1049, 1049, 'SME', 5.00, NULL, NULL),
-(54, '398', 1, 398, '2.0GB', '2.0GB', '30 Days', 1538, 1465.00, 1538.25, 1538, 1538, 'GIFTING', 5.00, NULL, NULL),
-(55, '218', 1, 218, '2.0GB', '2.0GB', '30 Days', 1538, 1465.00, 1538.25, 1538, 1538, 'SME', 5.00, NULL, NULL),
-(56, '482', 1, 482, '1.8GB', '1.8GB', '30 Days ThryveData + 35Minutes', 1538, 1465.00, 1538.25, 1538, 1538, 'GIFTING', 5.00, NULL, NULL),
-(57, '527', 1, 527, '3.5GB', '3.5GB', '7 Days', 1544, 1470.00, 1543.50, 1544, 1544, 'GIFTING', 5.00, NULL, NULL),
-(58, '532', 1, 532, '3.5GB', '3.5GB', '1 Week', 1544, 1470.00, 1543.50, 1544, 1544, 'AWOOF DATA', 5.00, NULL, NULL),
-(59, '569', 1, 569, '3.5GB', '3.5GB', '1 Week', 1544, 1470.00, 1543.50, 1544, 1544, 'SME', 5.00, NULL, NULL),
-(60, '493', 1, 493, '3.0GB', '3.0GB', '30 Days (DT)', 1549, 1475.00, 1548.75, 1549, 1549, 'SME', 5.00, NULL, NULL),
-(61, '596', 1, 596, '7.0GB', '7.0GB', '2 Days', 1853, 1765.00, 1853.25, 1853, 1853, 'AWOOF DATA', 5.00, NULL, NULL),
-(62, '597', 1, 597, '7.0GB', '7.0GB', '2 Days', 1853, 1765.00, 1853.25, 1853, 1853, 'GIFTING', 5.00, NULL, NULL),
-(63, '399', 1, 399, '2.7GB', '2.7GB', '30 Days', 2058, 1960.00, 2058.00, 2058, 2058, 'GIFTING', 5.00, NULL, NULL),
-(64, '494', 1, 494, '5.0GB', '5.0GB', '30 Days (DT)', 2095, 1995.00, 2094.75, 2095, 2095, 'SME', 5.00, NULL, NULL),
-(65, '219', 1, 219, '3.5GB', '3.5GB', '30 Days', 2552, 2430.00, 2551.50, 2552, 2552, 'SME', 5.00, NULL, NULL),
-(66, '396', 1, 396, '6.0GB', '6.0GB', '7 Days', 2557, 2435.00, 2556.75, 2557, 2557, 'GIFTING', 5.00, NULL, NULL),
-(67, '460', 1, 460, '3.5GB', '3.5GB', '30 Days', 2557, 2435.00, 2556.75, 2557, 2557, 'GIFTING', 5.00, NULL, NULL),
-(68, '551', 1, 551, '6.75GB', '6.75GB', '30 Days - XtraValue', 3087, 2940.00, 3087.00, 3087, 3087, 'AWOOF DATA', 5.00, NULL, NULL),
-(69, '570', 1, 570, '5.0GB', '5.0GB', '30 Days ThryveData + 90Minutes', 3087, 2940.00, 3087.00, 3087, 3087, 'GIFTING', 5.00, NULL, NULL),
-(70, '571', 1, 571, '5.0GB', '5.0GB', '30 Days ThryveData + 90Minutes', 3087, 2940.00, 3087.00, 3087, 3087, 'AWOOF DATA', 5.00, NULL, NULL),
-(71, '470', 1, 470, '7.0GB', '7.0GB', '30 Days', 3565, 3395.00, 3564.75, 3565, 3565, 'GIFTING', 5.00, NULL, NULL),
-(72, '220', 1, 220, '7.0GB', '7.0GB', '30 Days', 3565, 3395.00, 3564.75, 3565, 3565, 'SME', 5.00, NULL, NULL),
-(73, '397', 1, 397, '11.0GB', '11.0GB', '7 Days', 3602, 3430.00, 3601.50, 3602, 3602, 'GIFTING', 5.00, NULL, NULL),
-(74, '499', 1, 499, '11.0GB', '11.0GB', '1 Week', 3602, 3430.00, 3601.50, 3602, 3602, 'AWOOF DATA', 5.00, NULL, NULL),
-(75, '221', 1, 221, '10.0GB', '10.0GB', '30 Days', 4583, 4365.00, 4583.25, 4583, 4583, 'SME', 5.00, NULL, NULL),
-(76, '402', 1, 402, '10.0GB', '10.0GB', '30 Days', 4620, 4400.00, 4620.00, 4620, 4620, 'GIFTING', 5.00, NULL, NULL),
-(77, '552', 1, 552, '14.5GB', '14.5GB', '30 Days - XtraValue', 5145, 4900.00, 5145.00, 5145, 5145, 'AWOOF DATA', 5.00, NULL, NULL),
-(78, '496', 1, 496, '20.0GB', '20.0GB', '7 Days', 5145, 4900.00, 5145.00, 5145, 5145, 'GIFTING', 5.00, NULL, NULL),
-(79, '498', 1, 498, '20.0GB', '20.0GB', '1 Week', 5145, 4900.00, 5145.00, 5145, 5145, 'AWOOF DATA', 5.00, NULL, NULL),
-(80, '403', 1, 403, '12.5GB', '12.5GB', '30 Days', 5602, 5335.00, 5601.75, 5602, 5602, 'GIFTING', 5.00, NULL, NULL),
-(81, '404', 1, 404, '16.5GB', '16.5GB', '30 Days', 6689, 6370.00, 6688.50, 6689, 6689, 'GIFTING', 5.00, NULL, NULL),
-(82, '468', 1, 468, '20.0GB', '20.0GB', '30 Days', 7639, 7275.00, 7638.75, 7639, 7639, 'GIFTING', 5.00, NULL, NULL),
-(83, '469', 1, 469, '25.0GB', '25.0GB', '30 Days', 9167, 8730.00, 9166.50, 9167, 9167, 'GIFTING', 5.00, NULL, NULL),
-(84, '407', 1, 407, '36.0GB', '36.0GB', '30 Days', 11319, 10780.00, 11319.00, 11319, 11319, 'GIFTING', 5.00, NULL, NULL),
-(85, '408', 1, 408, '75.0GB', '75.0GB', '30 Days', 18333, 17460.00, 18333.00, 18333, 18333, 'GIFTING', 5.00, NULL, NULL),
-(86, '526', 1, 526, '90.0GB', '90.0GB', '2 Months', 25725, 24500.00, 25725.00, 25725, 25725, 'GIFTING', 5.00, NULL, NULL),
-(87, '409', 1, 409, '165.0GB', '165.0GB', '30 Days', 36015, 34300.00, 36015.00, 36015, 36015, 'GIFTING', 5.00, NULL, NULL),
-(88, '525', 1, 525, '150.0GB', '150.0GB', '2 Months', 41160, 39200.00, 41160.00, 41160, 41160, 'GIFTING', 5.00, NULL, NULL),
-(89, '438', 1, 438, '250.0GB', '250.0GB', '30 Days', 56595, 53900.00, 56595.00, 56595, 56595, 'GIFTING', 5.00, NULL, NULL),
-(90, '490', 1, 490, '800.0GB', '800.0GB', '1 Year', 128625, 122500.00, 128625.00, 128625, 128625, 'GIFTING', 5.00, NULL, NULL),
-(91, '546', 3, 546, '40.0MB', '40.0MB', '1 Day', 53, 50.00, 52.50, 53, 53, 'GIFTING', 5.00, NULL, NULL),
-(92, '305', 3, 305, '200.0MB', '200.0MB', '2 Weeks', 95, 90.00, 94.50, 95, 95, 'CORPORATE GIFTING', 5.00, NULL, NULL),
-(93, '500', 3, 500, '100.0MB', '100.0MB', '1 Day', 105, 100.00, 105.00, 105, 105, 'GIFTING', 5.00, NULL, NULL),
-(94, '375', 3, 375, '750.0MB', '750.0MB', '1 Day', 205, 195.00, 204.75, 205, 205, 'SME', 5.00, NULL, NULL),
-(95, '306', 3, 306, '500.0MB', '500.0MB', '30 Days', 210, 200.00, 210.00, 210, 210, 'CORPORATE GIFTING', 5.00, NULL, NULL),
-(96, '501', 3, 501, '210.0MB', '210.0MB', '2 Days', 210, 200.00, 210.00, 210, 210, 'GIFTING', 5.00, NULL, NULL),
-(97, '559', 3, 559, '1.0GB', '1.0GB', '3 Days', 293, 279.00, 292.95, 293, 293, 'CORPORATE GIFTING', 5.00, NULL, NULL),
-(98, '376', 3, 376, '1.5GB', '1.5GB', '1 Day', 310, 295.00, 309.75, 310, 310, 'SME', 5.00, NULL, NULL),
-(99, '562', 3, 562, '1.0GB', '1.0GB', '1 Week', 341, 325.00, 341.25, 341, 341, 'CORPORATE GIFTING', 5.00, NULL, NULL),
-(100, '506', 3, 506, '1.0GB', '1.0GB', '1 Day', 357, 340.00, 357.00, 357, 357, 'GIFTING', 5.00, NULL, NULL),
-(101, '307', 3, 307, '1.0GB', '1.0GB', '30 Days', 431, 410.00, 430.50, 431, 431, 'CORPORATE GIFTING', 5.00, NULL, NULL),
-(102, '377', 3, 377, '2.5GB', '2.5GB', '2 Days', 509, 485.00, 509.25, 509, 509, 'SME', 5.00, NULL, NULL),
-(103, '502', 3, 502, '500.0MB', '500.0MB', '7 Days + 1GB Night', 509, 485.00, 509.25, 509, 509, 'GIFTING', 5.00, NULL, NULL),
-(104, '507', 3, 507, '1.0GB', '1.0GB', '1 Day + 1GB Night', 509, 485.00, 509.25, 509, 509, 'GIFTING', 5.00, NULL, NULL),
-(105, '508', 3, 508, '1.55GB', '1.55GB', '2 Days + 2GB Night', 611, 582.00, 611.10, 611, 611, 'GIFTING', 5.00, NULL, NULL),
-(106, '503', 3, 503, '1.1GB', '1.1GB', '14 Days', 764, 728.00, 764.40, 764, 764, 'GIFTING', 5.00, NULL, NULL),
-(107, '308', 3, 308, '2.0GB', '2.0GB', '30 Days', 861, 820.00, 861.00, 861, 861, 'CORPORATE GIFTING', 5.00, NULL, NULL),
-(108, '560', 3, 560, '3.0GB', '3.0GB', '3 Days', 879, 837.00, 878.85, 879, 879, 'CORPORATE GIFTING', 5.00, NULL, NULL),
-(109, '509', 3, 509, '3.1GB', '3.1GB', '2 Days + 2GB Night', 1019, 970.00, 1018.50, 1019, 1019, 'GIFTING', 5.00, NULL, NULL),
-(110, '511', 3, 511, '1.1GB', '1.1GB', '30 Days + 1.5GB Night', 1019, 970.00, 1018.50, 1019, 1019, 'GIFTING', 5.00, NULL, NULL),
-(111, '563', 3, 563, '3.0GB', '3.0GB', '1 Week', 1024, 975.00, 1023.75, 1024, 1024, 'CORPORATE GIFTING', 5.00, NULL, NULL),
-(112, '309', 3, 309, '3.0GB', '3.0GB', '30 Days', 1292, 1230.00, 1291.50, 1292, 1292, 'CORPORATE GIFTING', 5.00, NULL, NULL),
-(113, '561', 3, 561, '5.0GB', '5.0GB', '3 Days', 1465, 1395.00, 1464.75, 1465, 1465, 'CORPORATE GIFTING', 5.00, NULL, NULL),
-(114, '512', 3, 512, '2.0GB', '2.0GB', '30 Days + 3GB Night', 1528, 1455.00, 1527.75, 1528, 1528, 'GIFTING', 5.00, NULL, NULL),
-(115, '510', 3, 510, '3.9GB', '3.9GB', '7 Days + 2GB Night', 1528, 1455.00, 1527.75, 1528, 1528, 'GIFTING', 5.00, NULL, NULL),
-(116, '564', 3, 564, '5.0GB', '5.0GB', '1 Week', 1706, 1625.00, 1706.25, 1706, 1706, 'CORPORATE GIFTING', 5.00, NULL, NULL),
-(117, '513', 3, 513, '3.15GB', '3.15GB', '30 Days + 3GB Night', 2037, 1940.00, 2037.00, 2037, 2037, 'GIFTING', 5.00, NULL, NULL),
-(118, '378', 3, 378, '10.0GB', '10.0GB', '1 Week', 2048, 1950.00, 2047.50, 2048, 2048, 'SME', 5.00, NULL, NULL),
-(119, '310', 3, 310, '5.0GB', '5.0GB', '30 Days', 2153, 2050.00, 2152.50, 2153, 2153, 'CORPORATE GIFTING', 5.00, NULL, NULL),
-(120, '514', 3, 514, '4.25GB', '4.25GB', '30 Days + 3GB Night', 2546, 2425.00, 2546.25, 2546, 2546, 'GIFTING', 5.00, NULL, NULL),
-(121, '515', 3, 515, '8.0GB', '8.0GB', '30 Days + 2GB Night', 3087, 2940.00, 3087.00, 3087, 3087, 'GIFTING', 5.00, NULL, NULL),
-(122, '516', 3, 516, '10.5GB', '10.5GB', '30 Days + 2GB Night', 4074, 3880.00, 4074.00, 4074, 4074, 'GIFTING', 5.00, NULL, NULL),
-(123, '311', 3, 311, '10.0GB', '10.0GB', '30 Days', 4305, 4100.00, 4305.00, 4305, 4305, 'CORPORATE GIFTING', 5.00, NULL, NULL),
-(124, '517', 3, 517, '13.5GB', '13.5GB', '30 Days + 2.5GB Night', 5093, 4850.00, 5092.50, 5093, 5093, 'GIFTING', 5.00, NULL, NULL),
-(125, '518', 3, 518, '26.0GB', '26.0GB', '30 Days + 2GB Night', 8148, 7760.00, 8148.00, 8148, 8148, 'GIFTING', 5.00, NULL, NULL),
-(126, '519', 3, 519, '36.0GB', '36.0GB', '30 Days + 2GB Night', 10185, 9700.00, 10185.00, 10185, 10185, 'GIFTING', 5.00, NULL, NULL),
-(127, '520', 3, 520, '62.0GB', '62.0GB', '30 Days + 2GB Night', 15278, 14550.00, 15277.50, 15278, 15278, 'GIFTING', 5.00, NULL, NULL),
-(128, '521', 3, 521, '105.0GB', '105.0GB', '30 Days + 2GB Night', 20370, 19400.00, 20370.00, 20370, 20370, 'GIFTING', 5.00, NULL, NULL),
-(129, '522', 3, 522, '1.0TB', '1.0TB', '1 Year', 152775, 145500.00, 152775.00, 152775, 152775, 'GIFTING', 5.00, NULL, NULL),
-(130, '528', 2, 528, '150.0MB', '150.0MB', '1Day- Don\'t Sell To Sim Owing!', 63, 60.00, 63.00, 63, 63, 'AWOOF DATA', 5.00, NULL, NULL),
-(131, '544', 2, 544, '75.0MB', '75.0MB', '1 Day', 79, 75.00, 78.75, 79, 79, 'GIFTING', 5.00, NULL, NULL),
-(132, '479', 2, 479, '110.0MB', '110.0MB', '1 Day', 105, 100.00, 105.00, 105, 105, 'GIFTING', 5.00, NULL, NULL),
-(133, '476', 2, 476, '300.0MB', '300.0MB', '2Days-Don\'t Sell To Sim Owing!', 121, 115.00, 120.75, 121, 121, 'AWOOF DATA', 5.00, NULL, NULL),
-(134, '480', 2, 480, '230.0MB', '230.0MB', '2 Days', 210, 200.00, 210.00, 210, 210, 'GIFTING', 5.00, NULL, NULL),
-(135, '447', 2, 447, '600.0MB', '600.0MB', '2Days-Don\'t Sell To Sim Owing!', 226, 215.00, 225.75, 226, 226, 'AWOOF DATA', 5.00, NULL, NULL),
-(136, '542', 2, 542, '1.0GB', '1.0GB', '3 Days - Social Apps Only', 315, 300.00, 315.00, 315, 315, 'GIFTING', 5.00, NULL, NULL),
-(137, '481', 2, 481, '300.0MB', '300.0MB', '2 Days', 315, 300.00, 315.00, 315, 315, 'GIFTING', 5.00, NULL, NULL),
-(138, '584', 2, 584, '500.0MB', '500.0MB', '1 Day', 360, 343.00, 360.15, 360, 360, 'GIFTING', 5.00, NULL, NULL),
-(139, '577', 2, 577, '1.5GB', '1.5GB', '1Day- Don\'t Sell To Sim Owing!', 436, 415.00, 435.75, 436, 436, 'AWOOF DATA', 5.00, NULL, NULL),
-(140, '534', 2, 534, '500.0MB', '500.0MB', '1 Week', 515, 490.00, 514.50, 515, 515, 'SME', 5.00, NULL, NULL),
-(141, '448', 2, 448, '1.0GB', '1.0GB', '1 Day', 515, 490.00, 514.50, 515, 515, 'GIFTING', 5.00, NULL, NULL),
-(142, '478', 2, 478, '500.0MB', '500.0MB', '7 Days', 515, 490.00, 514.50, 515, 515, 'GIFTING', 5.00, NULL, NULL),
-(143, '543', 2, 543, '1.5GB', '1.5GB', '7 Days - Social Apps Only', 520, 495.00, 519.75, 520, 520, 'GIFTING', 5.00, NULL, NULL),
-(144, '410', 2, 410, '1.5GB', '1.5GB', '2 Days', 617, 588.00, 617.40, 617, 617, 'GIFTING', 5.00, NULL, NULL),
-(145, '550', 2, 550, '2.0GB', '2.0GB', '2Days-Don\'t Sell To Sim Owing!', 646, 615.00, 645.75, 646, 646, 'AWOOF DATA', 5.00, NULL, NULL),
-(146, '411', 2, 411, '3.0GB', '3.0GB', '2 Days', 772, 735.00, 771.75, 772, 772, 'GIFTING', 5.00, NULL, NULL),
-(147, '581', 2, 581, '3.0GB', '3.0GB', '2 Days', 788, 750.00, 787.50, 788, 788, 'AWOOF DATA', 5.00, NULL, NULL),
-(148, '535', 2, 535, '1.0GB', '1.0GB', '1 Week', 824, 785.00, 824.25, 824, 824, 'SME', 5.00, NULL, NULL),
-(149, '414', 2, 414, '1.0GB', '1.0GB', '7 Days', 824, 785.00, 824.25, 824, 824, 'GIFTING', 5.00, NULL, NULL),
-(150, '412', 2, 412, '3.2GB', '3.2GB', '2 Days', 1029, 980.00, 1029.00, 1029, 1029, 'GIFTING', 5.00, NULL, NULL),
-(151, '415', 2, 415, '1.5GB', '1.5GB', '7 Days', 1029, 980.00, 1029.00, 1029, 1029, 'GIFTING', 5.00, NULL, NULL),
-(152, '536', 2, 536, '2.0GB', '2.0GB', '30 Days', 1544, 1470.00, 1543.50, 1544, 1544, 'SME', 5.00, NULL, NULL),
-(153, '565', 2, 565, '3.5GB', '3.5GB', '1 Week', 1544, 1470.00, 1543.50, 1544, 1544, 'SME', 5.00, NULL, NULL),
-(154, '413', 2, 413, '5.0GB', '5.0GB', '2 Days', 1544, 1470.00, 1543.50, 1544, 1544, 'GIFTING', 5.00, NULL, NULL),
-(155, '416', 2, 416, '3.5GB', '3.5GB', '7 Days', 1544, 1470.00, 1543.50, 1544, 1544, 'GIFTING', 5.00, NULL, NULL),
-(156, '420', 2, 420, '2.0GB', '2.0GB', '30 Days', 1544, 1470.00, 1543.50, 1544, 1544, 'GIFTING', 5.00, NULL, NULL),
-(157, '578', 2, 578, '5.0GB', '5.0GB', '7Days-Don\'t Sell To Sim Owing!', 1591, 1515.00, 1590.75, 1591, 1591, 'AWOOF DATA', 5.00, NULL, NULL),
-(158, '537', 2, 537, '3.0GB', '3.0GB', '30 Days', 2058, 1960.00, 2058.00, 2058, 2058, 'SME', 5.00, NULL, NULL),
-(159, '421', 2, 421, '3.0GB', '3.0GB', '30 Days', 2058, 1960.00, 2058.00, 2058, 2058, 'GIFTING', 5.00, NULL, NULL),
-(160, '538', 2, 538, '4.0GB', '4.0GB', '30 Days', 2573, 2450.00, 2572.50, 2573, 2573, 'SME', 5.00, NULL, NULL),
-(161, '566', 2, 566, '6.0GB', '6.0GB', '1 Week', 2573, 2450.00, 2572.50, 2573, 2573, 'SME', 5.00, NULL, NULL),
-(162, '417', 2, 417, '6.0GB', '6.0GB', '7 Days', 2573, 2450.00, 2572.50, 2573, 2573, 'GIFTING', 5.00, NULL, NULL),
-(163, '422', 2, 422, '4.0GB', '4.0GB', '30 Days', 2573, 2450.00, 2572.50, 2573, 2573, 'GIFTING', 5.00, NULL, NULL),
-(164, '539', 2, 539, '8.0GB', '8.0GB', '30 Days', 3087, 2940.00, 3087.00, 3087, 3087, 'SME', 5.00, NULL, NULL),
-(165, '567', 2, 567, '10.0GB', '10.0GB', '1 Week', 3087, 2940.00, 3087.00, 3087, 3087, 'SME', 5.00, NULL, NULL),
-(166, '418', 2, 418, '10.0GB', '10.0GB', '7 Days', 3087, 2940.00, 3087.00, 3087, 3087, 'GIFTING', 5.00, NULL, NULL),
-(167, '423', 2, 423, '8.0GB', '8.0GB', '30 Days', 3087, 2940.00, 3087.00, 3087, 3087, 'GIFTING', 5.00, NULL, NULL),
-(168, '365', 2, 365, '10.0GB', '10.0GB', '30Days-Don\'t Sell To Sim Owing', 3166, 3015.00, 3165.75, 3166, 3166, 'AWOOF DATA', 5.00, NULL, NULL),
-(169, '540', 2, 540, '10.0GB', '10.0GB', '30 Days', 4116, 3920.00, 4116.00, 4116, 4116, 'SME', 5.00, NULL, NULL),
-(170, '424', 2, 424, '10.0GB', '10.0GB', '30 Days', 4116, 3920.00, 4116.00, 4116, 4116, 'GIFTING', 5.00, NULL, NULL),
-(171, '531', 2, 531, '13.0GB', '13.0GB', '30 Days', 5145, 4900.00, 5145.00, 5145, 5145, 'SME', 5.00, NULL, NULL),
-(172, '419', 2, 419, '18.0GB', '18.0GB', '7 Days', 5145, 4900.00, 5145.00, 5145, 5145, 'GIFTING', 5.00, NULL, NULL),
-(173, '425', 2, 425, '13.0GB', '13.0GB', '30 Days', 5145, 4900.00, 5145.00, 5145, 5145, 'GIFTING', 5.00, NULL, NULL),
-(174, '575', 2, 575, '18.0GB', '18.0GB', '30 Days', 6174, 5880.00, 6174.00, 6174, 6174, 'SME', 5.00, NULL, NULL),
-(175, '426', 2, 426, '18.0GB', '18.0GB', '30 Days', 6174, 5880.00, 6174.00, 6174, 6174, 'GIFTING', 5.00, NULL, NULL),
-(176, '427', 2, 427, '25.0GB', '25.0GB', '30 Days', 8232, 7840.00, 8232.00, 8232, 8232, 'GIFTING', 5.00, NULL, NULL),
-(177, '428', 2, 428, '35.0GB', '35.0GB', '30 Days', 10290, 9800.00, 10290.00, 10290, 10290, 'GIFTING', 5.00, NULL, NULL),
-(178, '429', 2, 429, '60.0GB', '60.0GB', '30 Days', 15435, 14700.00, 15435.00, 15435, 15435, 'GIFTING', 5.00, NULL, NULL),
-(179, '430', 2, 430, '100.0GB', '100.0GB', '30 Days', 20580, 19600.00, 20580.00, 20580, 20580, 'GIFTING', 5.00, NULL, NULL),
-(180, '576', 2, 576, '160.0GB', '160.0GB', '30 Days', 30870, 29400.00, 30870.00, 30870, 30870, 'GIFTING', 5.00, NULL, NULL),
-(181, '431', 2, 431, '300.0GB', '300.0GB', '3 Months', 51450, 49000.00, 51450.00, 51450, 51450, 'GIFTING', 5.00, NULL, NULL),
-(182, '529', 2, 529, '350.0GB', '350.0GB', '4 Months', 61740, 58800.00, 61740.00, 61740, 61740, 'GIFTING', 5.00, NULL, NULL),
-(183, '530', 2, 530, '650.0GB', '650.0GB', '1 Year', 102900, 98000.00, 102900.00, 102900, 102900, 'GIFTING', 5.00, NULL, NULL),
-(184, '330', 4, 330, '500.0MB', '500.0MB', '30 Days', 189, 180.00, 189.00, 189, 189, 'CORPORATE GIFTING', 5.00, NULL, NULL),
-(185, '332', 4, 332, '1.0GB', '1.0GB', '30 Days', 378, 360.00, 378.00, 378, 378, 'CORPORATE GIFTING', 5.00, NULL, NULL),
-(186, '333', 4, 333, '1.5GB', '1.5GB', '30 Days', 567, 540.00, 567.00, 567, 567, 'CORPORATE GIFTING', 5.00, NULL, NULL),
-(187, '334', 4, 334, '2.0GB', '2.0GB', '30 Days', 756, 720.00, 756.00, 756, 756, 'CORPORATE GIFTING', 5.00, NULL, NULL),
-(188, '335', 4, 335, '3.0GB', '3.0GB', '30 Days', 1134, 1080.00, 1134.00, 1134, 1134, 'CORPORATE GIFTING', 5.00, NULL, NULL),
-(189, '337', 4, 337, '5.0GB', '5.0GB', '30 Days', 1890, 1800.00, 1890.00, 1890, 1890, 'CORPORATE GIFTING', 5.00, NULL, NULL),
-(190, '338', 4, 338, '10.0GB', '10.0GB', '30 Days', 3780, 3600.00, 3780.00, 3780, 3780, 'CORPORATE GIFTING', 5.00, NULL, NULL),
-(191, '340', 4, 340, '15.0GB', '15.0GB', '30 Days', 5670, 5400.00, 5670.00, 5670, 5670, 'CORPORATE GIFTING', 5.00, NULL, NULL),
-(192, '341', 4, 341, '20.0GB', '20.0GB', '30 Days', 7560, 7200.00, 7560.00, 7560, 7560, 'CORPORATE GIFTING', 5.00, NULL, NULL);
+(193, '385', 1, 385, '75.0MB', '75', '1', 79, NULL, NULL, 77, 77, 'GIFTING', NULL, NULL, NULL),
+(194, '463', 1, 463, '110.0MB', '100', '1', 105, NULL, NULL, 103, 102, 'GIFTING', NULL, NULL, NULL),
+(195, '464', 1, 464, '230.0MB', '200', '1', 210, NULL, NULL, 206, 204, 'GIFTING', NULL, NULL, NULL),
+(196, '495', 1, 495, '500.0MB', '343', '1', 360, NULL, NULL, 353, 350, 'GIFTING', NULL, NULL, NULL),
+(197, '390', 1, 390, '750.0MB', '440', '3', 462, NULL, NULL, 453, 449, 'GIFTING', NULL, NULL, NULL),
+(198, '486', 1, 486, '1.2GB', '440', '30', 462, NULL, NULL, 453, 449, 'GIFTING', NULL, NULL, NULL),
+(199, '387', 1, 387, '1.0GB', '485', '1', 509, NULL, NULL, 500, 495, 'GIFTING', NULL, NULL, NULL),
+(200, '461', 1, 461, '500.0MB', '485', '7', 509, NULL, NULL, 500, 495, 'GIFTING', NULL, NULL, NULL),
+(201, '451', 1, 451, '1.5GB', '585', '2', 614, NULL, NULL, 603, 597, 'GIFTING', NULL, NULL, NULL),
+(202, '388', 1, 388, '2.0GB', '735', '2', 772, NULL, NULL, 757, 750, 'GIFTING', NULL, NULL, NULL),
+(203, '467', 1, 467, '2.5GB', '735', '1', 772, NULL, NULL, 757, 750, 'GIFTING', NULL, NULL, NULL),
+(204, '456', 1, 456, '1.0GB', '780', '7', 819, NULL, NULL, 803, 796, 'GIFTING', NULL, NULL, NULL),
+(205, '389', 1, 389, '2.5GB', '880', '2', 924, NULL, NULL, 906, 898, 'GIFTING', NULL, NULL, NULL),
+(206, '395', 1, 395, '1.5GB', '975', '7', 1024, NULL, NULL, 1004, 995, 'GIFTING', NULL, NULL, NULL),
+(207, '452', 1, 452, '3.2GB', '975', '2', 1024, NULL, NULL, 1004, 995, 'GIFTING', NULL, NULL, NULL),
+(208, '398', 1, 398, '2.0GB', '1465', '30', 1538, NULL, NULL, 1509, 1494, 'GIFTING', NULL, NULL, NULL),
+(209, '482', 1, 482, '1.8GB', '1465', '30', 1538, NULL, NULL, 1509, 1494, 'GIFTING', NULL, NULL, NULL),
+(210, '527', 1, 527, '3.5GB', '1470', '7', 1544, NULL, NULL, 1514, 1499, 'GIFTING', NULL, NULL, NULL),
+(211, '597', 1, 597, '7.0GB', '1765', '2', 1853, NULL, NULL, 1818, 1800, 'GIFTING', NULL, NULL, NULL),
+(212, '399', 1, 399, '2.7GB', '1960', '30', 2058, NULL, NULL, 2019, 1999, 'GIFTING', NULL, NULL, NULL),
+(213, '396', 1, 396, '6.0GB', '2435', '7', 2557, NULL, NULL, 2508, 2484, 'GIFTING', NULL, NULL, NULL),
+(214, '460', 1, 460, '3.5GB', '2435', '30', 2557, NULL, NULL, 2508, 2484, 'GIFTING', NULL, NULL, NULL),
+(215, '570', 1, 570, '5.0GB', '2940', '30', 3087, NULL, NULL, 3028, 2999, 'GIFTING', NULL, NULL, NULL),
+(216, '470', 1, 470, '7.0GB', '3395', '30', 3565, NULL, NULL, 3497, 3463, 'GIFTING', NULL, NULL, NULL),
+(217, '397', 1, 397, '11.0GB', '3430', '7', 3602, NULL, NULL, 3533, 3499, 'GIFTING', NULL, NULL, NULL),
+(218, '402', 1, 402, '10.0GB', '4400', '30', 4620, NULL, NULL, 4532, 4488, 'GIFTING', NULL, NULL, NULL),
+(219, '496', 1, 496, '20.0GB', '4900', '7', 5145, NULL, NULL, 5047, 4998, 'GIFTING', NULL, NULL, NULL),
+(220, '403', 1, 403, '12.5GB', '5335', '30', 5602, NULL, NULL, 5495, 5442, 'GIFTING', NULL, NULL, NULL),
+(221, '404', 1, 404, '16.5GB', '6370', '30', 6689, NULL, NULL, 6561, 6497, 'GIFTING', NULL, NULL, NULL),
+(222, '468', 1, 468, '20.0GB', '7275', '30', 7639, NULL, NULL, 7493, 7421, 'GIFTING', NULL, NULL, NULL),
+(223, '469', 1, 469, '25.0GB', '8730', '30', 9167, NULL, NULL, 8992, 8905, 'GIFTING', NULL, NULL, NULL),
+(224, '407', 1, 407, '36.0GB', '10780', '30', 11319, NULL, NULL, 11103, 10996, 'GIFTING', NULL, NULL, NULL),
+(225, '408', 1, 408, '75.0GB', '17460', '30', 18333, NULL, NULL, 17984, 17809, 'GIFTING', NULL, NULL, NULL),
+(226, '526', 1, 526, '90.0GB', '24500', '60', 25725, NULL, NULL, 25235, 24990, 'GIFTING', NULL, NULL, NULL),
+(227, '409', 1, 409, '165.0GB', '34300', '30', 36015, NULL, NULL, 35329, 34986, 'GIFTING', NULL, NULL, NULL),
+(228, '525', 1, 525, '150.0GB', '39200', '60', 41160, NULL, NULL, 40376, 39984, 'GIFTING', NULL, NULL, NULL),
+(229, '438', 1, 438, '250.0GB', '53900', '30', 56595, NULL, NULL, 55517, 54978, 'GIFTING', NULL, NULL, NULL),
+(230, '490', 1, 490, '800.0GB', '122500', '30', 128625, NULL, NULL, 126175, 124950, 'GIFTING', NULL, NULL, NULL),
+(231, '592', 1, 592, '1.0GB', '245', '1', 257, NULL, NULL, 252, 250, 'AWOOF DATA', NULL, NULL, NULL),
+(232, '458', 1, 458, '750.0MB', '440', '3', 462, NULL, NULL, 453, 449, 'AWOOF DATA', NULL, NULL, NULL),
+(233, '462', 1, 462, '500.0MB', '485', '7', 509, NULL, NULL, 500, 495, 'AWOOF DATA', NULL, NULL, NULL),
+(234, '593', 1, 593, '2.5GB', '545', '1', 572, NULL, NULL, 561, 556, 'AWOOF DATA', NULL, NULL, NULL),
+(235, '475', 1, 475, '1.5GB', '585', '2', 614, NULL, NULL, 603, 597, 'AWOOF DATA', NULL, NULL, NULL),
+(236, '442', 1, 442, '2.0GB', '730', '2', 767, NULL, NULL, 752, 745, 'AWOOF DATA', NULL, NULL, NULL),
+(237, '443', 1, 443, '3.2GB', '975', '2', 1024, NULL, NULL, 1004, 995, 'AWOOF DATA', NULL, NULL, NULL),
+(238, '450', 1, 450, '1.5GB', '975', '7', 1024, NULL, NULL, 1004, 995, 'AWOOF DATA', NULL, NULL, NULL),
+(239, '532', 1, 532, '3.5GB', '1470', '7', 1544, NULL, NULL, 1514, 1499, 'AWOOF DATA', NULL, NULL, NULL),
+(240, '596', 1, 596, '7.0GB', '1765', '2', 1853, NULL, NULL, 1818, 1800, 'AWOOF DATA', NULL, NULL, NULL),
+(241, '551', 1, 551, '6.75GB', '2940', '30', 3087, NULL, NULL, 3028, 2999, 'AWOOF DATA', NULL, NULL, NULL),
+(242, '571', 1, 571, '5.0GB', '2940', '30', 3087, NULL, NULL, 3028, 2999, 'AWOOF DATA', NULL, NULL, NULL),
+(243, '499', 1, 499, '11.0GB', '3430', '7', 3602, NULL, NULL, 3533, 3499, 'AWOOF DATA', NULL, NULL, NULL),
+(244, '552', 1, 552, '14.5GB', '4900', '30', 5145, NULL, NULL, 5047, 4998, 'AWOOF DATA', NULL, NULL, NULL),
+(245, '498', 1, 498, '20.0GB', '4900', '7', 5145, NULL, NULL, 5047, 4998, 'AWOOF DATA', NULL, NULL, NULL),
+(246, '558', 1, 558, '500.0MB', '375', '7', 394, NULL, NULL, 386, 383, 'SME', NULL, NULL, NULL),
+(247, '583', 1, 583, '1.0GB', '475', '7', 499, NULL, NULL, 489, 485, 'SME', NULL, NULL, NULL),
+(248, '216', 1, 216, '500.0MB', '485', '7', 509, NULL, NULL, 500, 495, 'SME', NULL, NULL, NULL),
+(249, '491', 1, 491, '1.0GB', '575', '30', 604, NULL, NULL, 592, 587, 'SME', NULL, NULL, NULL),
+(250, '217', 1, 217, '1.0GB', '780', '7', 819, NULL, NULL, 803, 796, 'SME', NULL, NULL, NULL),
+(251, '594', 1, 594, '2.0GB', '850', '7', 893, NULL, NULL, 876, 867, 'SME', NULL, NULL, NULL),
+(252, '492', 1, 492, '2.0GB', '999', '30', 1049, NULL, NULL, 1029, 1019, 'SME', NULL, NULL, NULL),
+(253, '218', 1, 218, '2.0GB', '1465', '30', 1538, NULL, NULL, 1509, 1494, 'SME', NULL, NULL, NULL),
+(254, '569', 1, 569, '3.5GB', '1470', '7', 1544, NULL, NULL, 1514, 1499, 'SME', NULL, NULL, NULL),
+(255, '493', 1, 493, '3.0GB', '1475', '30', 1549, NULL, NULL, 1519, 1505, 'SME', NULL, NULL, NULL),
+(256, '494', 1, 494, '5.0GB', '1995', '30', 2095, NULL, NULL, 2055, 2035, 'SME', NULL, NULL, NULL),
+(257, '219', 1, 219, '3.5GB', '2430', '30', 2552, NULL, NULL, 2503, 2479, 'SME', NULL, NULL, NULL),
+(258, '220', 1, 220, '7.0GB', '3395', '30', 3565, NULL, NULL, 3497, 3463, 'SME', NULL, NULL, NULL),
+(259, '221', 1, 221, '10.0GB', '4365', '30', 4583, NULL, NULL, 4496, 4452, 'SME', NULL, NULL, NULL),
+(260, '579', 1, 579, '500.0MB', '385', '30', 404, NULL, NULL, 397, 393, 'DATA SHARE', NULL, NULL, NULL),
+(261, '580', 1, 580, '1.0GB', '700', '30', 735, NULL, NULL, 721, 714, 'DATA SHARE', NULL, NULL, NULL),
+(262, '595', 1, 595, '1.2GB', '735', '7', 772, NULL, NULL, 757, 750, 'DATA SHARE', NULL, NULL, NULL),
+(263, '598', 1, 598, '1.2GB', '735', '7', 772, NULL, NULL, 757, 750, 'DATA SHARE', NULL, NULL, NULL),
+(264, '546', 2, 546, '40.0MB', '50', '1', 53, NULL, NULL, 52, 51, 'GIFTING', NULL, NULL, NULL),
+(265, '500', 2, 500, '100.0MB', '100', '1', 105, NULL, NULL, 103, 102, 'GIFTING', NULL, NULL, NULL),
+(266, '501', 2, 501, '210.0MB', '200', '2', 210, NULL, NULL, 206, 204, 'GIFTING', NULL, NULL, NULL),
+(267, '506', 2, 506, '1.0GB', '340', '1', 357, NULL, NULL, 350, 347, 'GIFTING', NULL, NULL, NULL),
+(268, '502', 2, 502, '500.0MB', '485', '7', 509, NULL, NULL, 500, 495, 'GIFTING', NULL, NULL, NULL),
+(269, '507', 2, 507, '1.0GB', '485', '1', 509, NULL, NULL, 500, 495, 'GIFTING', NULL, NULL, NULL),
+(270, '508', 2, 508, '1.55GB', '582', '2', 611, NULL, NULL, 599, 594, 'GIFTING', NULL, NULL, NULL),
+(271, '503', 2, 503, '1.1GB', '728', '14', 764, NULL, NULL, 750, 743, 'GIFTING', NULL, NULL, NULL),
+(272, '509', 2, 509, '3.1GB', '970', '2', 1019, NULL, NULL, 999, 989, 'GIFTING', NULL, NULL, NULL),
+(273, '511', 2, 511, '1.1GB', '970', '30', 1019, NULL, NULL, 999, 989, 'GIFTING', NULL, NULL, NULL),
+(274, '512', 2, 512, '2.0GB', '1455', '30', 1528, NULL, NULL, 1499, 1484, 'GIFTING', NULL, NULL, NULL),
+(275, '510', 2, 510, '3.9GB', '1455', '7', 1528, NULL, NULL, 1499, 1484, 'GIFTING', NULL, NULL, NULL),
+(276, '513', 2, 513, '3.15GB', '1940', '30', 2037, NULL, NULL, 1998, 1979, 'GIFTING', NULL, NULL, NULL),
+(277, '514', 2, 514, '4.25GB', '2425', '30', 2546, NULL, NULL, 2498, 2474, 'GIFTING', NULL, NULL, NULL),
+(278, '515', 2, 515, '8.0GB', '2940', '30', 3087, NULL, NULL, 3028, 2999, 'GIFTING', NULL, NULL, NULL),
+(279, '516', 2, 516, '10.5GB', '3880', '30', 4074, NULL, NULL, 3996, 3958, 'GIFTING', NULL, NULL, NULL),
+(280, '517', 2, 517, '13.5GB', '4850', '30', 5093, NULL, NULL, 4996, 4947, 'GIFTING', NULL, NULL, NULL),
+(281, '518', 2, 518, '26.0GB', '7760', '30', 8148, NULL, NULL, 7993, 7915, 'GIFTING', NULL, NULL, NULL),
+(282, '519', 2, 519, '36.0GB', '9700', '30', 10185, NULL, NULL, 9991, 9894, 'GIFTING', NULL, NULL, NULL),
+(283, '520', 2, 520, '62.0GB', '14550', '30', 15278, NULL, NULL, 14987, 14841, 'GIFTING', NULL, NULL, NULL),
+(284, '521', 2, 521, '105.0GB', '19400', '30', 20370, NULL, NULL, 19982, 19788, 'GIFTING', NULL, NULL, NULL),
+(285, '522', 2, 522, '1.0TB', '145500', '30', 152775, NULL, NULL, 149865, 148410, 'GIFTING', NULL, NULL, NULL),
+(286, '305', 2, 305, '200.0MB', '90', '14', 95, NULL, NULL, 93, 92, 'CORPORATE GIFTING', NULL, NULL, NULL),
+(287, '306', 2, 306, '500.0MB', '200', '30', 210, NULL, NULL, 206, 204, 'CORPORATE GIFTING', NULL, NULL, NULL),
+(288, '559', 2, 559, '1.0GB', '279', '3', 293, NULL, NULL, 287, 285, 'CORPORATE GIFTING', NULL, NULL, NULL),
+(289, '562', 2, 562, '1.0GB', '325', '7', 341, NULL, NULL, 335, 332, 'CORPORATE GIFTING', NULL, NULL, NULL),
+(290, '307', 2, 307, '1.0GB', '410', '30', 431, NULL, NULL, 422, 418, 'CORPORATE GIFTING', NULL, NULL, NULL),
+(291, '308', 2, 308, '2.0GB', '820', '30', 861, NULL, NULL, 845, 836, 'CORPORATE GIFTING', NULL, NULL, NULL),
+(292, '560', 2, 560, '3.0GB', '837', '3', 879, NULL, NULL, 862, 854, 'CORPORATE GIFTING', NULL, NULL, NULL),
+(293, '563', 2, 563, '3.0GB', '975', '7', 1024, NULL, NULL, 1004, 995, 'CORPORATE GIFTING', NULL, NULL, NULL),
+(294, '309', 2, 309, '3.0GB', '1230', '30', 1292, NULL, NULL, 1267, 1255, 'CORPORATE GIFTING', NULL, NULL, NULL),
+(295, '561', 2, 561, '5.0GB', '1395', '3', 1465, NULL, NULL, 1437, 1423, 'CORPORATE GIFTING', NULL, NULL, NULL),
+(296, '564', 2, 564, '5.0GB', '1625', '7', 1706, NULL, NULL, 1674, 1658, 'CORPORATE GIFTING', NULL, NULL, NULL),
+(297, '310', 2, 310, '5.0GB', '2050', '30', 2153, NULL, NULL, 2112, 2091, 'CORPORATE GIFTING', NULL, NULL, NULL),
+(298, '311', 2, 311, '10.0GB', '4100', '30', 4305, NULL, NULL, 4223, 4182, 'CORPORATE GIFTING', NULL, NULL, NULL),
+(299, '375', 2, 375, '750.0MB', '195', '1', 205, NULL, NULL, 201, 199, 'SME', NULL, NULL, NULL),
+(300, '376', 2, 376, '1.5GB', '295', '1', 310, NULL, NULL, 304, 301, 'SME', NULL, NULL, NULL),
+(301, '377', 2, 377, '2.5GB', '485', '2', 509, NULL, NULL, 500, 495, 'SME', NULL, NULL, NULL),
+(302, '378', 2, 378, '10.0GB', '1950', '7', 2048, NULL, NULL, 2009, 1989, 'SME', NULL, NULL, NULL),
+(303, '528', 3, 528, '150.0MB', '60', '1', 63, NULL, NULL, 62, 61, 'AWOOF DATA', NULL, NULL, NULL),
+(304, '476', 3, 476, '300.0MB', '115', '2', 121, NULL, NULL, 118, 117, 'AWOOF DATA', NULL, NULL, NULL),
+(305, '447', 3, 447, '600.0MB', '215', '2', 226, NULL, NULL, 221, 219, 'AWOOF DATA', NULL, NULL, NULL),
+(306, '577', 3, 577, '1.5GB', '415', '1', 436, NULL, NULL, 427, 423, 'AWOOF DATA', NULL, NULL, NULL),
+(307, '550', 3, 550, '2.0GB', '615', '2', 646, NULL, NULL, 633, 627, 'AWOOF DATA', NULL, NULL, NULL),
+(308, '581', 3, 581, '3.0GB', '750', '2', 788, NULL, NULL, 773, 765, 'AWOOF DATA', NULL, NULL, NULL),
+(309, '578', 3, 578, '5.0GB', '1515', '7', 1591, NULL, NULL, 1560, 1545, 'AWOOF DATA', NULL, NULL, NULL),
+(310, '365', 3, 365, '10.0GB', '3015', '30', 3166, NULL, NULL, 3105, 3075, 'AWOOF DATA', NULL, NULL, NULL),
+(311, '544', 3, 544, '75.0MB', '75', '1', 79, NULL, NULL, 77, 77, 'GIFTING', NULL, NULL, NULL),
+(312, '479', 3, 479, '110.0MB', '100', '1', 105, NULL, NULL, 103, 102, 'GIFTING', NULL, NULL, NULL),
+(313, '480', 3, 480, '230.0MB', '200', '2', 210, NULL, NULL, 206, 204, 'GIFTING', NULL, NULL, NULL),
+(314, '542', 3, 542, '1.0GB', '300', '3', 315, NULL, NULL, 309, 306, 'GIFTING', NULL, NULL, NULL),
+(315, '481', 3, 481, '300.0MB', '300', '2', 315, NULL, NULL, 309, 306, 'GIFTING', NULL, NULL, NULL),
+(316, '584', 3, 584, '500.0MB', '343', '1', 360, NULL, NULL, 353, 350, 'GIFTING', NULL, NULL, NULL),
+(317, '448', 3, 448, '1.0GB', '490', '1', 515, NULL, NULL, 505, 500, 'GIFTING', NULL, NULL, NULL),
+(318, '478', 3, 478, '500.0MB', '490', '7', 515, NULL, NULL, 505, 500, 'GIFTING', NULL, NULL, NULL),
+(319, '543', 3, 543, '1.5GB', '495', '7', 520, NULL, NULL, 510, 505, 'GIFTING', NULL, NULL, NULL),
+(320, '410', 3, 410, '1.5GB', '588', '2', 617, NULL, NULL, 606, 600, 'GIFTING', NULL, NULL, NULL),
+(321, '411', 3, 411, '3.0GB', '735', '2', 772, NULL, NULL, 757, 750, 'GIFTING', NULL, NULL, NULL),
+(322, '414', 3, 414, '1.0GB', '785', '7', 824, NULL, NULL, 809, 801, 'GIFTING', NULL, NULL, NULL),
+(323, '412', 3, 412, '3.2GB', '980', '2', 1029, NULL, NULL, 1009, 1000, 'GIFTING', NULL, NULL, NULL),
+(324, '415', 3, 415, '1.5GB', '980', '7', 1029, NULL, NULL, 1009, 1000, 'GIFTING', NULL, NULL, NULL),
+(325, '413', 3, 413, '5.0GB', '1470', '2', 1544, NULL, NULL, 1514, 1499, 'GIFTING', NULL, NULL, NULL),
+(326, '416', 3, 416, '3.5GB', '1470', '7', 1544, NULL, NULL, 1514, 1499, 'GIFTING', NULL, NULL, NULL),
+(327, '420', 3, 420, '2.0GB', '1470', '30', 1544, NULL, NULL, 1514, 1499, 'GIFTING', NULL, NULL, NULL),
+(328, '421', 3, 421, '3.0GB', '1960', '30', 2058, NULL, NULL, 2019, 1999, 'GIFTING', NULL, NULL, NULL),
+(329, '417', 3, 417, '6.0GB', '2450', '7', 2573, NULL, NULL, 2524, 2499, 'GIFTING', NULL, NULL, NULL),
+(330, '422', 3, 422, '4.0GB', '2450', '30', 2573, NULL, NULL, 2524, 2499, 'GIFTING', NULL, NULL, NULL),
+(331, '418', 3, 418, '10.0GB', '2940', '7', 3087, NULL, NULL, 3028, 2999, 'GIFTING', NULL, NULL, NULL),
+(332, '423', 3, 423, '8.0GB', '2940', '30', 3087, NULL, NULL, 3028, 2999, 'GIFTING', NULL, NULL, NULL),
+(333, '424', 3, 424, '10.0GB', '3920', '30', 4116, NULL, NULL, 4038, 3998, 'GIFTING', NULL, NULL, NULL),
+(334, '419', 3, 419, '18.0GB', '4900', '7', 5145, NULL, NULL, 5047, 4998, 'GIFTING', NULL, NULL, NULL),
+(335, '425', 3, 425, '13.0GB', '4900', '30', 5145, NULL, NULL, 5047, 4998, 'GIFTING', NULL, NULL, NULL),
+(336, '426', 3, 426, '18.0GB', '5880', '30', 6174, NULL, NULL, 6056, 5998, 'GIFTING', NULL, NULL, NULL),
+(337, '427', 3, 427, '25.0GB', '7840', '30', 8232, NULL, NULL, 8075, 7997, 'GIFTING', NULL, NULL, NULL),
+(338, '428', 3, 428, '35.0GB', '9800', '30', 10290, NULL, NULL, 10094, 9996, 'GIFTING', NULL, NULL, NULL),
+(339, '429', 3, 429, '60.0GB', '14700', '30', 15435, NULL, NULL, 15141, 14994, 'GIFTING', NULL, NULL, NULL),
+(340, '430', 3, 430, '100.0GB', '19600', '30', 20580, NULL, NULL, 20188, 19992, 'GIFTING', NULL, NULL, NULL),
+(341, '576', 3, 576, '160.0GB', '29400', '30', 30870, NULL, NULL, 30282, 29988, 'GIFTING', NULL, NULL, NULL),
+(342, '431', 3, 431, '300.0GB', '49000', '90', 51450, NULL, NULL, 50470, 49980, 'GIFTING', NULL, NULL, NULL),
+(343, '529', 3, 529, '350.0GB', '58800', '120', 61740, NULL, NULL, 60564, 59976, 'GIFTING', NULL, NULL, NULL),
+(344, '530', 3, 530, '650.0GB', '98000', '30', 102900, NULL, NULL, 100940, 99960, 'GIFTING', NULL, NULL, NULL),
+(345, '534', 3, 534, '500.0MB', '490', '7', 515, NULL, NULL, 505, 500, 'SME', NULL, NULL, NULL),
+(346, '535', 3, 535, '1.0GB', '785', '7', 824, NULL, NULL, 809, 801, 'SME', NULL, NULL, NULL),
+(347, '536', 3, 536, '2.0GB', '1470', '30', 1544, NULL, NULL, 1514, 1499, 'SME', NULL, NULL, NULL),
+(348, '565', 3, 565, '3.5GB', '1470', '7', 1544, NULL, NULL, 1514, 1499, 'SME', NULL, NULL, NULL),
+(349, '537', 3, 537, '3.0GB', '1960', '30', 2058, NULL, NULL, 2019, 1999, 'SME', NULL, NULL, NULL),
+(350, '538', 3, 538, '4.0GB', '2450', '30', 2573, NULL, NULL, 2524, 2499, 'SME', NULL, NULL, NULL),
+(351, '566', 3, 566, '6.0GB', '2450', '7', 2573, NULL, NULL, 2524, 2499, 'SME', NULL, NULL, NULL),
+(352, '539', 3, 539, '8.0GB', '2940', '30', 3087, NULL, NULL, 3028, 2999, 'SME', NULL, NULL, NULL),
+(353, '567', 3, 567, '10.0GB', '2940', '7', 3087, NULL, NULL, 3028, 2999, 'SME', NULL, NULL, NULL),
+(354, '540', 3, 540, '10.0GB', '3920', '30', 4116, NULL, NULL, 4038, 3998, 'SME', NULL, NULL, NULL),
+(355, '531', 3, 531, '13.0GB', '4900', '30', 5145, NULL, NULL, 5047, 4998, 'SME', NULL, NULL, NULL),
+(356, '575', 3, 575, '18.0GB', '5880', '30', 6174, NULL, NULL, 6056, 5998, 'SME', NULL, NULL, NULL),
+(357, '330', 4, 330, '500.0MB', '180', '30', 189, NULL, NULL, 185, 184, 'CORPORATE GIFTING', NULL, NULL, NULL),
+(358, '332', 4, 332, '1.0GB', '360', '30', 378, NULL, NULL, 371, 367, 'CORPORATE GIFTING', NULL, NULL, NULL),
+(359, '333', 4, 333, '1.5GB', '540', '30', 567, NULL, NULL, 556, 551, 'CORPORATE GIFTING', NULL, NULL, NULL),
+(360, '334', 4, 334, '2.0GB', '720', '30', 756, NULL, NULL, 742, 734, 'CORPORATE GIFTING', NULL, NULL, NULL),
+(361, '335', 4, 335, '3.0GB', '1080', '30', 1134, NULL, NULL, 1112, 1102, 'CORPORATE GIFTING', NULL, NULL, NULL),
+(362, '337', 4, 337, '5.0GB', '1800', '30', 1890, NULL, NULL, 1854, 1836, 'CORPORATE GIFTING', NULL, NULL, NULL),
+(363, '338', 4, 338, '10.0GB', '3600', '30', 3780, NULL, NULL, 3708, 3672, 'CORPORATE GIFTING', NULL, NULL, NULL),
+(364, '340', 4, 340, '15.0GB', '5400', '30', 5670, NULL, NULL, 5562, 5508, 'CORPORATE GIFTING', NULL, NULL, NULL),
+(365, '341', 4, 341, '20.0GB', '7200', '30', 7560, NULL, NULL, 7416, 7344, 'CORPORATE GIFTING', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1243,7 +1276,7 @@ CREATE TABLE `service_sync_status` (
 
 INSERT INTO `service_sync_status` (`id`, `service_type`, `last_sync_at`, `sync_status`, `total_synced`, `total_created`, `total_updated`, `total_errors`, `last_error`, `api_source`, `created_at`, `updated_at`) VALUES
 (1, 'cable_plans', NULL, 'never', 16, 0, 0, 0, 'Uzobest does not provide cable plan listing API', 'manual', '2025-12-16 14:54:54', '2025-12-16 14:54:54'),
-(2, 'data_plans', '2025-12-16 14:56:07', 'failed', 0, 0, 0, 0, 'SQLSTATE[HY000]: General error: 1364 Field \'nId\' doesn\'t have a default value (Connection: mysql, SQL: insert into `network_ids` (`network`) values (MTN_PLAN))', 'uzobest', '2025-12-16 14:56:07', '2025-12-16 14:56:07'),
+(2, 'data_plans', '2025-12-19 11:47:27', 'failed', 0, 0, 0, 0, 'SQLSTATE[HY000]: General error: 1364 Field \'nId\' doesn\'t have a default value (Connection: mysql, SQL: insert into `network_ids` (`network`) values (MTN_PLAN))', 'uzobest', '2025-12-16 14:56:07', '2025-12-19 11:47:27'),
 (3, 'electricity', '2025-12-16 15:56:12', 'success', 9, 9, 0, 0, NULL, 'uzobest', '2025-12-16 15:56:12', '2025-12-16 15:56:12');
 
 -- --------------------------------------------------------
@@ -1266,9 +1299,11 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('BluP6gMVB9SMymEfsWkIyUaXECnnbgk4rXafWM7L', 8133051779, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoidlF1dVBIN0ZiNzV4Z0Myb3didUpkdXJ1Zmk4TUlqMzRVb3RibzhVMCI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MzM6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9lbGVjdHJpY2l0eSI7czo1OiJyb3V0ZSI7czoxMToiZWxlY3RyaWNpdHkiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7czoxMToiMDgxMzMwNTE3NzkiO30=', 1765910973),
-('FtlqMlrnm7e8oo98ndy9syiCBG76uZu4r4LWmfuE', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0', 'YTo4OntzOjY6Il90b2tlbiI7czo0MDoib1VLMGxYR21od3B0cDNNYXVYeVJ0dDR4cnR5ZU1mNDZzb1l0eE9RNSI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6Mzk6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9hZG1pbi9jYWJsZS1wbGFucyI7czo1OiJyb3V0ZSI7czoyMzoiYWRtaW4uY2FibGUtcGxhbnMuaW5kZXgiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUyOiJsb2dpbl9hZG1pbl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtzOjIxOiJ3YWxzaGFrMTk5OUBnbWFpbC5jb20iO3M6Nzoic3lzVXNlciI7czoyMToid2Fsc2hhazE5OTlAZ21haWwuY29tIjtzOjc6InN5c1JvbGUiO2k6MTtzOjc6InN5c05hbWUiO3M6MTE6IlN1cGVyIEFkbWluIjtzOjU6InN5c0lkIjtpOjE7fQ==', 1765906928),
-('pFTZ8R6rQGdovjEVKvo75mWwLkVgpXLwwvbKlFe4', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiOHJHWW1jSml6aWhheTZIR3ZhWTN3NG5Va0xrUGpPMXNSVzdMRmlNRCI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6Mjc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9sb2dpbiI7czo1OiJyb3V0ZSI7czo1OiJsb2dpbiI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1765898890);
+('FROdfK2s8IgogOeWnqpdBh6NsrdPUfQSAzP6tjSo', NULL, '37.120.213.204', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiMkZSajBOdmI1ZGxMSFV3Qk5yWlJGOUtnUjdGNXc4eUtESjVIUjlmbyI7czozOiJ1cmwiO2E6MTp7czo4OiJpbnRlbmRlZCI7czo0MjoiaHR0cHM6Ly93d3cudmFzdGxlYWRsdGQuY29tLm5nL2Z1bmQtd2FsbGV0Ijt9czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MzY6Imh0dHBzOi8vd3d3LnZhc3RsZWFkbHRkLmNvbS5uZy9sb2dpbiI7czo1OiJyb3V0ZSI7czo1OiJsb2dpbiI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1768744671),
+('NUyhswwzTmskeDioxzITiwFMXjHKDFpb6qWJN0LJ', 8133051779, '37.120.213.205', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiY004bGw2eERmY1M0RDVFQjhzR3JlS2hzYm1FOElWTUt1amVBMzJJbiI7czozOiJ1cmwiO2E6MTp7czo4OiJpbnRlbmRlZCI7czo0MjoiaHR0cHM6Ly93d3cudmFzdGxlYWRsdGQuY29tLm5nL2Z1bmQtd2FsbGV0Ijt9czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MzA6Imh0dHBzOi8vd3d3LnZhc3RsZWFkbHRkLmNvbS5uZyI7czo1OiJyb3V0ZSI7czo3OiJ3ZWxjb21lIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO3M6MTE6IjA4MTMzMDUxNzc5Ijt9', 1768747157),
+('Pl8UvYgsUYfd8FbgIcoM43krOtBjeIs0yUnBuxsO', NULL, '188.43.69.4', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.7499.170 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoidmxaaHdUaFRMemxHbHZWcUo4OVVoNjA0ellNb1ZLRGY5Z0lSZWNMQSI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MzY6Imh0dHBzOi8vd3d3LnZhc3RsZWFkbHRkLmNvbS5uZy9sb2dpbiI7czo1OiJyb3V0ZSI7czo1OiJsb2dpbiI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1768744684),
+('Wt2sFKgztf0fNWYt1PH6J96fugSr0tT3CHw2T2E2', 8039676596, '105.117.128.152', 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Mobile Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiaTRjbDZVUDNjUG8xaXFEMUxjZGdKTU1VcU5NMERWdnlCcElGWHpWSSI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6Mzg6Imh0dHBzOi8vdmFzdGxlYWRsdGQuY29tLm5nL2Z1bmQtd2FsbGV0IjtzOjU6InJvdXRlIjtzOjExOiJmdW5kLXdhbGxldCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtzOjExOiIwODAzOTY3NjU5NiI7fQ==', 1768745249),
+('WylLbzNRGXCaofU5FqSy9UXiHVmU6fwX3EGO3SYM', NULL, '105.117.128.152', 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Mobile Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiMHNMWm5PTlE5dzQ1UVpUZ3ZpUDdqeERjMXBCazdaUHh1R1dmdUlsbSI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MzI6Imh0dHBzOi8vdmFzdGxlYWRsdGQuY29tLm5nL2xvZ2luIjtzOjU6InJvdXRlIjtzOjU6ImxvZ2luIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1768744933);
 
 -- --------------------------------------------------------
 
@@ -1385,6 +1420,18 @@ CREATE TABLE `transactions` (
   `date` datetime NOT NULL DEFAULT '2025-12-05 06:07:01'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `transactions`
+--
+
+INSERT INTO `transactions` (`tId`, `sId`, `transref`, `servicename`, `servicedesc`, `amount`, `service_name`, `service_description`, `old_balance`, `new_balance`, `api_response`, `status`, `oldbal`, `newbal`, `profit`, `date`) VALUES
+(1, 1, 'PAY_1765915889_6941bcf1b7182', 'Wallet Topup', 'Wallet funding of ₦20,000.00 via Paystack. Charges: ₦300.00', '19700', 'Wallet Topup', 'Wallet funding of ₦20,000.00 via Paystack. Charges: ₦300.00', 0.00, 19700.00, NULL, 0, '0', '19700', 0, '2025-12-16 20:13:15'),
+(2, 2, 'PAY_1765992450_6942e80249605', 'Wallet Topup', 'Wallet funding of ₦5,000.00 via Paystack. Charges: ₦75.00', '4925', 'Wallet Topup', 'Wallet funding of ₦5,000.00 via Paystack. Charges: ₦75.00', 0.00, 4925.00, NULL, 0, '0', '4925', 0, '2025-12-17 17:28:03'),
+(3, 2, 'PAY_1765994675_6942f0b33f520', 'Wallet Topup', 'Wallet funding of ₦5,000.00 via Paystack. Charges: ₦75.00', '4925', 'Wallet Topup', 'Wallet funding of ₦5,000.00 via Paystack. Charges: ₦75.00', 4925.00, 9850.00, NULL, 0, '4925', '9850', 0, '2025-12-17 18:04:49'),
+(4, 2, '257411768047121', 'Data', 'Purchase of Airtel 1.5GB data bundle for phone number 08028276500', '310', 'data', 'Purchase of Airtel 1.5GB data bundle for phone number 08028276500', 9850.00, 9540.00, NULL, 1, '9850', '9540', 15, '2026-01-10 12:12:01'),
+(5, 2, '125511768656310', 'Data', 'Purchase of Airtel 1.5GB data bundle for phone number 08028276500', '310', 'data', 'Purchase of Airtel 1.5GB data bundle for phone number 08028276500', 9850.00, 9540.00, NULL, 1, '9850', '9540', 15, '2026-01-17 13:25:10'),
+(6, 2, 'PAY_1768745030_696ce8462658b', 'Wallet Topup', 'Wallet funding of ₦100.00 via Paystack. Charges: ₦1.50', '98.5', 'Wallet Topup', 'Wallet funding of ₦100.00 via Paystack. Charges: ₦1.50', 9850.00, 9948.50, NULL, 0, '9850', '9948.5', 0, '2026-01-18 14:07:28');
+
 -- --------------------------------------------------------
 
 --
@@ -1442,7 +1489,12 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `phone`, `state`, `user_type`, `reg_status`, `ver_code`, `transaction_pin`, `pin_status`, `wallet_balance`, `referral_wallet`, `bank_account`, `rolex_bank`, `sterling_bank`, `fidelity_bank`, `bank_name`, `api_key`, `referral_code`, `referred_by`, `last_activity`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `virtual_accounts`, `monnify_reference`, `monnify_account_number`) VALUES
-(1, 'Walshak Apollos', 'mikenenshimwa@gmail.com', '08133051779', 'Niger', 1, 0, 0, 1878, 1, 0.00, 0.00, NULL, NULL, NULL, NULL, NULL, 'Zim7d4IPXE36bBCqnTScpHVDQyfG1LOwv2ReYJ0lN5g8h9FoUx176491495908133051779', NULL, NULL, '2025-12-16 14:28:41', NULL, '$2y$12$1cEBfULXodE7F8GmzXhiWuLssfaaHktPBH.OFWeC55WwVjd74Vqki', NULL, '2025-12-05 05:09:19', '2025-12-16 14:28:41', NULL, NULL, NULL);
+(1, 'Walshak Apollos', 'mikenenshimwa@gmail.com', '08133051779', 'Niger', 1, 0, 0, 1878, 1, 19700.00, 0.00, NULL, NULL, NULL, NULL, NULL, 'Zim7d4IPXE36bBCqnTScpHVDQyfG1LOwv2ReYJ0lN5g8h9FoUx176491495908133051779', NULL, NULL, '2026-01-18 12:58:03', NULL, '$2y$12$1cEBfULXodE7F8GmzXhiWuLssfaaHktPBH.OFWeC55WwVjd74Vqki', NULL, '2025-12-05 05:09:19', '2026-01-18 12:58:03', NULL, NULL, NULL),
+(2, 'samuel david sambo', 'sammysambo88@gmail.com', '08039676596', 'Lagos', 1, 0, 0, 3589, 1, 9948.50, 0.00, NULL, NULL, NULL, NULL, NULL, 'ZNYyjdWEhlVxPg10LvO5fc3SIF4KsqQr9CJ7pX2MzDkbmGHaBT176591330708039676596', NULL, NULL, '2026-01-18 13:02:29', NULL, '$2y$12$YL/kRShRUqKeUrLYlIfqYuckU3clZFae6kUz/o59AFV3/tVt4gO0y', NULL, '2025-12-16 18:28:27', '2026-01-18 13:07:28', NULL, NULL, NULL),
+(3, 'Ernest Inyang', 'ernestinyang748@gmail.com', '08063463088', 'Akwa Ibom', 1, 0, 0, 3530, 1, 0.00, 0.00, NULL, NULL, NULL, NULL, NULL, 'Fy6PJu9WL8TimC70OZBUS2a1n5lrQx4cj3vIogbqDYeNfRHXkA176596354208063463088', NULL, NULL, '2025-12-23 20:54:06', NULL, '$2y$12$wK1AHpXgiN1nTGwmYaA/eOpTDAj1ZO.QWjjBE7d4PBjTuWZEJGBDu', NULL, '2025-12-17 08:25:42', '2025-12-23 20:54:06', NULL, NULL, NULL),
+(4, 'Ekomobong Idio', 'praiseraph@gmail.com', '08032032519', 'Enugu', 1, 0, 0, 2791, 1, 0.00, 0.00, NULL, NULL, NULL, NULL, NULL, 'jbYhCyuT3pfzOPQZ2Iod1v0tqAcJK8GrL9UgF76kmnHxVXls4e176597765508032032519', NULL, NULL, '2025-12-29 07:00:21', NULL, '$2y$12$o/Yr/2fPeCCO1FX7BO/Nr.uXnFUH5j6R0GqNrl5F0xoiCK3K1LWTi', NULL, '2025-12-17 12:20:55', '2025-12-29 07:00:21', NULL, NULL, NULL),
+(5, 'Anna Danfulani', 'annadanfulani38@gmail.com', '08031852185', 'Akwa Ibom', 2, 0, 0, 2015, 1, 0.00, 0.00, NULL, NULL, NULL, NULL, NULL, 'JHMipF5kq6IgnUNXWthvlBTwyj2DzQmYb94GadO73KeVsEuZoS176730337608031852185', NULL, NULL, '2026-01-01 20:36:16', NULL, '$2y$12$2g79mX4qKlxcCQqVVjgjsOvjmedti8J8StGXqQ6OcOdBwQGddmAC.', NULL, '2026-01-01 20:36:16', '2026-01-01 20:36:16', NULL, NULL, NULL),
+(6, 'Luwa Iyanu', 'ajuwonoluwa@gmail.com', '08125847393', 'Lagos', 1, 0, 0, 1223, 1, 0.00, 0.00, NULL, NULL, NULL, NULL, NULL, 'VehsTL1ZobdKEX2Y3F85B9jtmDJIPOpvzNQHUgaiuWRnkl7rA4176796891108125847393', NULL, NULL, '2026-01-09 13:28:31', NULL, '$2y$12$AXyKfI15kJx5onWZEiTDresUy.EwbPlVhkuyhM7iRU2x5SKemai5S', NULL, '2026-01-09 13:28:31', '2026-01-09 13:28:31', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1846,7 +1898,7 @@ ALTER TABLE `alphatopupprice`
 -- AUTO_INCREMENT for table `apilinks`
 --
 ALTER TABLE `apilinks`
-  MODIFY `aId` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
+  MODIFY `aId` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
 -- AUTO_INCREMENT for table `api_configs`
@@ -1888,7 +1940,7 @@ ALTER TABLE `cable_plans`
 -- AUTO_INCREMENT for table `configurations`
 --
 ALTER TABLE `configurations`
-  MODIFY `cId` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `cId` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `contact`
@@ -1912,7 +1964,7 @@ ALTER TABLE `datatokens`
 -- AUTO_INCREMENT for table `data_plans`
 --
 ALTER TABLE `data_plans`
-  MODIFY `dId` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=193;
+  MODIFY `dId` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=366;
 
 --
 -- AUTO_INCREMENT for table `electricity`
@@ -2038,7 +2090,7 @@ ALTER TABLE `sysusers`
 -- AUTO_INCREMENT for table `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `tId` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `tId` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `userlogin`
@@ -2050,7 +2102,7 @@ ALTER TABLE `userlogin`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `uservisits`

@@ -283,26 +283,88 @@ function getWalletBalances() {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                let html = '<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">';
-                for (let wallet in data.balances) {
-                    let balance = data.balances[wallet];
-                    let statusColor = balance.status === 'success' ? 'green' : (balance.status === 'error' ? 'red' : 'yellow');
-                    let statusIcon = balance.status === 'success' ? 'check-circle' : (balance.status === 'error' ? 'times-circle' : 'exclamation-triangle');
+                let html = '<div class="grid grid-cols-1 md:grid-cols-3 gap-6">';
 
-                    html += `
-                        <div class="bg-white border border-gray-200 rounded-lg p-4 border-l-4 border-l-${statusColor}-500">
-                            <div class="flex justify-between items-start mb-2">
-                                <h4 class="font-semibold text-gray-900">${balance.provider}</h4>
-                                <i class="fas fa-${statusIcon} text-${statusColor}-500"></i>
+                // Monnify Card
+                const monnify = data.balances.monnify || {};
+                let monnifyStatusColor = monnify.status === 'configured' ? 'blue' : 'gray';
+                let monnifyIcon = monnify.status === 'configured' ? 'check-circle' : 'times-circle';
+                html += `
+                    <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-6 border-2 border-blue-200">
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="flex items-center">
+                                <div class="bg-blue-600 rounded-lg p-3 mr-3">
+                                    <i class="fas fa-university text-white text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-900 text-lg">Monnify</h4>
+                                    <p class="text-sm text-gray-600">Virtual Accounts</p>
+                                </div>
                             </div>
-                            <div class="text-2xl font-bold text-gray-900 mb-1">₦${Number(balance.balance).toLocaleString()}</div>
-                            <div class="text-sm text-gray-500">Available Balance</div>
-                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-${statusColor}-100 text-${statusColor}-800 mt-2">
-                                ${balance.status.charAt(0).toUpperCase() + balance.status.slice(1)}
-                            </span>
+                            <i class="fas fa-${monnifyIcon} text-${monnifyStatusColor}-500 text-xl"></i>
                         </div>
-                    `;
-                }
+                        <div class="text-3xl font-bold text-gray-900 mb-2">${monnify.balance}</div>
+                        <div class="text-sm text-gray-600 mb-3">${monnify.message || 'Available Balance'}</div>
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-${monnifyStatusColor}-100 text-${monnifyStatusColor}-800">
+                            ${monnify.status === 'configured' ? 'Active' : 'Not Configured'}
+                        </span>
+                    </div>
+                `;
+
+                // Paystack Card
+                const paystack = data.balances.paystack || {};
+                let paystackStatusColor = paystack.status === 'configured' ? 'green' : 'gray';
+                let paystackIcon = paystack.status === 'configured' ? 'check-circle' : 'times-circle';
+                html += `
+                    <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-6 border-2 border-green-200">
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="flex items-center">
+                                <div class="bg-green-600 rounded-lg p-3 mr-3">
+                                    <i class="fas fa-credit-card text-white text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-900 text-lg">Paystack</h4>
+                                    <p class="text-sm text-gray-600">Payment Gateway</p>
+                                </div>
+                            </div>
+                            <i class="fas fa-${paystackIcon} text-${paystackStatusColor}-500 text-xl"></i>
+                        </div>
+                        <div class="text-3xl font-bold text-gray-900 mb-2">${paystack.balance}</div>
+                        <div class="text-sm text-gray-600 mb-3">${paystack.message || 'Available Balance'}</div>
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-${paystackStatusColor}-100 text-${paystackStatusColor}-800">
+                            ${paystack.status === 'configured' ? 'Active' : 'Not Configured'}
+                        </span>
+                    </div>
+                `;
+
+                // Uzobest Card
+                const uzobest = data.balances.uzobest || {};
+                let uzobestStatusColor = uzobest.status === 'success' ? 'purple' : (uzobest.status === 'error' ? 'red' : 'yellow');
+                let uzobestIcon = uzobest.status === 'success' ? 'check-circle' : (uzobest.status === 'error' ? 'times-circle' : 'exclamation-triangle');
+                html += `
+                    <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl p-6 border-2 border-purple-200">
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="flex items-center">
+                                <div class="bg-purple-600 rounded-lg p-3 mr-3">
+                                    <i class="fas fa-server text-white text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-900 text-lg">Uzobest</h4>
+                                    <p class="text-sm text-gray-600">VTU Provider</p>
+                                </div>
+                            </div>
+                            <i class="fas fa-${uzobestIcon} text-${uzobestStatusColor}-500 text-xl"></i>
+                        </div>
+                        <div class="text-3xl font-bold text-gray-900 mb-2">
+                            ${uzobest.status === 'success' ? '₦' + Number(uzobest.balance).toLocaleString() : uzobest.balance}
+                        </div>
+                        <div class="text-sm text-gray-600 mb-3">${uzobest.message || 'Available Balance'}</div>
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-${uzobestStatusColor}-100 text-${uzobestStatusColor}-800">
+                            ${uzobest.status === 'success' ? 'Connected' : uzobest.status === 'error' ? 'Error' : 'Warning'}
+                        </span>
+                    </div>
+                `;
+
                 html += '</div>';
                 content.innerHTML = html;
             } else {
@@ -348,7 +410,7 @@ function testAllConnections() {
         </div>
     `;
 
-    const providers = ['monnify', 'paystack', 'walletOne', 'walletTwo', 'walletThree'];
+    const providers = ['monnify', 'paystack', 'uzobest'];
     let results = [];
     let completed = 0;
 
@@ -385,24 +447,44 @@ function testAllConnections() {
     });
 
     function displayConnectionResults(results) {
-        let html = '<div class="grid grid-cols-1 md:grid-cols-2 gap-4">';
+        let html = '<div class="grid grid-cols-1 md:grid-cols-3 gap-6">';
         results.forEach(result => {
             const statusColor = result.success ? 'green' : 'red';
             const statusIcon = result.success ? 'check-circle' : 'times-circle';
             const providerName = result.provider.charAt(0).toUpperCase() + result.provider.slice(1);
 
+            // Provider-specific styling
+            let providerColor = 'blue';
+            let providerIcon = 'server';
+            if (result.provider === 'monnify') {
+                providerColor = 'blue';
+                providerIcon = 'university';
+            } else if (result.provider === 'paystack') {
+                providerColor = 'green';
+                providerIcon = 'credit-card';
+            } else if (result.provider === 'uzobest') {
+                providerColor = 'purple';
+                providerIcon = 'server';
+            }
+
             html += `
-                <div class="bg-white border border-gray-200 rounded-lg p-4">
-                    <div class="flex items-center">
-                        <i class="fas fa-${statusIcon} text-${statusColor}-500 text-xl mr-3"></i>
-                        <div class="flex-grow">
-                            <h4 class="font-semibold text-gray-900">${providerName}</h4>
-                            <p class="text-sm text-gray-500">${result.message}</p>
+                <div class="bg-gradient-to-br from-${providerColor}-50 to-${providerColor}-100 rounded-xl p-6 border-2 border-${providerColor}-200">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center">
+                            <div class="bg-${providerColor}-600 rounded-lg p-3 mr-3">
+                                <i class="fas fa-${providerIcon} text-white text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900">${providerName}</h4>
+                                <p class="text-sm text-gray-600">${result.message}</p>
+                            </div>
                         </div>
-                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-${statusColor}-100 text-${statusColor}-800">
-                            ${result.success ? 'Connected' : 'Failed'}
-                        </span>
+                        <i class="fas fa-${statusIcon} text-${statusColor}-500 text-2xl"></i>
                     </div>
+                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-${statusColor}-100 text-${statusColor}-800">
+                        <i class="fas fa-${statusIcon} mr-1"></i>
+                        ${result.success ? 'Connected' : 'Failed'}
+                    </span>
                 </div>
             `;
         });

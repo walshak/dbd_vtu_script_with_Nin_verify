@@ -182,22 +182,33 @@
                                 </div>
                             </div>
 
-                            <!-- Contract Code and Charges -->
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
-                                    <label for="monifyContract" class="block text-sm font-medium text-gray-900 mb-2">
-                                        Contract Code <span class="text-red-500">*</span>
-                                    </label>
-                                    <input type="text" name="monifyContract" id="monifyContract"
-                                        value="{{ isset($configurations['monifyContract']) ? $configurations['monifyContract']->config_value : '' }}"
-                                        placeholder="Enter Contract Code"
-                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                    <p class="mt-1 text-sm text-gray-500">Your Monnify Contract Code for virtual accounts
-                                    </p>
+                            <!-- Contract Code - Full Width with Emphasis -->
+                            <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0">
+                                        <i class="fas fa-file-contract text-blue-600 text-xl mt-1"></i>
+                                    </div>
+                                    <div class="ml-3 flex-1">
+                                        <label for="monifyContract" class="block text-sm font-semibold text-gray-900 mb-2">
+                                            Contract Code <span class="text-red-500">*</span>
+                                        </label>
+                                        <input type="text" name="monifyContract" id="monifyContract"
+                                            value="{{ isset($configurations['monifyContract']) ? $configurations['monifyContract']->config_value : '' }}"
+                                            placeholder="e.g., 915483940575"
+                                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-mono text-lg">
+                                        <div class="mt-2 text-sm text-blue-700">
+                                            <i class="fas fa-info-circle mr-1"></i>
+                                            <strong>Important:</strong> Find your Contract Code in your Monnify Dashboard → Settings → API Settings.
+                                            This is required for creating virtual accounts and must match your production/sandbox environment.
+                                        </div>
+                                    </div>
                                 </div>
-                                <div>
-                                    <label for="monifyCharges" class="block text-sm font-medium text-gray-900 mb-2">
-                                        Transaction Charges (%)
+                            </div>
+
+                            <!-- Transaction Charges -->
+                            <div>
+                                <label for="monifyCharges" class="block text-sm font-medium text-gray-900 mb-2">
+                                    Transaction Charges (%)
                                     </label>
                                     <input type="number" step="0.01" min="0" max="100"
                                         name="monifyCharges" id="monifyCharges"
@@ -271,8 +282,8 @@
                                     2</div>
                                 <div>
                                     <h4 class="font-medium text-gray-900">Get API Credentials</h4>
-                                    <p class="text-sm text-gray-500">From your merchant dashboard, get API Key, Secret Key,
-                                        and Contract Code</p>
+                                    <p class="text-sm text-gray-500">From your Monnify Dashboard → <strong>Settings</strong> → <strong>API Settings</strong>,
+                                        copy your <strong>API Key</strong>, <strong>Secret Key</strong>, and <strong>Contract Code</strong></p>
                                 </div>
                             </div>
                             <div class="flex items-start">
@@ -310,7 +321,11 @@
                         <ul class="space-y-3">
                             <li class="flex items-center">
                                 <i class="fas fa-check text-green-500 mr-3"></i>
-                                <span class="text-gray-700">Virtual account generation</span>
+                                <span class="text-gray-700">Virtual account generation with KYC</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-3"></i>
+                                <span class="text-gray-700">NIN/BVN verification via VAS API</span>
                             </li>
                             <li class="flex items-center">
                                 <i class="fas fa-check text-green-500 mr-3"></i>
@@ -318,7 +333,7 @@
                             </li>
                             <li class="flex items-center">
                                 <i class="fas fa-check text-green-500 mr-3"></i>
-                                <span class="text-gray-700">Multiple bank support</span>
+                                <span class="text-gray-700">Multiple bank support (Wema, Sterling)</span>
                             </li>
                             <li class="flex items-center">
                                 <i class="fas fa-check text-green-500 mr-3"></i>
@@ -326,7 +341,7 @@
                             </li>
                             <li class="flex items-center">
                                 <i class="fas fa-check text-green-500 mr-3"></i>
-                                <span class="text-gray-700">Secure transactions</span>
+                                <span class="text-gray-700">CBN compliant transactions</span>
                             </li>
                         </ul>
                     </div>

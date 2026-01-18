@@ -115,7 +115,7 @@
 
             <!-- Analytics & Reports Section -->
             <div class="pt-4">
-                <h3 class="px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Analytics</h3>
+                <h3 class="px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Analytics & Reports</h3>
                 <div class="mt-2 space-y-1">
                     <a href="{{ route('analytics.index') }}"
                         class="group flex items-center px-4 py-3 text-sm font-medium rounded-lg {{ request()->is('admin/analytics*') ? 'bg-red-50 text-red-700 border-r-2 border-red-700' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}">
@@ -127,52 +127,10 @@
                         <i class="fas fa-file-alt mr-3 text-blue-500"></i>
                         Reports
                     </a>
-                    <a href="{{ route('admin.system.notifications') }}"
-                        class="group flex items-center px-4 py-3 text-sm font-medium rounded-lg {{ request()->is('admin/system/notifications*') ? 'bg-green-50 text-green-700 border-r-2 border-green-700' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}">
-                        <i class="fas fa-bell mr-3 text-green-500"></i>
-                        Notifications
-                    </a>
                     <a href="{{ route('kyc.index') }}"
                         class="group flex items-center px-4 py-3 text-sm font-medium rounded-lg {{ request()->is('admin/kyc*') ? 'bg-yellow-50 text-yellow-700 border-r-2 border-yellow-700' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}">
                         <i class="fas fa-id-card mr-3 text-yellow-500"></i>
                         KYC Management
-                    </a>
-                </div>
-            </div>
-
-            <!-- Advanced System Management Section -->
-            <div class="pt-4">
-                <h3 class="px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">System Management</h3>
-                <div class="mt-2 space-y-1">
-                    <a href="{{ route('admin.system.accounts.index') }}"
-                        class="group flex items-center px-4 py-3 text-sm font-medium rounded-lg {{ request()->is('admin/system/accounts*') ? 'bg-indigo-50 text-indigo-700 border-r-2 border-indigo-700' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}">
-                        <i class="fas fa-user-cog mr-3 text-indigo-500"></i>
-                        Admin Accounts
-                    </a>
-                    <a href="{{ route('admin.system.subscribers') }}"
-                        class="group flex items-center px-4 py-3 text-sm font-medium rounded-lg {{ request()->is('admin/system/subscribers*') ? 'bg-teal-50 text-teal-700 border-r-2 border-teal-700' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}">
-                        <i class="fas fa-users-cog mr-3 text-teal-500"></i>
-                        Subscribers
-                    </a>
-                    <a href="{{ route('admin.system.wallet-providers.index') }}"
-                        class="group flex items-center px-4 py-3 text-sm font-medium rounded-lg {{ request()->is('admin/system/wallet-providers*') ? 'bg-purple-50 text-purple-700 border-r-2 border-purple-700' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}">
-                        <i class="fas fa-credit-card mr-3 text-purple-500"></i>
-                        Wallet Providers
-                    </a>
-                    <a href="{{ route('admin.system.api-monitoring.index') }}"
-                        class="group flex items-center px-4 py-3 text-sm font-medium rounded-lg {{ request()->is('admin/system/api-monitoring*') ? 'bg-red-50 text-red-700 border-r-2 border-red-700' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}">
-                        <i class="fas fa-server mr-3 text-red-500"></i>
-                        API Monitoring
-                    </a>
-                    <a href="{{ route('admin.system.settings') }}"
-                        class="group flex items-center px-4 py-3 text-sm font-medium rounded-lg {{ request()->is('admin/system/settings*') ? 'bg-gray-50 text-gray-700 border-r-2 border-gray-700' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}">
-                        <i class="fas fa-cogs mr-3 text-gray-500"></i>
-                        Site Settings
-                    </a>
-                    <a href="{{ route('admin.system.analytics.general') }}"
-                        class="group flex items-center px-4 py-3 text-sm font-medium rounded-lg {{ request()->is('admin/system/analytics*') ? 'bg-blue-50 text-blue-700 border-r-2 border-blue-700' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}">
-                        <i class="fas fa-chart-pie mr-3 text-blue-500"></i>
-                        System Analytics
                     </a>
                 </div>
             </div>

@@ -20,10 +20,8 @@ class MonnifyService
         $this->secretKey = $this->getConfigValue('monifySecrete');
         $this->contractCode = $this->getConfigValue('monifyContract');
 
-        // Use sandbox for testing, live for production
-        $this->baseUrl = config('app.env') === 'production'
-            ? 'https://api.monnify.com'
-            : 'https://sandbox.monnify.com';
+        // Always use production API
+        $this->baseUrl = 'https://api.monnify.com';
     }
 
     /**
@@ -43,12 +41,19 @@ class MonnifyService
 
     /**
      * Get access token from Monnify with caching
-     * Tokens are valid for 1 hour, we cache for 55 minutes
+     * Tokens are valid for 1 hour, we cache for 50 minutes to avoid edge cases
      */
-    private function getAccessToken()
+    public function getAccessToken($forceRefresh = false)
     {
         $cacheKey = 'monnify_access_token_' . md5($this->apiKey);
-        $cacheDuration = config('monnify.token_cache_duration', 3300); // 55 minutes
+
+        // Force refresh if requested (e.g., after 401 error)
+        if ($forceRefresh) {
+            \Illuminate\Support\Facades\Cache::forget($cacheKey);
+            Log::info('Monnify token cache cleared - forcing refresh');
+        }
+
+        $cacheDuration = 3000; // 50 minutes (safer than 55 for 1-hour tokens)
 
         return \Illuminate\Support\Facades\Cache::remember($cacheKey, $cacheDuration, function () {
             try {
@@ -64,15 +69,21 @@ class MonnifyService
                 if ($response->successful()) {
                     $data = $response->json();
                     $token = $data['responseBody']['accessToken'] ?? null;
-                    
+
                     if ($token) {
-                        Log::info('Monnify access token obtained and cached');
+                        Log::info('Monnify access token obtained and cached', [
+                            'cache_duration' => '50 minutes',
+                            'expires_in' => '1 hour'
+                        ]);
                     }
-                    
+
                     return $token;
                 }
 
-                Log::error('Monnify auth failed', ['response' => $response->body()]);
+                Log::error('Monnify auth failed', [
+                    'status' => $response->status(),
+                    'response' => $response->body()
+                ]);
                 return null;
             } catch (\Exception $e) {
                 Log::error('Monnify auth error: ' . $e->getMessage());
@@ -82,21 +93,86 @@ class MonnifyService
     }
 
     /**
+     * Make authenticated request to Monnify API with automatic token refresh
+     */
+    private function makeAuthenticatedRequest($method, $url, $data = [])
+    {
+        $token = $this->getAccessToken();
+
+        if (!$token) {
+            return [
+                'success' => false,
+                'message' => 'Failed to authenticate with Monnify'
+            ];
+        }
+
+        $response = Http::timeout(30)
+            ->withHeaders([
+                'Authorization' => 'Bearer ' . $token,
+                'Content-Type' => 'application/json',
+            ])
+            ->$method($url, $data);
+
+        // Check if token expired (401 error)
+        if ($response->status() === 401) {
+            $responseBody = $response->body();
+            if (strpos($responseBody, 'expired') !== false || strpos($responseBody, 'invalid_token') !== false) {
+                Log::warning('Monnify token expired, refreshing and retrying...');
+
+                // Get fresh token
+                $token = $this->getAccessToken(true);
+
+                if (!$token) {
+                    return [
+                        'success' => false,
+                        'message' => 'Failed to refresh authentication token'
+                    ];
+                }
+
+                // Retry request with fresh token
+                $response = Http::timeout(30)
+                    ->withHeaders([
+                        'Authorization' => 'Bearer ' . $token,
+                        'Content-Type' => 'application/json',
+                    ])
+                    ->$method($url, $data);
+            }
+        }
+
+        return $response;
+    }
+
+    /**
      * Create virtual account for user
      */
     public function createVirtualAccount(User $user)
     {
         try {
+            // Check if user has completed KYC (BVN or NIN required)
+            if (empty($user->nin) && empty($user->bvn)) {
+                Log::warning('Virtual account creation blocked - KYC not completed', [
+                    'user_id' => $user->id
+                ]);
+
+                return [
+                    'success' => false,
+                    'message' => 'Please complete KYC verification (NIN or BVN) before generating virtual account',
+                    'requires_kyc' => true
+                ];
+            }
+
             $accessToken = $this->getAccessToken();
             if (!$accessToken) {
                 return ['success' => false, 'message' => 'Failed to authenticate with Monnify'];
             }
 
             $reference = 'VA_' . $user->id . '_' . uniqid() . rand(1000, 9999);
-            $fullName = trim(($user->first_name ?? '') . ' ' . ($user->last_name ?? ''));
 
-            // Ensure we have a proper name - if user has no name, use a default based on email
-            if (empty($fullName) || $fullName === ' ') {
+            // Get user's full name - use 'name' field from users table
+            $fullName = trim($user->name ?? '');
+
+            // Fallback: if no name, use email username
+            if (empty($fullName)) {
                 $emailPart = explode('@', $user->email)[0];
                 $fullName = ucfirst($emailPart) . ' User';
             }
@@ -106,7 +182,7 @@ class MonnifyService
             $fullName = preg_replace('/\s+/', ' ', $fullName); // Clean up multiple spaces
             $fullName = trim($fullName);
 
-            // Ensure minimum length and maximum length for account name
+            // Ensure minimum length
             if (strlen($fullName) < 3) {
                 $fullName = 'Account Holder ' . $user->id;
             }
@@ -128,18 +204,34 @@ class MonnifyService
                 'preferredBanks' => ['035', '120', '232'] // Wema, Sterling, Sterling
             ];
 
+            // Add BVN or NIN to payload (required by Monnify)
+            if (!empty($user->bvn)) {
+                $payload['bvn'] = $user->bvn;
+                Log::info('Using BVN for virtual account', ['user_id' => $user->id]);
+            } elseif (!empty($user->nin)) {
+                $payload['nin'] = $user->nin;
+                Log::info('Using NIN for virtual account', ['user_id' => $user->id]);
+            }
+
             Log::info('Monnify virtual account request payload', [
                 'user_id' => $user->id,
-                'payload' => $payload
+                'payload' => array_merge($payload, [
+                    'bvn' => isset($payload['bvn']) ? substr($payload['bvn'], 0, 3) . '********' : null,
+                    'nin' => isset($payload['nin']) ? substr($payload['nin'], 0, 3) . '********' : null,
+                ])
             ]);
 
-            // Create virtual account with multiple bank options
-            $response = Http::timeout(30)
-                ->withHeaders([
-                    'Authorization' => 'Bearer ' . $accessToken,
-                    'Content-Type' => 'application/json',
-                ])
-                ->post($this->baseUrl . '/api/v2/bank-transfer/reserved-accounts', $payload);
+            // Create virtual account with automatic token refresh
+            $response = $this->makeAuthenticatedRequest(
+                'post',
+                $this->baseUrl . '/api/v2/bank-transfer/reserved-accounts',
+                $payload
+            );
+
+            // Handle makeAuthenticatedRequest error response
+            if (is_array($response) && isset($response['success']) && !$response['success']) {
+                return $response;
+            }
 
             if ($response->successful()) {
                 $data = $response->json();
@@ -273,7 +365,7 @@ class MonnifyService
 
     /**
      * Process successful payment
-     * Updated with correct Monnify charges (₦10 flat fee, max ₦50)
+     * Uses same logic as checkNewTransactions for consistency
      */
     private function processSuccessfulPayment($eventData)
     {
@@ -281,9 +373,8 @@ class MonnifyService
             $accountNumber = $eventData['destinationAccountNumber'] ?? '';
             $amountPaid = $eventData['amountPaid'] ?? 0;
             $paymentReference = $eventData['paymentReference'] ?? '';
-            $transactionReference = $eventData['transactionReference'] ?? '';
 
-            // Find user by virtual account number (SQLite compatible)
+            // Find user by virtual account number
             $user = User::whereNotNull('virtual_accounts')
                 ->get()
                 ->filter(function ($user) use ($accountNumber) {
@@ -304,11 +395,172 @@ class MonnifyService
                 return ['success' => false, 'message' => 'User not found'];
             }
 
-            // Start transaction with lock to prevent race conditions
+            // Use the same transaction processing logic as checkNewTransactions
+            $transaction = (object)[
+                'paymentReference' => $paymentReference,
+                'amountPaid' => $amountPaid,
+                'paidOn' => $eventData['paidOn'] ?? now()->toDateTimeString(),
+                'destinationAccountNumber' => $accountNumber
+            ];
+
+            $result = $this->processTransactionFromAPI($user, $transaction);
+
+            return $result;
+
+        } catch (\Exception $e) {
+            Log::error('Monnify payment processing error: ' . $e->getMessage(), [
+                'payment_reference' => $paymentReference ?? 'unknown',
+                'trace' => $e->getTraceAsString()
+            ]);
+            return ['success' => false, 'message' => 'Payment processing failed'];
+        }
+    }
+
+    /**
+     * Check for new reserved account transactions
+     * Call Monnify API to get recent transactions for all virtual accounts
+     */
+    public function checkNewTransactions()
+    {
+        try {
+            // Get all users with virtual accounts
+            $users = User::whereNotNull('virtual_accounts')
+                ->where('virtual_accounts', '!=', '')
+                ->where('virtual_accounts', '!=', '[]')
+                ->get();
+
+            if ($users->isEmpty()) {
+                Log::info('No users with virtual accounts found');
+                return ['success' => true, 'message' => 'No accounts to check', 'processed' => 0];
+            }
+
+            $processedCount = 0;
+            $errorCount = 0;
+
+            foreach ($users as $user) {
+                try {
+                    $result = $this->fetchUserTransactions($user);
+                    if ($result['success'] && $result['processed'] > 0) {
+                        $processedCount += $result['processed'];
+                    }
+                } catch (\Exception $e) {
+                    $errorCount++;
+                    Log::error('Error checking transactions for user', [
+                        'user_id' => $user->id,
+                        'error' => $e->getMessage()
+                    ]);
+                }
+            }
+
+            Log::info('Completed transaction check cycle', [
+                'users_checked' => $users->count(),
+                'transactions_processed' => $processedCount,
+                'errors' => $errorCount
+            ]);
+
+            return [
+                'success' => true,
+                'users_checked' => $users->count(),
+                'transactions_processed' => $processedCount,
+                'errors' => $errorCount
+            ];
+
+        } catch (\Exception $e) {
+            Log::error('Error in checkNewTransactions: ' . $e->getMessage());
+            return ['success' => false, 'message' => $e->getMessage()];
+        }
+    }
+
+    /**
+     * Fetch and process transactions for a specific user's virtual account
+     */
+    private function fetchUserTransactions(User $user)
+    {
+        try {
+            $virtualAccounts = json_decode($user->virtual_accounts, true);
+            if (!$virtualAccounts || empty($virtualAccounts)) {
+                return ['success' => false, 'message' => 'No virtual accounts found'];
+            }
+
+            // Get account reference from user record
+            if (empty($user->monnify_reference)) {
+                Log::warning('User has no monnify_reference', ['user_id' => $user->id]);
+                return ['success' => false, 'message' => 'No account reference'];
+            }
+
+            // Call Monnify API to get transactions for this account reference
+            $response = $this->makeAuthenticatedRequest(
+                'get',
+                $this->baseUrl . '/api/v1/bank-transfer/reserved-accounts/transactions',
+                [
+                    'accountReference' => $user->monnify_reference,
+                    'page' => 0,
+                    'size' => 10 // Check last 10 transactions
+                ]
+            );
+
+            // Handle makeAuthenticatedRequest error response
+            if (is_array($response) && isset($response['success']) && !$response['success']) {
+                return $response;
+            }
+
+            if ($response->successful()) {
+                $data = $response->json();
+
+                if (isset($data['requestSuccessful']) && $data['requestSuccessful']) {
+                    $transactions = $data['responseBody']['content'] ?? [];
+                    $processed = 0;
+
+                    foreach ($transactions as $transaction) {
+                        // Only process successful transactions
+                        if ($transaction['paymentStatus'] === 'PAID') {
+                            $result = $this->processTransactionFromAPI($user, $transaction);
+                            if ($result['success']) {
+                                $processed++;
+                            }
+                        }
+                    }
+
+                    return ['success' => true, 'processed' => $processed];
+                }
+            }
+
+            Log::warning('Failed to fetch transactions from Monnify', [
+                'user_id' => $user->id,
+                'status' => $response->status(),
+                'body' => $response->body()
+            ]);
+
+            return ['success' => false, 'message' => 'API request failed'];
+
+        } catch (\Exception $e) {
+            Log::error('Error fetching user transactions: ' . $e->getMessage(), [
+                'user_id' => $user->id
+            ]);
+            return ['success' => false, 'message' => $e->getMessage()];
+        }
+    }
+
+    /**
+     * Process a transaction fetched from Monnify API
+     * Includes idempotency check to prevent double-crediting
+     */
+    private function processTransactionFromAPI(User $user, array $transaction)
+    {
+        try {
+            $paymentReference = $transaction['paymentReference'] ?? '';
+            $amountPaid = $transaction['amountPaid'] ?? 0;
+            $transactionDate = $transaction['paidOn'] ?? now();
+
+            if (empty($paymentReference) || $amountPaid <= 0) {
+                return ['success' => false, 'message' => 'Invalid transaction data'];
+            }
+
+            // Start transaction with lock
             DB::beginTransaction();
 
             try {
-                // Check if transaction already processed with row lock
+                // Idempotency check - use transref to prevent double-crediting
                 $existingTransaction = DB::table('transactions')
                     ->where('transref', $paymentReference)
                     ->lockForUpdate()
@@ -316,47 +568,53 @@ class MonnifyService
 
                 if ($existingTransaction) {
                     DB::rollBack();
-                    Log::info('Transaction already processed (idempotency check)', [
+                    Log::debug('Transaction already processed (idempotency)', [
+                        'user_id' => $user->id,
                         'reference' => $paymentReference
                     ]);
-                    return ['success' => true, 'message' => 'Transaction already processed'];
+                    return ['success' => true, 'message' => 'Already processed'];
                 }
 
-                // Calculate charges - Monnify uses flat fee, not percentage
-                $transferFee = config('monnify.transfer_fee', 10); // ₦10
-                $maxFee = config('monnify.max_fee', 50); // ₦50
+                // Calculate charges
+                $transferFee = config('monnify.transfer_fee', 10);
+                $maxFee = config('monnify.max_fee', 50);
                 $charges = min($transferFee, $maxFee);
                 $netAmount = $amountPaid - $charges;
 
-                // Get current balance
-                $currentBalance = $user->wallet_balance ?? 0;
+                // Get current balance with lock
+                $currentBalance = DB::table('users')
+                    ->where('id', $user->id)
+                    ->lockForUpdate()
+                    ->value('wallet_balance') ?? 0;
+
                 $newBalance = $currentBalance + $netAmount;
 
                 // Update user balance
-                $user->update(['wallet_balance' => $newBalance]);
+                DB::table('users')
+                    ->where('id', $user->id)
+                    ->update(['wallet_balance' => $newBalance]);
 
                 // Record transaction
                 DB::table('transactions')->insert([
                     'sId' => $user->id,
                     'transref' => $paymentReference,
                     'servicename' => 'Wallet Topup',
-                    'servicedesc' => "Wallet funding of ₦" . number_format($amountPaid, 2) . " via Monnify bank transfer. Charges: ₦" . number_format($charges, 2),
+                    'servicedesc' => "Wallet funding of ₦" . number_format($amountPaid, 2) . " via Monnify. Charges: ₦" . number_format($charges, 2),
                     'amount' => (string)$netAmount,
-                    'status' => 0, // 0 = success
+                    'status' => 1, // 1 = successful
                     'oldbal' => (string)$currentBalance,
                     'newbal' => (string)$newBalance,
                     'profit' => 0,
-                    'date' => now(),
-                    // Also fill the new columns to avoid NOT NULL constraint errors
+                    'date' => $transactionDate,
                     'service_name' => 'Wallet Topup',
-                    'service_description' => "Wallet funding of ₦" . number_format($amountPaid, 2) . " via Monnify bank transfer. Charges: ₦" . number_format($charges, 2),
+                    'service_description' => "Wallet funding via Monnify",
                     'old_balance' => $currentBalance,
                     'new_balance' => $newBalance
                 ]);
 
                 DB::commit();
 
-                Log::info('Monnify payment processed successfully', [
+                Log::info('Transaction processed from API check', [
                     'user_id' => $user->id,
                     'amount' => $amountPaid,
                     'charges' => $charges,
@@ -364,17 +622,19 @@ class MonnifyService
                     'reference' => $paymentReference
                 ]);
 
-                return ['success' => true, 'message' => 'Payment processed successfully'];
+                return ['success' => true, 'message' => 'Transaction processed'];
+
             } catch (\Exception $e) {
                 DB::rollBack();
                 throw $e;
             }
+
         } catch (\Exception $e) {
-            Log::error('Monnify payment processing error: ' . $e->getMessage(), [
-                'payment_reference' => $paymentReference ?? 'unknown',
-                'trace' => $e->getTraceAsString()
+            Log::error('Error processing transaction from API: ' . $e->getMessage(), [
+                'user_id' => $user->id,
+                'reference' => $paymentReference ?? 'unknown'
             ]);
-            return ['success' => false, 'message' => 'Payment processing failed'];
+            return ['success' => false, 'message' => $e->getMessage()];
         }
     }
 

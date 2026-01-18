@@ -31,25 +31,37 @@
     <!-- Filter Section -->
     <div class="bg-white rounded-xl shadow-sm border border-gray-100 mb-8">
         <div class="p-6">
-            <h2 class="text-lg font-semibold text-gray-900 mb-4">Filter Transactions</h2>
-            <form id="filter-form" class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <h2 class="text-lg font-semibold text-gray-900 mb-4">
+                <i class="fas fa-filter text-indigo-600 mr-2"></i>Filter Transactions
+                <span class="text-sm text-gray-500 font-normal ml-2">(Default: Last 30 days)</span>
+            </h2>
+            <form method="GET" action="{{ route('transactions') }}" class="grid grid-cols-1 md:grid-cols-5 gap-4">
                 <div>
-                    <label for="transaction_type" class="block text-sm font-medium text-gray-700 mb-2">
-                        Transaction Type
+                    <label for="service" class="block text-sm font-medium text-gray-700 mb-2">
+                        Service Type
                     </label>
-                    <select id="transaction_type"
-                            name="transaction_type"
+                    <select id="service"
+                            name="service"
                             class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
-                        <option value="">All Types</option>
-                        <option value="deposit">Deposits</option>
-                        <option value="withdrawal">Withdrawals</option>
-                        <option value="transfer_sent">Transfers Sent</option>
-                        <option value="transfer_received">Transfers Received</option>
-                        <option value="airtime">Airtime Purchase</option>
-                        <option value="data">Data Purchase</option>
-                        <option value="cable_tv">Cable TV</option>
-                        <option value="electricity">Electricity</option>
-                        <option value="exam_pin">Exam Pin</option>
+                        <option value="all" {{ $serviceFilter == 'all' ? 'selected' : '' }}>All Services</option>
+                        @foreach($availableServices as $service)
+                            <option value="{{ $service }}" {{ $serviceFilter == $service ? 'selected' : '' }}>
+                                {{ $service }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div>
+                    <label for="status" class="block text-sm font-medium text-gray-700 mb-2">
+                        Status
+                    </label>
+                    <select id="status"
+                            name="status"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                        <option value="all" {{ $statusFilter == 'all' ? 'selected' : '' }}>All Status</option>
+                        <option value="success" {{ $statusFilter == 'success' ? 'selected' : '' }}>Successful</option>
+                        <option value="failed" {{ $statusFilter == 'failed' ? 'selected' : '' }}>Failed</option>
                     </select>
                 </div>
 
@@ -60,6 +72,7 @@
                     <input type="date"
                            id="date_from"
                            name="date_from"
+                           value="{{ $dateFrom }}"
                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
                 </div>
 
@@ -70,14 +83,19 @@
                     <input type="date"
                            id="date_to"
                            name="date_to"
+                           value="{{ $dateTo }}"
                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
                 </div>
 
-                <div class="flex items-end">
+                <div class="flex items-end gap-2">
                     <button type="submit"
-                            class="w-full bg-indigo-600 text-white font-semibold py-3 px-4 rounded-lg hover:bg-indigo-700 transition-colors">
-                        <i class="fas fa-filter mr-2"></i>Filter
+                            class="flex-1 bg-indigo-600 text-white font-semibold py-3 px-4 rounded-lg hover:bg-indigo-700 transition-colors">
+                        <i class="fas fa-filter mr-2"></i>Apply
                     </button>
+                    <a href="{{ route('transactions') }}"
+                       class="px-4 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors">
+                        <i class="fas fa-redo"></i>
+                    </a>
                 </div>
             </form>
         </div>
@@ -88,8 +106,8 @@
         <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm font-medium text-gray-600">Total Deposits</p>
-                    <p class="text-2xl font-bold text-green-600">₦0.00</p>
+                    <p class="text-sm font-medium text-gray-600">Wallet Funding</p>
+                    <p class="text-2xl font-bold text-green-600">₦{{ number_format($summary['wallet_topup'] ?? 0, 2) }}</p>
                 </div>
                 <div class="bg-green-100 p-3 rounded-full">
                     <i class="fas fa-arrow-down text-green-600"></i>
@@ -100,20 +118,8 @@
         <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm font-medium text-gray-600">Total Withdrawals</p>
-                    <p class="text-2xl font-bold text-red-600">₦0.00</p>
-                </div>
-                <div class="bg-red-100 p-3 rounded-full">
-                    <i class="fas fa-arrow-up text-red-600"></i>
-                </div>
-            </div>
-        </div>
-
-        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-            <div class="flex items-center justify-between">
-                <div>
                     <p class="text-sm font-medium text-gray-600">Total Spent</p>
-                    <p class="text-2xl font-bold text-orange-600">₦0.00</p>
+                    <p class="text-2xl font-bold text-orange-600">₦{{ number_format($summary['total_spent'] ?? 0, 2) }}</p>
                 </div>
                 <div class="bg-orange-100 p-3 rounded-full">
                     <i class="fas fa-shopping-cart text-orange-600"></i>
@@ -124,8 +130,22 @@
         <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
             <div class="flex items-center justify-between">
                 <div>
+                    <p class="text-sm font-medium text-gray-600">Successful</p>
+                    <p class="text-2xl font-bold text-green-600">{{ $summary['successful'] ?? 0 }}</p>
+                    <p class="text-xs text-gray-500 mt-1">₦{{ number_format($summary['total_amount'] ?? 0, 2) }}</p>
+                </div>
+                <div class="bg-green-100 p-3 rounded-full">
+                    <i class="fas fa-check-circle text-green-600"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+            <div class="flex items-center justify-between">
+                <div>
                     <p class="text-sm font-medium text-gray-600">Total Transactions</p>
-                    <p class="text-2xl font-bold text-blue-600">0</p>
+                    <p class="text-2xl font-bold text-blue-600">{{ $summary['total_transactions'] ?? 0 }}</p>
+                    <p class="text-xs text-gray-500 mt-1">{{ $summary['failed'] ?? 0 }} failed</p>
                 </div>
                 <div class="bg-blue-100 p-3 rounded-full">
                     <i class="fas fa-list text-blue-600"></i>
@@ -158,16 +178,19 @@
                 <thead class="bg-gray-50">
                     <tr>
                         <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Transaction ID
+                            Reference
                         </th>
                         <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Type
+                            Service
                         </th>
                         <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Description
                         </th>
                         <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Amount
+                        </th>
+                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Balance
                         </th>
                         <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Status
@@ -177,237 +200,156 @@
                         </th>
                     </tr>
                 </thead>
-                <tbody id="transactions-table" class="bg-white divide-y divide-gray-200">
-                    <!-- Transactions will be loaded here -->
+                <tbody class="bg-white divide-y divide-gray-200">
+                    @forelse($transactions as $transaction)
+                    <tr class="hover:bg-gray-50 transition-colors">
+                        <td class="px-6 py-4 whitespace-nowrap text-xs font-mono text-gray-600">
+                            {{ substr($transaction->transref, 0, 15) }}...
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="flex items-center">
+                                <div class="w-8 h-8 rounded-full {{ $transaction->status == 0 ? 'bg-green-100' : 'bg-red-100' }} flex items-center justify-center mr-2">
+                                    <i class="{{ $transaction->service_icon }} text-xs {{ $transaction->status == 0 ? 'text-green-600' : 'text-red-600' }}"></i>
+                                </div>
+                                <span class="text-sm font-medium text-gray-900">{{ $transaction->servicename }}</span>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 text-sm text-gray-700 max-w-xs truncate">
+                            {{ $transaction->servicedesc }}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold {{ $transaction->servicename == 'Wallet Topup' ? 'text-green-600' : 'text-gray-900' }}">
+                            {{ $transaction->formatted_amount }}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-xs text-gray-500">
+                            <div>Old: ₦{{ number_format(floatval($transaction->oldbal), 2) }}</div>
+                            <div class="font-medium text-gray-700">New: ₦{{ number_format(floatval($transaction->newbal), 2) }}</div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            @if($transaction->status == 0)
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                    <i class="fas fa-check-circle mr-1"></i>Success
+                                </span>
+                            @else
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                    <i class="fas fa-times-circle mr-1"></i>Failed
+                                </span>
+                            @endif
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            <div>{{ $transaction->date ? $transaction->date->format('M d, Y') : 'N/A' }}</div>
+                            <div class="text-xs text-gray-400">{{ $transaction->date ? $transaction->date->format('h:i A') : '' }}</div>
+                        </td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="7" class="px-6 py-12 text-center">
+                            <div class="bg-gray-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-receipt text-gray-400 text-2xl"></i>
+                            </div>
+                            <h3 class="text-lg font-medium text-gray-900 mb-2">No transactions found</h3>
+                            <p class="text-gray-500 mb-4">No transactions match your filter criteria</p>
+                            <a href="{{ route('transactions') }}" class="text-indigo-600 hover:text-indigo-500 text-sm font-medium">
+                                Clear filters
+                            </a>
+                        </td>
+                    </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
 
         <!-- Mobile Cards -->
-        <div id="transactions-mobile" class="md:hidden p-6 space-y-4">
-            <!-- Mobile transaction cards will be loaded here -->
-        </div>
-
-        <!-- Empty State -->
-        <div id="empty-state" class="text-center py-12">
-            <div class="bg-gray-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <i class="fas fa-receipt text-gray-400 text-2xl"></i>
+        <div class="md:hidden p-6 space-y-4">
+            @forelse($transactions as $transaction)
+            <div class="bg-gray-50 rounded-lg p-4 border border-gray-200 hover:border-indigo-300 transition-colors">
+                <div class="flex items-start justify-between mb-3">
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 rounded-full {{ $transaction->status == 0 ? 'bg-green-100' : 'bg-red-100' }} flex items-center justify-center mr-3">
+                            <i class="{{ $transaction->service_icon }} {{ $transaction->status == 0 ? 'text-green-600' : 'text-red-600' }}"></i>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-gray-900">{{ $transaction->servicename }}</p>
+                            <p class="text-xs text-gray-500 font-mono">{{ substr($transaction->transref, 0, 15) }}...</p>
+                        </div>
+                    </div>
+                    @if($transaction->status == 0)
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                            <i class="fas fa-check-circle mr-1"></i>Success
+                        </span>
+                    @else
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                            <i class="fas fa-times-circle mr-1"></i>Failed
+                        </span>
+                    @endif
+                </div>
+                <p class="text-sm text-gray-700 mb-3 line-clamp-2">{{ $transaction->servicedesc }}</p>
+                <div class="flex justify-between items-center pt-3 border-t border-gray-200">
+                    <div>
+                        <p class="text-xs text-gray-500">Amount</p>
+                        <p class="text-lg font-bold {{ $transaction->servicename == 'Wallet Topup' ? 'text-green-600' : 'text-gray-900' }}">
+                            {{ $transaction->formatted_amount }}
+                        </p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-xs text-gray-500">Balance</p>
+                        <p class="text-sm font-medium text-gray-700">₦{{ number_format(floatval($transaction->newbal), 2) }}</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-xs text-gray-500">{{ $transaction->date ? $transaction->date->format('M d, Y') : 'N/A' }}</p>
+                        <p class="text-xs text-gray-400">{{ $transaction->date ? $transaction->date->format('h:i A') : '' }}</p>
+                    </div>
+                </div>
             </div>
-            <h3 class="text-lg font-medium text-gray-900 mb-2">No transactions found</h3>
-            <p class="text-gray-500">Your transaction history will appear here once you start using the platform</p>
+            @empty
+            <div class="text-center py-12">
+                <div class="bg-gray-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-receipt text-gray-400 text-2xl"></i>
+                </div>
+                <h3 class="text-lg font-medium text-gray-900 mb-2">No transactions found</h3>
+                <p class="text-gray-500 mb-4">No transactions match your filter criteria</p>
+                <a href="{{ route('transactions') }}" class="text-indigo-600 hover:text-indigo-500 text-sm font-medium">
+                    Clear filters
+                </a>
+            </div>
+            @endforelse
         </div>
 
         <!-- Pagination -->
-        <div id="pagination" class="px-6 py-4 border-t border-gray-100 hidden">
-            <div class="flex items-center justify-between">
+        @if($transactions->hasPages())
+        <div class="px-6 py-4 border-t border-gray-100 bg-gray-50">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div class="text-sm text-gray-700">
-                    Showing <span id="showing-from">0</span> to <span id="showing-to">0</span> of <span id="total-records">0</span> results
+                    Showing <span class="font-medium">{{ $transactions->firstItem() ?? 0 }}</span>
+                    to <span class="font-medium">{{ $transactions->lastItem() ?? 0 }}</span>
+                    of <span class="font-medium">{{ $transactions->total() }}</span> results
                 </div>
-                <div class="flex space-x-2">
-                    <button id="prev-btn"
-                            class="px-3 py-2 text-sm bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
-                        Previous
-                    </button>
-                    <button id="next-btn"
-                            class="px-3 py-2 text-sm bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
-                        Next
-                    </button>
+                <div>
+                    {{ $transactions->links() }}
                 </div>
             </div>
         </div>
+        @endif
     </div>
 </div>
 
 @push('scripts')
 <script>
-let currentPage = 1;
-let totalPages = 1;
-
 $(document).ready(function() {
-    loadTransactions();
-
-    // Filter form submission
-    $('#filter-form').submit(function(e) {
-        e.preventDefault();
-        currentPage = 1;
-        loadTransactions();
-    });
-
     // Refresh button
     $('#refresh-btn').click(function() {
-        loadTransactions();
+        window.location.reload();
     });
 
     // Export button
     $('#export-btn').click(function() {
-        exportTransactions();
-    });
-
-    // Pagination
-    $('#prev-btn').click(function() {
-        if (currentPage > 1) {
-            currentPage--;
-            loadTransactions();
-        }
-    });
-
-    $('#next-btn').click(function() {
-        if (currentPage < totalPages) {
-            currentPage++;
-            loadTransactions();
-        }
+        Swal.fire({
+            icon: 'info',
+            title: 'Export Feature',
+            text: 'Export functionality will be implemented soon. You can take a screenshot or print this page for now.',
+            confirmButtonColor: '#6366F1'
+        });
     });
 });
-
-function loadTransactions() {
-    // Show loading state
-    $('#transactions-table').html(`
-        <tr>
-            <td colspan="6" class="px-6 py-12 text-center">
-                <i class="fas fa-spinner fa-spin text-2xl text-gray-400 mb-2"></i>
-                <p class="text-gray-500">Loading transactions...</p>
-            </td>
-        </tr>
-    `);
-
-    // Simulate API call (replace with actual AJAX call)
-    setTimeout(() => {
-        // Mock empty data for now
-        const transactions = [];
-
-        if (transactions.length === 0) {
-            $('#transactions-table').empty();
-            $('#transactions-mobile').empty();
-            $('#empty-state').show();
-            $('#pagination').hide();
-        } else {
-            renderTransactions(transactions);
-            $('#empty-state').hide();
-            $('#pagination').show();
-        }
-    }, 1000);
-}
-
-function renderTransactions(transactions) {
-    // Desktop table
-    let tableHTML = '';
-    transactions.forEach(transaction => {
-        tableHTML += `
-            <tr class="hover:bg-gray-50">
-                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                    ${transaction.id}
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap">
-                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getTypeClass(transaction.type)}">
-                        ${getTypeIcon(transaction.type)} ${transaction.type}
-                    </span>
-                </td>
-                <td class="px-6 py-4 text-sm text-gray-900">
-                    ${transaction.description}
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium ${getAmountClass(transaction.type)}">
-                    ${transaction.type.includes('deposit') || transaction.type.includes('received') ? '+' : '-'}₦${transaction.amount}
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap">
-                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusClass(transaction.status)}">
-                        ${transaction.status}
-                    </span>
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    ${formatDate(transaction.created_at)}
-                </td>
-            </tr>
-        `;
-    });
-    $('#transactions-table').html(tableHTML);
-
-    // Mobile cards
-    let mobileHTML = '';
-    transactions.forEach(transaction => {
-        mobileHTML += `
-            <div class="bg-gray-50 rounded-lg p-4">
-                <div class="flex justify-between items-start mb-2">
-                    <div>
-                        <p class="font-medium text-gray-900">${transaction.description}</p>
-                        <p class="text-sm text-gray-500">${transaction.id}</p>
-                    </div>
-                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusClass(transaction.status)}">
-                        ${transaction.status}
-                    </span>
-                </div>
-                <div class="flex justify-between items-center">
-                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getTypeClass(transaction.type)}">
-                        ${getTypeIcon(transaction.type)} ${transaction.type}
-                    </span>
-                    <span class="text-lg font-semibold ${getAmountClass(transaction.type)}">
-                        ${transaction.type.includes('deposit') || transaction.type.includes('received') ? '+' : '-'}₦${transaction.amount}
-                    </span>
-                </div>
-                <p class="text-sm text-gray-500 mt-2">${formatDate(transaction.created_at)}</p>
-            </div>
-        `;
-    });
-    $('#transactions-mobile').html(mobileHTML);
-}
-
-function getTypeClass(type) {
-    const classes = {
-        'deposit': 'bg-green-100 text-green-800',
-        'withdrawal': 'bg-red-100 text-red-800',
-        'transfer_sent': 'bg-purple-100 text-purple-800',
-        'transfer_received': 'bg-blue-100 text-blue-800',
-        'airtime': 'bg-orange-100 text-orange-800',
-        'data': 'bg-cyan-100 text-cyan-800',
-        'cable_tv': 'bg-yellow-100 text-yellow-800',
-        'electricity': 'bg-indigo-100 text-indigo-800',
-        'exam_pin': 'bg-pink-100 text-pink-800'
-    };
-    return classes[type] || 'bg-gray-100 text-gray-800';
-}
-
-function getTypeIcon(type) {
-    const icons = {
-        'deposit': '↓',
-        'withdrawal': '↑',
-        'transfer_sent': '→',
-        'transfer_received': '←',
-        'airtime': '📱',
-        'data': '📊',
-        'cable_tv': '📺',
-        'electricity': '⚡',
-        'exam_pin': '📝'
-    };
-    return icons[type] || '•';
-}
-
-function getAmountClass(type) {
-    return type.includes('deposit') || type.includes('received') ? 'text-green-600' : 'text-red-600';
-}
-
-function getStatusClass(status) {
-    const classes = {
-        'completed': 'bg-green-100 text-green-800',
-        'pending': 'bg-yellow-100 text-yellow-800',
-        'failed': 'bg-red-100 text-red-800',
-        'cancelled': 'bg-gray-100 text-gray-800'
-    };
-    return classes[status] || 'bg-gray-100 text-gray-800';
-}
-
-function formatDate(dateString) {
-    const date = new Date(dateString);
-    return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
-}
-
-function exportTransactions() {
-    // Implement export functionality
-    Swal.fire({
-        icon: 'info',
-        title: 'Export Feature',
-        text: 'Export functionality will be implemented soon',
-        confirmButtonColor: '#6366F1'
-    });
-}
 </script>
 @endpush
 @endsection

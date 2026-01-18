@@ -70,19 +70,19 @@
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div class="text-center p-4 bg-green-50 rounded-lg">
                 <div class="text-2xl font-bold text-green-600">
-                    {{ count(array_filter($monitoringData['provider_health'] ?? [], function($p) { return $p['status'] === 'healthy'; })) }}
+                    {{ count(array_filter($monitoringData['provider_health']['providers'] ?? [], function($p) { return ($p['status'] ?? 'unknown') === 'operational' || ($p['status'] ?? 'unknown') === 'healthy'; })) }}
                 </div>
                 <div class="text-sm text-gray-600">Healthy Providers</div>
             </div>
             <div class="text-center p-4 bg-yellow-50 rounded-lg">
                 <div class="text-2xl font-bold text-yellow-600">
-                    {{ count(array_filter($monitoringData['provider_health'] ?? [], function($p) { return $p['status'] === 'degraded'; })) }}
+                    {{ count(array_filter($monitoringData['provider_health']['providers'] ?? [], function($p) { return ($p['status'] ?? 'unknown') === 'degraded'; })) }}
                 </div>
                 <div class="text-sm text-gray-600">Degraded Providers</div>
             </div>
             <div class="text-center p-4 bg-red-50 rounded-lg">
                 <div class="text-2xl font-bold text-red-600">
-                    {{ count(array_filter($monitoringData['provider_health'] ?? [], function($p) { return $p['status'] === 'down'; })) }}
+                    {{ count(array_filter($monitoringData['provider_health']['providers'] ?? [], function($p) { return ($p['status'] ?? 'unknown') === 'down' || ($p['status'] ?? 'unknown') === 'error'; })) }}
                 </div>
                 <div class="text-sm text-gray-600">Down Providers</div>
             </div>
@@ -102,12 +102,12 @@
             Provider Health Status
         </h3>
         <div class="monitoring-grid">
-            @if(isset($monitoringData['provider_health']))
-                @foreach($monitoringData['provider_health'] as $provider => $health)
+            @if(isset($monitoringData['provider_health']['providers']))
+                @foreach($monitoringData['provider_health']['providers'] as $provider => $health)
                     <div class="border rounded-lg p-4">
                         <div class="flex items-center justify-between mb-2">
                             <h4 class="font-medium text-gray-900 flex items-center">
-                                <span class="status-indicator status-{{ $health['status'] }} mr-2"></span>
+                                <span class="status-indicator status-{{ $health['status'] ?? 'unknown' }} mr-2"></span>
                                 {{ ucfirst($provider) }}
                             </h4>
                             <span class="text-xs text-gray-500">{{ $health['last_check'] ?? 'N/A' }}</span>
@@ -149,37 +149,37 @@
             <div class="monitoring-grid">
                 <div class="performance-metric p-4 rounded-lg">
                     <div class="flex items-center justify-between mb-2">
-                        <h4 class="font-medium text-gray-900">Average Response Time</h4>
-                        <i class="fas fa-clock text-blue-500"></i>
+                        <h4 class="font-medium text-gray-900">Overall Health Score</h4>
+                        <i class="fas fa-heartbeat text-blue-500"></i>
                     </div>
                     <div class="text-2xl font-bold text-blue-600">
-                        {{ $monitoringData['api_performance']['avg_response_time'] ?? 'N/A' }}ms
+                        {{ $monitoringData['api_performance']['overall_health_score'] ?? 'N/A' }}%
                     </div>
                     <div class="text-sm text-gray-600 mt-1">
-                        Last 24 hours
+                        System health
                     </div>
                 </div>
 
                 <div class="performance-metric p-4 rounded-lg">
                     <div class="flex items-center justify-between mb-2">
-                        <h4 class="font-medium text-gray-900">Success Rate</h4>
+                        <h4 class="font-medium text-gray-900">Active Services</h4>
                         <i class="fas fa-check-circle text-green-500"></i>
                     </div>
                     <div class="text-2xl font-bold text-green-600">
-                        {{ $monitoringData['api_performance']['success_rate'] ?? 'N/A' }}%
+                        {{ count($monitoringData['api_performance']['service_performance'] ?? []) }}
                     </div>
                     <div class="text-sm text-gray-600 mt-1">
-                        Last 24 hours
+                        Monitored services
                     </div>
                 </div>
 
                 <div class="performance-metric p-4 rounded-lg">
                     <div class="flex items-center justify-between mb-2">
-                        <h4 class="font-medium text-gray-900">Error Rate</h4>
+                        <h4 class="font-medium text-gray-900">Recent Errors</h4>
                         <i class="fas fa-exclamation-triangle text-red-500"></i>
                     </div>
                     <div class="text-2xl font-bold text-red-600">
-                        {{ $monitoringData['api_performance']['error_rate'] ?? 'N/A' }}%
+                        {{ count($monitoringData['api_performance']['recent_errors'] ?? []) }}
                     </div>
                     <div class="text-sm text-gray-600 mt-1">
                         Last 24 hours
@@ -188,14 +188,14 @@
 
                 <div class="performance-metric p-4 rounded-lg">
                     <div class="flex items-center justify-between mb-2">
-                        <h4 class="font-medium text-gray-900">Requests Per Minute</h4>
+                        <h4 class="font-medium text-gray-900">Fastest Services</h4>
                         <i class="fas fa-chart-line text-purple-500"></i>
                     </div>
                     <div class="text-2xl font-bold text-purple-600">
-                        {{ $monitoringData['api_performance']['requests_per_minute'] ?? 'N/A' }}
+                        {{ count($monitoringData['api_performance']['fastest_services'] ?? []) }}
                     </div>
                     <div class="text-sm text-gray-600 mt-1">
-                        Current rate
+                        Optimal performance
                     </div>
                 </div>
             </div>
@@ -219,30 +219,30 @@
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div class="security-event p-4 rounded-lg">
                         <div class="text-lg font-bold text-red-800">
-                            {{ $monitoringData['security_metrics']['failed_logins'] ?? 0 }}
+                            {{ $monitoringData['security_metrics']['failed_logins_24h'] ?? 0 }}
                         </div>
                         <div class="text-sm text-red-700">Failed Logins (24h)</div>
                     </div>
                     <div class="security-event p-4 rounded-lg">
-                        <div class="text-lg font-bold text-red-800">
-                            {{ $monitoringData['security_metrics']['suspicious_activities'] ?? 0 }}
+                        <div class="text-lg font-bold text-green-800">
+                            {{ $monitoringData['security_metrics']['unique_login_users_24h'] ?? 0 }}
                         </div>
-                        <div class="text-sm text-red-700">Suspicious Activities</div>
+                        <div class="text-sm text-green-700">Unique Logins (24h)</div>
                     </div>
                     <div class="security-event p-4 rounded-lg">
-                        <div class="text-lg font-bold text-red-800">
-                            {{ $monitoringData['security_metrics']['blocked_ips'] ?? 0 }}
+                        <div class="text-lg font-bold text-blue-800">
+                            {{ $monitoringData['security_metrics']['security_score'] ?? 'N/A' }}%
                         </div>
-                        <div class="text-sm text-red-700">Blocked IPs</div>
+                        <div class="text-sm text-blue-700">Security Score</div>
                     </div>
                 </div>
 
                 <!-- Recent Security Events -->
-                @if(isset($monitoringData['security_metrics']['recent_events']) && count($monitoringData['security_metrics']['recent_events']) > 0)
+                @if(isset($monitoringData['security_metrics']['security_events']) && count($monitoringData['security_metrics']['security_events']) > 0)
                     <div>
                         <h4 class="font-medium text-gray-900 mb-3">Recent Security Events</h4>
                         <div class="space-y-2">
-                            @foreach($monitoringData['security_metrics']['recent_events'] as $event)
+                            @foreach($monitoringData['security_metrics']['security_events'] as $event)
                                 <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                                     <div class="flex items-center">
                                         <i class="fas fa-{{ $event['icon'] ?? 'exclamation-triangle' }} text-red-500 mr-3"></i>
@@ -277,10 +277,14 @@
             </h3>
             <div class="space-y-3">
                 @foreach($monitoringData['system_alerts'] as $alert)
-                    <div class="alert-{{ $alert['level'] ?? 'info' }} rounded-lg p-4">
+                    @php
+                        $alertType = $alert['type'] ?? $alert['level'] ?? 'info';
+                        $alertClass = $alertType === 'danger' ? 'warning' : $alertType;
+                    @endphp
+                    <div class="alert-{{ $alertClass }} rounded-lg p-4">
                         <div class="flex items-start">
                             <div class="flex-shrink-0">
-                                <i class="fas fa-{{ $alert['level'] === 'critical' ? 'exclamation-triangle' : ($alert['level'] === 'warning' ? 'exclamation-circle' : 'info-circle') }} text-lg"></i>
+                                <i class="fas fa-{{ $alertType === 'danger' || $alertType === 'critical' ? 'exclamation-triangle' : ($alertType === 'warning' ? 'exclamation-circle' : 'info-circle') }} text-lg"></i>
                             </div>
                             <div class="ml-3 flex-1">
                                 <div class="flex items-center justify-between">
@@ -288,6 +292,13 @@
                                     <span class="text-xs opacity-75">{{ $alert['timestamp'] ?? 'Unknown time' }}</span>
                                 </div>
                                 <p class="text-sm mt-1">{{ $alert['message'] ?? 'No message available' }}</p>
+                                @if(isset($alert['action_url']))
+                                    <div class="mt-2">
+                                        <a href="{{ $alert['action_url'] }}" class="text-xs font-semibold text-blue-600 hover:text-blue-800">
+                                            View Details →
+                                        </a>
+                                    </div>
+                                @endif
                                 @if(isset($alert['action_required']) && $alert['action_required'])
                                     <div class="mt-2">
                                         <span class="inline-flex px-2 py-1 text-xs font-semibold rounded bg-red-100 text-red-800">

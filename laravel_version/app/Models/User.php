@@ -42,7 +42,14 @@ class User extends Authenticatable
         'referred_by',
         'last_activity',
         'virtual_accounts',
-        'monnify_reference'
+        'monnify_reference',
+        'nin',
+        'bvn',
+        'date_of_birth',
+        'kyc_status',
+        'kyc_verified_at',
+        'kyc_rejection_reason',
+        'kyc_method'
     ];
 
     /**
@@ -70,6 +77,8 @@ class User extends Authenticatable
             'referral_wallet' => 'float',
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
+            'kyc_verified_at' => 'datetime',
+            'date_of_birth' => 'date',
         ];
     }
 
@@ -138,12 +147,12 @@ class User extends Authenticatable
         if (is_string($this->user_type)) {
             return match(strtolower($this->user_type)) {
                 'user' => 'User',
-                'agent' => 'Agent', 
+                'agent' => 'Agent',
                 'vendor' => 'Vendor',
                 default => ucfirst($this->user_type)
             };
         }
-        
+
         return match($this->user_type) {
             self::TYPE_USER => 'User',
             self::TYPE_AGENT => 'Agent',
@@ -167,7 +176,7 @@ class User extends Authenticatable
                 default => ucfirst($this->reg_status)
             };
         }
-        
+
         return match($this->reg_status) {
             self::REG_STATUS_ACTIVE => 'Active',
             self::REG_STATUS_PENDING => 'Pending',
@@ -384,5 +393,110 @@ class User extends Authenticatable
     public function scopeActive($query)
     {
         return $query->where('reg_status', self::REG_STATUS_ACTIVE);
+    }
+
+    // ==================== KYC Helper Methods ====================
+
+    /**
+     * Check if user has completed KYC verification
+     */
+    public function hasCompletedKyc(): bool
+    {
+        return $this->kyc_status === 'verified';
+    }
+
+    /**
+     * Check if user has pending KYC verification
+     */
+    public function hasPendingKyc(): bool
+    {
+        return $this->kyc_status === 'pending' || empty($this->kyc_status);
+    }
+
+    /**
+     * Check if user's KYC was rejected
+     */
+    public function hasRejectedKyc(): bool
+    {
+        return $this->kyc_status === 'rejected';
+    }
+
+    /**
+     * Check if user has NIN verified
+     */
+    public function hasNin(): bool
+    {
+        return !empty($this->nin);
+    }
+
+    /**
+     * Check if user has BVN verified
+     */
+    public function hasBvn(): bool
+    {
+        return !empty($this->bvn);
+    }
+
+    /**
+     * Get KYC status badge HTML
+     */
+    public function getKycStatusBadge(): string
+    {
+        return match($this->kyc_status) {
+            'verified' => '<span class="badge bg-success">Verified</span>',
+            'rejected' => '<span class="badge bg-danger">Rejected</span>',
+            'pending' => '<span class="badge bg-warning">Pending</span>',
+            default => '<span class="badge bg-secondary">Not Started</span>',
+        };
+    }
+
+    /**
+     * Get KYC method display name
+     */
+    public function getKycMethodName(): string
+    {
+        return match($this->kyc_method) {
+            'nin' => 'NIN',
+            'bvn' => 'BVN',
+            default => 'None',
+        };
+    }
+
+    /**
+     * Get masked NIN (show first 3 digits only)
+     */
+    public function getMaskedNin(): ?string
+    {
+        if (empty($this->nin)) {
+            return null;
+        }
+        return substr($this->nin, 0, 3) . '********';
+    }
+
+    /**
+     * Get masked BVN (show first 3 digits only)
+     */
+    public function getMaskedBvn(): ?string
+    {
+        if (empty($this->bvn)) {
+            return null;
+        }
+        return substr($this->bvn, 0, 3) . '********';
+    }
+
+    /**
+     * Scope for KYC verified users
+     */
+    public function scopeKycVerified($query)
+    {
+        return $query->where('kyc_status', 'verified');
+    }
+
+    /**
+     * Scope for users pending KYC
+     */
+    public function scopeKycPending($query)
+    {
+        return $query->whereIn('kyc_status', ['pending', null]);
     }
 }

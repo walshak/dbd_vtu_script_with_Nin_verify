@@ -38,37 +38,20 @@
                 <form id="profile-form" class="space-y-6">
                     @csrf
                     @method('PUT')
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <!-- First Name -->
-                        <div>
-                            <label for="fname" class="block text-sm font-medium text-gray-700 mb-2">
-                                <i class="fas fa-user text-blue-500 mr-2"></i>First Name
-                            </label>
-                            <input 
-                                type="text" 
-                                id="fname" 
-                                name="fname" 
-                                value="{{ auth()->user()->sFname }}"
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-                                required
-                            >
-                        </div>
 
-                        <!-- Last Name -->
-                        <div>
-                            <label for="lname" class="block text-sm font-medium text-gray-700 mb-2">
-                                <i class="fas fa-user text-blue-500 mr-2"></i>Last Name
-                            </label>
-                            <input 
-                                type="text" 
-                                id="lname" 
-                                name="lname" 
-                                value="{{ auth()->user()->sLname }}"
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-                                required
-                            >
-                        </div>
+                    <!-- Full Name -->
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-gray-700 mb-2">
+                            <i class="fas fa-user text-blue-500 mr-2"></i>Full Name
+                        </label>
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            value="{{ $user->name }}"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                            required
+                        >
                     </div>
 
                     <!-- Email -->
@@ -76,11 +59,11 @@
                         <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
                             <i class="fas fa-envelope text-blue-500 mr-2"></i>Email Address
                         </label>
-                        <input 
-                            type="email" 
-                            id="email" 
-                            name="email" 
-                            value="{{ auth()->user()->sEmail }}"
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            value="{{ $user->email }}"
                             class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                             required
                         >
@@ -91,11 +74,11 @@
                         <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">
                             <i class="fas fa-phone text-blue-500 mr-2"></i>Phone Number
                         </label>
-                        <input 
-                            type="tel" 
-                            id="phone" 
-                            name="phone" 
-                            value="{{ auth()->user()->sPhone }}"
+                        <input
+                            type="tel"
+                            id="phone"
+                            name="phone"
+                            value="{{ $user->phone }}"
                             class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                             required
                         >
@@ -106,24 +89,24 @@
                         <label for="state" class="block text-sm font-medium text-gray-700 mb-2">
                             <i class="fas fa-map-marker-alt text-blue-500 mr-2"></i>State
                         </label>
-                        <select 
-                            id="state" 
-                            name="state" 
+                        <select
+                            id="state"
+                            name="state"
                             class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                             required
                         >
                             <option value="">Select your state</option>
                             @php
                                 $states = [
-                                    'Abuja FCT', 'Abia', 'Adamawa', 'Akwa Ibom', 'Anambra', 'Bauchi', 'Bayelsa', 
-                                    'Benue', 'Borno', 'Cross River', 'Delta', 'Ebonyi', 'Edo', 'Ekiti', 'Enugu', 
-                                    'Gombe', 'Imo', 'Jigawa', 'Kaduna', 'Kano', 'Katsina', 'Kebbi', 'Kogi', 
-                                    'Kwara', 'Lagos', 'Nassarawa', 'Niger', 'Ogun', 'Ondo', 'Osun', 'Oyo', 
+                                    'Abuja FCT', 'Abia', 'Adamawa', 'Akwa Ibom', 'Anambra', 'Bauchi', 'Bayelsa',
+                                    'Benue', 'Borno', 'Cross River', 'Delta', 'Ebonyi', 'Edo', 'Ekiti', 'Enugu',
+                                    'Gombe', 'Imo', 'Jigawa', 'Kaduna', 'Kano', 'Katsina', 'Kebbi', 'Kogi',
+                                    'Kwara', 'Lagos', 'Nassarawa', 'Niger', 'Ogun', 'Ondo', 'Osun', 'Oyo',
                                     'Plateau', 'Rivers', 'Sokoto', 'Taraba', 'Yobe', 'Zamfara'
                                 ];
                             @endphp
                             @foreach($states as $state)
-                                <option value="{{ $state }}" {{ auth()->user()->sState == $state ? 'selected' : '' }}>
+                                <option value="{{ $state }}" {{ $user->state == $state ? 'selected' : '' }}>
                                     {{ $state }}
                                 </option>
                             @endforeach
@@ -131,8 +114,8 @@
                     </div>
 
                     <div class="flex justify-end">
-                        <button 
-                            type="submit" 
+                        <button
+                            type="submit"
                             class="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                         >
                             <i class="fas fa-save mr-2"></i>Update Profile
@@ -176,20 +159,20 @@
                     @csrf
                     <div>
                         <label for="current_password" class="block text-sm font-medium text-gray-700 mb-2">Current Password</label>
-                        <input 
-                            type="password" 
-                            id="current_password" 
-                            name="current_password" 
+                        <input
+                            type="password"
+                            id="current_password"
+                            name="current_password"
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                             required
                         >
                     </div>
                     <div>
                         <label for="password" class="block text-sm font-medium text-gray-700 mb-2">New Password</label>
-                        <input 
-                            type="password" 
-                            id="password" 
-                            name="password" 
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                             required
                             minlength="8"
@@ -198,16 +181,16 @@
                     </div>
                     <div>
                         <label for="password_confirmation" class="block text-sm font-medium text-gray-700 mb-2">Confirm Password</label>
-                        <input 
-                            type="password" 
-                            id="password_confirmation" 
-                            name="password_confirmation" 
+                        <input
+                            type="password"
+                            id="password_confirmation"
+                            name="password_confirmation"
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                             required
                         >
                     </div>
-                    <button 
-                        type="submit" 
+                    <button
+                        type="submit"
                         class="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200"
                     >
                         <i class="fas fa-key mr-2"></i>Change Password
@@ -224,10 +207,10 @@
                     @csrf
                     <div>
                         <label for="current_pin" class="block text-sm font-medium text-gray-700 mb-2">Current PIN</label>
-                        <input 
-                            type="password" 
-                            id="current_pin" 
-                            name="current_pin" 
+                        <input
+                            type="password"
+                            id="current_pin"
+                            name="current_pin"
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                             required
                             maxlength="4"
@@ -236,10 +219,10 @@
                     </div>
                     <div>
                         <label for="pin" class="block text-sm font-medium text-gray-700 mb-2">New PIN</label>
-                        <input 
-                            type="password" 
-                            id="pin" 
-                            name="pin" 
+                        <input
+                            type="password"
+                            id="pin"
+                            name="pin"
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                             required
                             maxlength="4"
@@ -248,18 +231,18 @@
                     </div>
                     <div>
                         <label for="pin_confirmation" class="block text-sm font-medium text-gray-700 mb-2">Confirm PIN</label>
-                        <input 
-                            type="password" 
-                            id="pin_confirmation" 
-                            name="pin_confirmation" 
+                        <input
+                            type="password"
+                            id="pin_confirmation"
+                            name="pin_confirmation"
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                             required
                             maxlength="4"
                             pattern="[0-9]{4}"
                         >
                     </div>
-                    <button 
-                        type="submit" 
+                    <button
+                        type="submit"
                         class="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200"
                     >
                         <i class="fas fa-key mr-2"></i>Change PIN
@@ -274,19 +257,30 @@
 <script>
 $(document).ready(function() {
     // Profile Update Form
-    $('#profile-form').submit(function(e) {
+    $('#profile-form').on('submit', function(e) {
         e.preventDefault();
-        
-        const submitBtn = $(this).find('button[type="submit"]');
+        e.stopPropagation();
+
+        const form = $(this);
+        const submitBtn = form.find('button[type="submit"]');
         const originalText = submitBtn.html();
-        
+
+        // Prevent multiple submissions
+        if (submitBtn.prop('disabled')) {
+            return false;
+        }
+
         submitBtn.prop('disabled', true)
                  .html('<i class="fas fa-spinner fa-spin mr-2"></i>Updating...');
-        
+
         $.ajax({
             url: '{{ route("user.profile.update") }}',
             method: 'PUT',
-            data: $(this).serialize(),
+            data: form.serialize(),
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                'Accept': 'application/json'
+            },
             success: function(response) {
                 if (response.status === 'success') {
                     Swal.fire({
@@ -312,7 +306,7 @@ $(document).ready(function() {
                     const errors = xhr.responseJSON.errors;
                     message = Object.values(errors).flat().join(', ');
                 }
-                
+
                 Swal.fire({
                     icon: 'error',
                     title: 'Error!',
@@ -323,35 +317,48 @@ $(document).ready(function() {
                 submitBtn.prop('disabled', false).html(originalText);
             }
         });
+
+        return false;
     });
 
     // Password Change Form
-    $('#password-form').submit(function(e) {
+    $('#password-form').on('submit', function(e) {
         e.preventDefault();
-        
-        const submitBtn = $(this).find('button[type="submit"]');
+        e.stopPropagation();
+
+        const form = $(this);
+        const submitBtn = form.find('button[type="submit"]');
         const originalText = submitBtn.html();
-        
+
+        // Prevent multiple submissions
+        if (submitBtn.prop('disabled')) {
+            return false;
+        }
+
         // Validate password match
         const password = $('#password').val();
         const confirmPassword = $('#password_confirmation').val();
-        
+
         if (password !== confirmPassword) {
             Swal.fire({
                 icon: 'warning',
                 title: 'Error!',
                 text: 'Passwords do not match.'
             });
-            return;
+            return false;
         }
-        
+
         submitBtn.prop('disabled', true)
                  .html('<i class="fas fa-spinner fa-spin mr-2"></i>Changing...');
-        
+
         $.ajax({
             url: '{{ route("user.password.change") }}',
             method: 'POST',
-            data: $(this).serialize(),
+            data: form.serialize(),
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                'Accept': 'application/json'
+            },
             success: function(response) {
                 if (response.status === 'success') {
                     Swal.fire({
@@ -361,7 +368,7 @@ $(document).ready(function() {
                         timer: 2000,
                         showConfirmButton: false
                     });
-                    $('#password-form')[0].reset();
+                    form[0].reset();
                 } else {
                     Swal.fire({
                         icon: 'error',
@@ -378,7 +385,7 @@ $(document).ready(function() {
                     const errors = xhr.responseJSON.errors;
                     message = Object.values(errors).flat().join(', ');
                 }
-                
+
                 Swal.fire({
                     icon: 'error',
                     title: 'Error!',
@@ -389,35 +396,48 @@ $(document).ready(function() {
                 submitBtn.prop('disabled', false).html(originalText);
             }
         });
+
+        return false;
     });
 
     // PIN Change Form
-    $('#pin-form').submit(function(e) {
+    $('#pin-form').on('submit', function(e) {
         e.preventDefault();
-        
-        const submitBtn = $(this).find('button[type="submit"]');
+        e.stopPropagation();
+
+        const form = $(this);
+        const submitBtn = form.find('button[type="submit"]');
         const originalText = submitBtn.html();
-        
+
+        // Prevent multiple submissions
+        if (submitBtn.prop('disabled')) {
+            return false;
+        }
+
         // Validate PIN match
         const pin = $('#pin').val();
         const confirmPin = $('#pin_confirmation').val();
-        
+
         if (pin !== confirmPin) {
             Swal.fire({
                 icon: 'warning',
                 title: 'Error!',
                 text: 'PINs do not match.'
             });
-            return;
+            return false;
         }
-        
+
         submitBtn.prop('disabled', true)
                  .html('<i class="fas fa-spinner fa-spin mr-2"></i>Changing...');
-        
+
         $.ajax({
             url: '{{ route("user.pin.change") }}',
             method: 'POST',
-            data: $(this).serialize(),
+            data: form.serialize(),
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                'Accept': 'application/json'
+            },
             success: function(response) {
                 if (response.status === 'success') {
                     Swal.fire({
@@ -427,7 +447,7 @@ $(document).ready(function() {
                         timer: 2000,
                         showConfirmButton: false
                     });
-                    $('#pin-form')[0].reset();
+                    form[0].reset();
                 } else {
                     Swal.fire({
                         icon: 'error',
@@ -444,7 +464,7 @@ $(document).ready(function() {
                     const errors = xhr.responseJSON.errors;
                     message = Object.values(errors).flat().join(', ');
                 }
-                
+
                 Swal.fire({
                     icon: 'error',
                     title: 'Error!',

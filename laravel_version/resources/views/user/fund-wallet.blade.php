@@ -82,18 +82,70 @@
                 @else
                     <!-- No Virtual Accounts - Show Setup Card -->
                     <div class="max-w-2xl mx-auto">
-                        <div class="bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-2xl p-8 text-center">
-                            <div class="bg-blue-600 p-4 rounded-full w-20 h-20 mx-auto mb-6">
-                                <i class="fas fa-credit-card text-white text-3xl mt-2"></i>
-                            </div>
-                            <h3 class="text-2xl font-bold text-gray-800 mb-3">Get Your Virtual Account Numbers</h3>
-                            <p class="text-gray-600 mb-8 text-lg">Get dedicated bank account numbers to fund your wallet instantly from any bank app, USSD, or transfer. No charges, instant funding!</p>
+                        @php
+                            $user = Auth::user();
+                            $kycCompleted = $user && $user->kyc_status === 'verified';
+                        @endphp
 
-                            <button onclick="generateVirtualAccount()"
-                                    id="generate-account-btn"
-                                    class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-12 py-4 rounded-xl font-bold text-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg">
-                                <i class="fas fa-plus mr-3"></i>Generate Account Numbers
-                            </button>
+                        @if(!$kycCompleted)
+                            <!-- KYC Required Card -->
+                            <div class="bg-gradient-to-r from-yellow-50 to-orange-50 border border-yellow-300 rounded-2xl p-8 text-center">
+                                <div class="bg-yellow-500 p-4 rounded-full w-20 h-20 mx-auto mb-6">
+                                    <i class="fas fa-shield-alt text-white text-3xl mt-2"></i>
+                                </div>
+                                <h3 class="text-2xl font-bold text-gray-800 mb-3">KYC Verification Required</h3>
+                                <p class="text-gray-700 mb-6 text-lg">To create your virtual account numbers, you must first complete KYC verification (NIN or BVN) as required by CBN regulations.</p>
+
+                                <a href="{{ route('kyc.verification') }}"
+                                   class="inline-block bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-12 py-4 rounded-xl font-bold text-lg hover:from-yellow-600 hover:to-orange-600 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                                    <i class="fas fa-check-circle mr-3"></i>Complete KYC Verification
+                                </a>
+
+                                <div class="mt-8 bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
+                                    <h4 class="font-bold text-gray-800 mb-4 text-lg">Why KYC is Required?</h4>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
+                                        <div class="flex items-center space-x-3">
+                                            <div class="bg-blue-100 p-2 rounded-full">
+                                                <i class="fas fa-landmark text-blue-600"></i>
+                                            </div>
+                                            <span class="text-gray-700">CBN compliance</span>
+                                        </div>
+                                        <div class="flex items-center space-x-3">
+                                            <div class="bg-blue-100 p-2 rounded-full">
+                                                <i class="fas fa-shield-alt text-blue-600"></i>
+                                            </div>
+                                            <span class="text-gray-700">Enhanced security</span>
+                                        </div>
+                                        <div class="flex items-center space-x-3">
+                                            <div class="bg-blue-100 p-2 rounded-full">
+                                                <i class="fas fa-user-check text-blue-600"></i>
+                                            </div>
+                                            <span class="text-gray-700">Identity verification</span>
+                                        </div>
+                                        <div class="flex items-center space-x-3">
+                                            <div class="bg-blue-100 p-2 rounded-full">
+                                                <i class="fas fa-lock text-blue-600"></i>
+                                            </div>
+                                            <span class="text-gray-700">Fraud prevention</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @else
+                            <!-- KYC Complete - Show Generate Button -->
+                            <div class="bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-2xl p-8 text-center">
+                                <div class="bg-blue-600 p-4 rounded-full w-20 h-20 mx-auto mb-6">
+                                    <i class="fas fa-credit-card text-white text-3xl mt-2"></i>
+                                </div>
+                                <h3 class="text-2xl font-bold text-gray-800 mb-3">Get Your Virtual Account Numbers</h3>
+                                <p class="text-gray-600 mb-8 text-lg">Get dedicated bank account numbers to fund your wallet instantly from any bank app, USSD, or transfer. No charges, instant funding!</p>
+
+                                <button onclick="generateVirtualAccount()"
+                                        id="generate-account-btn"
+                                        class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-12 py-4 rounded-xl font-bold text-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                                    <i class="fas fa-plus mr-3"></i>Generate Account Numbers
+                                </button>
+                        @endif
 
                             <div class="mt-8 bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
                                 <h4 class="font-bold text-gray-800 mb-4 text-lg">Why Use Virtual Accounts?</h4>

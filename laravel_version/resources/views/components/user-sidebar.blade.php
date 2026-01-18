@@ -82,10 +82,10 @@
                         <i class="fas fa-user mr-3 text-blue-500"></i>
                         Profile
                     </a>
-                    <a href="/referrals" class="group flex items-center px-4 py-3 text-sm font-medium rounded-lg {{ request()->is('referrals') ? 'bg-green-50 text-green-700 border-r-2 border-green-700' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}">
+                    <!-- <a href="/referrals" class="group flex items-center px-4 py-3 text-sm font-medium rounded-lg {{ request()->is('referrals') ? 'bg-green-50 text-green-700 border-r-2 border-green-700' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}">
                         <i class="fas fa-users mr-3 text-green-500"></i>
                         Referrals
-                    </a>
+                    </a> -->
                     <a href="/pricing" class="group flex items-center px-4 py-3 text-sm font-medium rounded-lg {{ request()->is('pricing') ? 'bg-purple-50 text-purple-700 border-r-2 border-purple-700' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}">
                         <i class="fas fa-list mr-3 text-purple-500"></i>
                         Pricing

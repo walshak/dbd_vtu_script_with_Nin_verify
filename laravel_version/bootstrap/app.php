@@ -16,6 +16,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'verified' => \App\Http\Middleware\EnsureEmailIsVerified::class,
             'user.type' => \App\Http\Middleware\CheckUserType::class,
             'transaction.pin' => \App\Http\Middleware\RequireTransactionPin::class,
+            'kyc.verified' => \App\Http\Middleware\EnsureKycVerified::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
